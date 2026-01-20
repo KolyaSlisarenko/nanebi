@@ -1,0 +1,2171 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Na Nebi Camp — Безтурботний табір для дорослих у Карпатах</title>
+    <meta name="description" content="Намети на деревах, незабутні краєвиди та новий досвід. Тури на 3, 4, 6 або 9 днів у Закарпатті та Львівській області.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========== CSS Variables ========== */
+        :root {
+            /* Primary - Green */
+            --primary: #2D5F3F;
+            --primary-light: #7FB685;
+            --primary-dark: #1e4a2d;
+
+            /* Secondary - Brown/Warm */
+            --secondary: #8B7355;
+            --secondary-light: #E8DCC4;
+            --secondary-bg: #F5F1EB;
+
+            /* Accent */
+            --accent-blue: #87CEEB;
+            --accent-yellow: #FFD89C;
+
+            /* Status */
+            --status-available: #4CAF50;
+            --status-few: #FF9800;
+            --status-soldout: #9E9E9E;
+
+            /* Neutral */
+            --white: #FFFFFF;
+            --black: #1A1A1A;
+            --gray-100: #F7F7F7;
+            --gray-200: #E5E5E5;
+            --gray-300: #CCCCCC;
+            --gray-600: #666666;
+
+            /* Typography */
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --space-2xl: 4rem;
+            --space-3xl: 6rem;
+
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+
+            /* Transitions */
+            --transition: 0.3s ease;
+        }
+
+        /* ========== Reset & Base ========== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--black);
+            background: var(--white);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        /* ========== Typography ========== */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--black);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-bottom: var(--space-md);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+        }
+
+        p {
+            margin-bottom: var(--space-sm);
+        }
+
+        .text-center { text-align: center; }
+        .text-primary { color: var(--primary); }
+        .text-secondary { color: var(--secondary); }
+        .text-gray { color: var(--gray-600); }
+
+        /* ========== Layout ========== */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        .section {
+            padding: var(--space-2xl) 0;
+        }
+
+        .section-bg {
+            background: var(--secondary-bg);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .section-header p {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: var(--space-sm) auto 0;
+        }
+
+        /* ========== Buttons ========== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-xs);
+            padding: 0.875rem 1.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            transition: all var(--transition);
+            min-height: 48px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        .btn-sm {
+            padding: 0.625rem 1.25rem;
+            font-size: 0.875rem;
+            min-height: 40px;
+        }
+
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .logo img {
+            height: 45px;
+            width: auto;
+        }
+
+        .nav {
+            display: none;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: var(--space-lg);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--black);
+            transition: color var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .header-cta {
+            display: none;
+        }
+
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 10px;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--black);
+            transition: all var(--transition);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--white);
+            padding: var(--space-lg);
+            transform: translateX(100%);
+            transition: transform var(--transition);
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .mobile-nav-link {
+            display: block;
+            padding: var(--space-sm) 0;
+            font-size: 1.125rem;
+            font-weight: 500;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .mobile-menu .btn {
+            width: 100%;
+            margin-top: var(--space-lg);
+        }
+
+        /* ========== Hero ========== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 70px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)),
+                        url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1920&q=80') center/cover no-repeat;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: var(--white);
+            text-align: center;
+            padding: var(--space-xl) 0;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-xl);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: var(--space-md);
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: 2.5rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto var(--space-lg);
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            align-items: center;
+        }
+
+        .hero-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
+        }
+
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .hero-feature svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== Tour Selector ========== */
+        .tour-selector {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: var(--space-lg);
+            margin-top: calc(-1 * var(--space-3xl));
+            position: relative;
+            z-index: 10;
+        }
+
+        .selector-title {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .selector-title h2 {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .selector-title p {
+            color: var(--gray-600);
+            margin-bottom: 0;
+        }
+
+        .selector-steps {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .selector-step {
+            display: none;
+        }
+
+        .selector-step.active {
+            display: block;
+        }
+
+        .step-label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+            color: var(--primary);
+        }
+
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 0.875rem;
+        }
+
+        .step-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-sm);
+        }
+
+        .step-option {
+            padding: var(--space-md);
+            background: var(--gray-100);
+            border: 2px solid transparent;
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .step-option:hover {
+            border-color: var(--primary-light);
+            background: var(--white);
+        }
+
+        .step-option.selected {
+            border-color: var(--primary);
+            background: rgba(45, 95, 63, 0.05);
+        }
+
+        .step-option-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .step-option-subtitle {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+
+        .selector-nav {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-lg);
+        }
+
+        .selector-nav .btn {
+            flex: 1;
+        }
+
+        .selector-progress {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xs);
+            margin-bottom: var(--space-md);
+        }
+
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gray-300);
+            transition: all var(--transition);
+        }
+
+        .progress-dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .progress-dot.completed {
+            background: var(--primary-light);
+        }
+
+        /* ========== Why Na Nebi ========== */
+        .why-section {
+            background: var(--secondary-bg);
+        }
+
+        .why-grid {
+            display: grid;
+            gap: var(--space-md);
+        }
+
+        .why-card {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+
+        .why-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .why-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(45, 95, 63, 0.1);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-md);
+        }
+
+        .why-icon svg {
+            width: 28px;
+            height: 28px;
+            color: var(--primary);
+        }
+
+        .why-card h3 {
+            margin-bottom: var(--space-xs);
+        }
+
+        .why-card p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* ========== Stats ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-md);
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: var(--space-lg);
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-number {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: var(--space-xs);
+        }
+
+        .stat-label {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        /* ========== Tours Section ========== */
+        .tours-grid {
+            display: grid;
+            gap: var(--space-md);
+        }
+
+        .tour-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+
+        .tour-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .tour-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .tour-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition);
+        }
+
+        .tour-card:hover .tour-image img {
+            transform: scale(1.05);
+        }
+
+        .tour-badge {
+            position: absolute;
+            top: var(--space-sm);
+            left: var(--space-sm);
+            padding: 0.375rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .tour-badge.available {
+            background: var(--status-available);
+        }
+
+        .tour-badge.few {
+            background: var(--status-few);
+        }
+
+        .tour-badge.soldout {
+            background: var(--status-soldout);
+        }
+
+        .tour-content {
+            padding: var(--space-md);
+        }
+
+        .tour-location {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            margin-bottom: var(--space-xs);
+        }
+
+        .tour-title {
+            font-size: 1.125rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .tour-dates {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .tour-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: var(--space-sm);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .tour-price {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .tour-price span {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--gray-600);
+        }
+
+        /* ========== Reviews ========== */
+        .reviews-grid {
+            display: grid;
+            gap: var(--space-md);
+        }
+
+        .review-card {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+        }
+
+        .review-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .review-author {
+            flex: 1;
+        }
+
+        .review-name {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .review-date {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+
+        .review-rating {
+            display: flex;
+            gap: 2px;
+            color: var(--accent-yellow);
+        }
+
+        .review-text {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        /* ========== Locations ========== */
+        .locations-grid {
+            display: grid;
+            gap: var(--space-md);
+        }
+
+        .location-card {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            min-height: 280px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .location-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        }
+
+        .location-card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition);
+        }
+
+        .location-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .location-content {
+            position: relative;
+            z-index: 1;
+            padding: var(--space-lg);
+            color: var(--white);
+            width: 100%;
+        }
+
+        .location-content h3 {
+            color: var(--white);
+            font-size: 1.5rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .location-content p {
+            opacity: 0.9;
+            margin-bottom: var(--space-sm);
+        }
+
+        .location-tours-count {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* ========== CTA Section ========== */
+        .cta-section {
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            color: var(--white);
+            margin-bottom: var(--space-sm);
+        }
+
+        .cta-section p {
+            opacity: 0.9;
+            max-width: 500px;
+            margin: 0 auto var(--space-lg);
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            align-items: center;
+        }
+
+        /* ========== FAQ ========== */
+        .faq-list {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-sm);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            padding: var(--space-md);
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .faq-question svg {
+            flex-shrink: 0;
+            transition: transform var(--transition);
+        }
+
+        .faq-item.active .faq-question svg {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 var(--space-md) var(--space-md);
+            color: var(--gray-600);
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            background: var(--black);
+            color: var(--white);
+            padding: var(--space-2xl) 0 var(--space-lg);
+        }
+
+        .footer-grid {
+            display: grid;
+            gap: var(--space-xl);
+            margin-bottom: var(--space-xl);
+        }
+
+        .footer-brand p {
+            color: var(--gray-300);
+            font-size: 0.9rem;
+            margin-top: var(--space-sm);
+        }
+
+        .footer h4 {
+            color: var(--white);
+            font-size: 1rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+
+        .footer-links a {
+            color: var(--gray-300);
+            font-size: 0.9rem;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            color: var(--gray-300);
+            font-size: 0.9rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: var(--white);
+            transition: all var(--transition);
+        }
+
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            padding-top: var(--space-lg);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        /* ========== Modal ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-md);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-md);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .modal-header h3 {
+            margin: 0;
+        }
+
+        .modal-close {
+            padding: var(--space-xs);
+            color: var(--gray-600);
+            transition: color var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--black);
+        }
+
+        .modal-body {
+            padding: var(--space-lg);
+        }
+
+        /* ========== Form ========== */
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: var(--space-xs);
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(45, 95, 63, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--gray-300);
+        }
+
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-hint {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            margin-top: var(--space-xs);
+        }
+
+        .form-success {
+            text-align: center;
+            padding: var(--space-xl);
+        }
+
+        .form-success svg {
+            width: 64px;
+            height: 64px;
+            color: var(--status-available);
+            margin-bottom: var(--space-md);
+        }
+
+        .form-success h3 {
+            margin-bottom: var(--space-sm);
+        }
+
+        /* ========== Desktop Styles ========== */
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 2.25rem;
+            }
+
+            .section {
+                padding: var(--space-3xl) 0;
+            }
+
+            .header-inner {
+                height: 80px;
+            }
+
+            .nav {
+                display: block;
+            }
+
+            .header-cta {
+                display: block;
+            }
+
+            .mobile-menu-btn {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.25rem;
+            }
+
+            .hero-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .tour-selector {
+                padding: var(--space-xl);
+            }
+
+            .step-options {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .why-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .tours-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .reviews-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .locations-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cta-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: 2fr 1fr 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .why-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .tours-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .reviews-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="/" class="logo">
+                    <img src="https://res2.weblium.site/res/6602ec4ba1f59c000f6a8364/66031631e0a192000f2ecf2f_optimized" alt="Na Nebi Camp">
+                </a>
+
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="#tours" class="nav-link">Тури</a></li>
+                        <li><a href="#locations" class="nav-link">Локації</a></li>
+                        <li><a href="#about" class="nav-link">Про нас</a></li>
+                        <li><a href="#reviews" class="nav-link">Відгуки</a></li>
+                        <li><a href="#faq" class="nav-link">FAQ</a></li>
+                    </ul>
+                </nav>
+
+                <div class="header-cta">
+                    <button class="btn btn-primary btn-sm" onclick="openModal()">Підібрати тур</button>
+                </div>
+
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Меню">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav>
+            <ul class="mobile-nav-list">
+                <li><a href="#tours" class="mobile-nav-link" onclick="toggleMobileMenu()">Тури</a></li>
+                <li><a href="#locations" class="mobile-nav-link" onclick="toggleMobileMenu()">Локації</a></li>
+                <li><a href="#about" class="mobile-nav-link" onclick="toggleMobileMenu()">Про нас</a></li>
+                <li><a href="#reviews" class="mobile-nav-link" onclick="toggleMobileMenu()">Відгуки</a></li>
+                <li><a href="#faq" class="mobile-nav-link" onclick="toggleMobileMenu()">FAQ</a></li>
+                <li><a href="#contacts" class="mobile-nav-link" onclick="toggleMobileMenu()">Контакти</a></li>
+            </ul>
+            <button class="btn btn-primary" onclick="openModal(); toggleMobileMenu();">Підібрати тур</button>
+        </nav>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">Сезон 2025: травень — вересень</span>
+                <h1>Na Nebi Camp</h1>
+                <p class="hero-subtitle">Безтурботний табір для дорослих у Карпатах. Намети на деревах, неймовірні краєвиди та новий досвід, який ти запам'ятаєш назавжди.</p>
+                <div class="hero-buttons">
+                    <a href="#tour-selector" class="btn btn-primary btn-lg">Підібрати тур</a>
+                    <a href="#about" class="btn btn-outline">Дізнатись більше</a>
+                </div>
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Тури 3-9 днів</span>
+                    </div>
+                    <div class="hero-feature">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>2 локації</span>
+                    </div>
+                    <div class="hero-feature">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>23-40 років</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tour Selector -->
+    <section id="tour-selector" class="section">
+        <div class="container">
+            <div class="tour-selector">
+                <div class="selector-title">
+                    <h2>Підібрати свій тур</h2>
+                    <p>Обери параметри і знайди ідеальний варіант серед сотень турів</p>
+                </div>
+
+                <div class="selector-progress">
+                    <div class="progress-dot active" data-step="1"></div>
+                    <div class="progress-dot" data-step="2"></div>
+                    <div class="progress-dot" data-step="3"></div>
+                </div>
+
+                <div class="selector-steps">
+                    <!-- Step 1: Month -->
+                    <div class="selector-step active" data-step="1">
+                        <div class="step-label">
+                            <span class="step-number">1</span>
+                            <span>Коли плануєш відпустку?</span>
+                        </div>
+                        <div class="step-options">
+                            <div class="step-option" data-value="may" onclick="selectOption(this, 'month')">
+                                <div class="step-option-title">Травень</div>
+                                <div class="step-option-subtitle">12 турів</div>
+                            </div>
+                            <div class="step-option" data-value="june" onclick="selectOption(this, 'month')">
+                                <div class="step-option-title">Червень</div>
+                                <div class="step-option-subtitle">18 турів</div>
+                            </div>
+                            <div class="step-option" data-value="july" onclick="selectOption(this, 'month')">
+                                <div class="step-option-title">Липень</div>
+                                <div class="step-option-subtitle">24 тури</div>
+                            </div>
+                            <div class="step-option" data-value="august" onclick="selectOption(this, 'month')">
+                                <div class="step-option-title">Серпень</div>
+                                <div class="step-option-subtitle">20 турів</div>
+                            </div>
+                            <div class="step-option" data-value="september" onclick="selectOption(this, 'month')">
+                                <div class="step-option-title">Вересень</div>
+                                <div class="step-option-subtitle">8 турів</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Duration -->
+                    <div class="selector-step" data-step="2">
+                        <div class="step-label">
+                            <span class="step-number">2</span>
+                            <span>На скільки днів?</span>
+                        </div>
+                        <div class="step-options" style="grid-template-columns: repeat(4, 1fr);">
+                            <div class="step-option" data-value="3" onclick="selectOption(this, 'duration')">
+                                <div class="step-option-title">3 дні</div>
+                                <div class="step-option-subtitle">Вікенд</div>
+                            </div>
+                            <div class="step-option" data-value="4" onclick="selectOption(this, 'duration')">
+                                <div class="step-option-title">4 дні</div>
+                                <div class="step-option-subtitle">Міні-відпустка</div>
+                            </div>
+                            <div class="step-option" data-value="6" onclick="selectOption(this, 'duration')">
+                                <div class="step-option-title">6 днів</div>
+                                <div class="step-option-subtitle">Повна програма</div>
+                            </div>
+                            <div class="step-option" data-value="9" onclick="selectOption(this, 'duration')">
+                                <div class="step-option-title">9 днів</div>
+                                <div class="step-option-subtitle">Максимум вражень</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Location -->
+                    <div class="selector-step" data-step="3">
+                        <div class="step-label">
+                            <span class="step-number">3</span>
+                            <span>Де?</span>
+                        </div>
+                        <div class="step-options" style="grid-template-columns: repeat(2, 1fr);">
+                            <div class="step-option" data-value="zakarpattia" onclick="selectOption(this, 'location')">
+                                <div class="step-option-title">Закарпаття</div>
+                                <div class="step-option-subtitle">Гори та озера</div>
+                            </div>
+                            <div class="step-option" data-value="skole" onclick="selectOption(this, 'location')">
+                                <div class="step-option-title">Сколе</div>
+                                <div class="step-option-subtitle">Львівська область</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="selector-nav">
+                    <button class="btn btn-secondary" id="prevBtn" onclick="prevStep()" style="display: none;">Назад</button>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextStep()" disabled>Далі</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Tours -->
+    <section id="tours" class="section section-bg">
+        <div class="container">
+            <div class="section-header">
+                <h2>Найближчі тури</h2>
+                <p>Обери свою пригоду серед доступних дат</p>
+            </div>
+
+            <div class="tours-grid">
+                <!-- Tour Card 1 -->
+                <div class="tour-card">
+                    <div class="tour-image">
+                        <img src="https://images.unsplash.com/photo-1517824806704-9040b037703b?w=600&q=80" alt="Тур Закарпаття">
+                        <span class="tour-badge available">Є місця</span>
+                    </div>
+                    <div class="tour-content">
+                        <div class="tour-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            Закарпаття
+                        </div>
+                        <h3 class="tour-title">Карпатська пригода</h3>
+                        <div class="tour-dates">15-18 травня • 4 дні</div>
+                        <div class="tour-footer">
+                            <div class="tour-price">₴8 900 <span>/ особа</span></div>
+                            <button class="btn btn-primary btn-sm" onclick="openModal()">Обрати</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tour Card 2 -->
+                <div class="tour-card">
+                    <div class="tour-image">
+                        <img src="https://images.unsplash.com/photo-1510312305653-8ed496efae75?w=600&q=80" alt="Тур Сколе">
+                        <span class="tour-badge few">Мало місць</span>
+                    </div>
+                    <div class="tour-content">
+                        <div class="tour-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            Сколе, Львівська обл.
+                        </div>
+                        <h3 class="tour-title">Гори та водоспади</h3>
+                        <div class="tour-dates">22-27 травня • 6 днів</div>
+                        <div class="tour-footer">
+                            <div class="tour-price">₴12 500 <span>/ особа</span></div>
+                            <button class="btn btn-primary btn-sm" onclick="openModal()">Обрати</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tour Card 3 -->
+                <div class="tour-card">
+                    <div class="tour-image">
+                        <img src="https://images.unsplash.com/photo-1533873984035-25970ab07461?w=600&q=80" alt="Тур Закарпаття">
+                        <span class="tour-badge available">Є місця</span>
+                    </div>
+                    <div class="tour-content">
+                        <div class="tour-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            Закарпаття
+                        </div>
+                        <h3 class="tour-title">Літній вікенд</h3>
+                        <div class="tour-dates">7-9 червня • 3 дні</div>
+                        <div class="tour-footer">
+                            <div class="tour-price">₴6 200 <span>/ особа</span></div>
+                            <button class="btn btn-primary btn-sm" onclick="openModal()">Обрати</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tour Card 4 -->
+                <div class="tour-card">
+                    <div class="tour-image">
+                        <img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=600&q=80" alt="Тур Сколе">
+                        <span class="tour-badge soldout">Sold out</span>
+                    </div>
+                    <div class="tour-content">
+                        <div class="tour-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            Сколе, Львівська обл.
+                        </div>
+                        <h3 class="tour-title">Повне занурення</h3>
+                        <div class="tour-dates">1-9 липня • 9 днів</div>
+                        <div class="tour-footer">
+                            <div class="tour-price">₴18 900 <span>/ особа</span></div>
+                            <button class="btn btn-secondary btn-sm" disabled>Sold out</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tour Card 5 -->
+                <div class="tour-card">
+                    <div class="tour-image">
+                        <img src="https://images.unsplash.com/photo-1496545672447-f699b503d270?w=600&q=80" alt="Тур Закарпаття">
+                        <span class="tour-badge available">Є місця</span>
+                    </div>
+                    <div class="tour-content">
+                        <div class="tour-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            Закарпаття
+                        </div>
+                        <h3 class="tour-title">Серпневі зорі</h3>
+                        <div class="tour-dates">10-13 серпня • 4 дні</div>
+                        <div class="tour-footer">
+                            <div class="tour-price">₴8 900 <span>/ особа</span></div>
+                            <button class="btn btn-primary btn-sm" onclick="openModal()">Обрати</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tour Card 6 -->
+                <div class="tour-card">
+                    <div class="tour-image">
+                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80" alt="Тур Сколе">
+                        <span class="tour-badge few">Мало місць</span>
+                    </div>
+                    <div class="tour-content">
+                        <div class="tour-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            Сколе, Львівська обл.
+                        </div>
+                        <h3 class="tour-title">Осінній старт</h3>
+                        <div class="tour-dates">5-10 вересня • 6 днів</div>
+                        <div class="tour-footer">
+                            <div class="tour-price">₴12 500 <span>/ особа</span></div>
+                            <button class="btn btn-primary btn-sm" onclick="openModal()">Обрати</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-xl);">
+                <a href="#" class="btn btn-secondary">Показати всі тури</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Na Nebi -->
+    <section class="section why-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Чому Na Nebi</h2>
+                <p>Ми створюємо простір, де ти можеш просто бути</p>
+            </div>
+
+            <div class="why-grid">
+                <!-- Safety -->
+                <div class="why-card">
+                    <div class="why-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3>Безпека</h3>
+                    <p>5000+ людей вже були з нами. Досвідчені інструктори, перевірене спорядження, страховка включена.</p>
+                </div>
+
+                <!-- Care -->
+                <div class="why-card">
+                    <div class="why-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </div>
+                    <h3>Турбота</h3>
+                    <p>Ми не продаємо тури — ми допомагаємо обрати найкращий варіант саме для тебе. Кожна деталь продумана.</p>
+                </div>
+
+                <!-- Clarity -->
+                <div class="why-card">
+                    <div class="why-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <h3>Зрозумілість</h3>
+                    <p>Не маєш досвіду походів? Чудово! Ми все пояснюємо та організовуємо. Тобі потрібно лише приїхати.</p>
+                </div>
+
+                <!-- Experience -->
+                <div class="why-card">
+                    <div class="why-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                        </svg>
+                    </div>
+                    <h3>Новий досвід</h3>
+                    <p>Намети на деревах, зоряне небо, нові знайомства та емоції, які ти запам'ятаєш надовго.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Na Nebi в цифрах</h2>
+                <p>Реальні факти про наш досвід</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">5 000+</div>
+                    <div class="stat-label">щасливих гостей</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">сезони досвіду</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">турів проведено</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4.9</div>
+                    <div class="stat-label">рейтинг на Google</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations -->
+    <section id="locations" class="section section-bg">
+        <div class="container">
+            <div class="section-header">
+                <h2>Наші локації</h2>
+                <p>Два унікальних місця в серці Карпат</p>
+            </div>
+
+            <div class="locations-grid">
+                <a href="#" class="location-card">
+                    <img src="https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=800&q=80" alt="Закарпаття">
+                    <div class="location-content">
+                        <h3>Закарпаття</h3>
+                        <p>Магія гір та озер у найзахіднішому куточку України</p>
+                        <span class="location-tours-count">42 тури цього сезону →</span>
+                    </div>
+                </a>
+
+                <a href="#" class="location-card">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Сколе">
+                    <div class="location-content">
+                        <h3>Сколе</h3>
+                        <p>Національний парк «Сколівські Бескиди» та водоспади</p>
+                        <span class="location-tours-count">38 турів цього сезону →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section id="reviews" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Що кажуть наші гості</h2>
+                <p>Реальні відгуки від реальних людей</p>
+            </div>
+
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="https://i.pravatar.cc/100?img=1" alt="Марія" class="review-avatar">
+                        <div class="review-author">
+                            <div class="review-name">Марія К.</div>
+                            <div class="review-date">Липень 2024</div>
+                        </div>
+                        <div class="review-rating">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">«Це був найкращий відпочинок за останні роки! Прокинутись на дереві з видом на гори — неймовірні відчуття. Команда Na Nebi робить все, щоб ти просто насолоджувався моментом.»</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="https://i.pravatar.cc/100?img=3" alt="Андрій" class="review-avatar">
+                        <div class="review-author">
+                            <div class="review-name">Андрій П.</div>
+                            <div class="review-date">Серпень 2024</div>
+                        </div>
+                        <div class="review-rating">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">«Їхав з побоюваннями — ніколи не був у поході. Але команда все пояснила, допомогла з спорядженням. Тепер планую повернутись на довший тур!»</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="https://i.pravatar.cc/100?img=5" alt="Олена" class="review-avatar">
+                        <div class="review-author">
+                            <div class="review-name">Олена С.</div>
+                            <div class="review-date">Червень 2024</div>
+                        </div>
+                        <div class="review-rating">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">«Окрема подяка за атмосферу! Познайомилась з чудовими людьми, відключилась від міста та роботи. Рекомендую всім, хто шукає щось особливе.»</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-xl);">
+                <a href="#" class="btn btn-secondary">Всі відгуки</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section section-bg">
+        <div class="container">
+            <div class="section-header">
+                <h2>Часті питання</h2>
+                <p>Відповіді на те, що цікавить найбільше</p>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item active">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Чи потрібен досвід походів?
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Ні, досвід не потрібен! Більшість наших гостей — новачки. Ми все організовуємо та пояснюємо: від спорядження до техніки безпеки. Твоє завдання — просто приїхати та насолоджуватись.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Що входить у вартість туру?
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>У вартість включено: проживання в наметах на деревах, харчування (сніданок, обід, вечеря), супровід інструкторів, страховка, програма активностей. Не входить: трансфер до локації та особисті витрати.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Як відбувається бронювання?
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Обираєш зручний тур → залишаєш заявку → наш менеджер зв'язується з тобою протягом години → вносиш передоплату 30% → отримуєш підтвердження та інструкції. Решту оплачуєш перед початком туру.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Що брати з собою?
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Після бронювання надсилаємо детальний чек-лист. Основне: зручний одяг та взуття, особисті речі. Спальники та килимки можна взяти у нас. Головне — гарний настрій!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Чи можна поїхати одному/одній?
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Звісно! Близько 40% наших гостей приїжджають самі. Це чудова можливість познайомитись з новими людьми. Наші групи — це завжди дружня атмосфера.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-section">
+        <div class="container">
+            <h2>Готовий до нового досвіду?</h2>
+            <p>Підбери свій ідеальний тур або напиши нам — допоможемо обрати</p>
+            <div class="cta-buttons">
+                <a href="#tour-selector" class="btn btn-outline btn-lg">Підібрати тур</a>
+                <a href="https://t.me/nanebicamp" target="_blank" class="btn btn-primary btn-lg" style="background: var(--white); color: var(--primary);">Написати в Telegram</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacts" class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="https://res2.weblium.site/res/6602ec4ba1f59c000f6a8364/66031631e0a192000f2ecf2f_optimized" alt="Na Nebi Camp" style="height: 50px; filter: brightness(0) invert(1);">
+                    <p>Безтурботний табір для дорослих у Карпатах. Намети на деревах, неймовірні краєвиди та новий досвід.</p>
+                </div>
+
+                <div>
+                    <h4>Навігація</h4>
+                    <div class="footer-links">
+                        <a href="#tours">Тури</a>
+                        <a href="#locations">Локації</a>
+                        <a href="#about">Про нас</a>
+                        <a href="#reviews">Відгуки</a>
+                        <a href="#faq">FAQ</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Тури</h4>
+                    <div class="footer-links">
+                        <a href="#">Закарпаття</a>
+                        <a href="#">Сколе</a>
+                        <a href="#">Корпоративні</a>
+                        <a href="#">Всі тури</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Контакти</h4>
+                    <div class="footer-contact">
+                        <div class="footer-contact-item">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                            </svg>
+                            <span>+380 XX XXX XX XX</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            <span>hello@nanebi.camp</span>
+                        </div>
+                    </div>
+                    <div class="footer-social">
+                        <a href="https://instagram.com/nanebicamp" target="_blank" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                            </svg>
+                        </a>
+                        <a href="https://t.me/nanebicamp" target="_blank" aria-label="Telegram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                            </svg>
+                        </a>
+                        <a href="https://facebook.com/nanebicamp" target="_blank" aria-label="Facebook">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Na Nebi Camp. Всі права захищені.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Залишити заявку</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="bookingForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label class="form-label" for="name">Ім'я *</label>
+                        <input type="text" class="form-input" id="name" name="name" required placeholder="Як до вас звертатись?">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="phone">Телефон *</label>
+                        <input type="tel" class="form-input" id="phone" name="phone" required placeholder="+380 XX XXX XX XX">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email *</label>
+                        <input type="email" class="form-input" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="tour">Який тур цікавить?</label>
+                        <select class="form-input" id="tour" name="tour">
+                            <option value="">Оберіть тур або залиште пустим</option>
+                            <option value="zakarpattia-may-4">Карпатська пригода (15-18 травня, 4 дні)</option>
+                            <option value="skole-may-6">Гори та водоспади (22-27 травня, 6 днів)</option>
+                            <option value="zakarpattia-june-3">Літній вікенд (7-9 червня, 3 дні)</option>
+                            <option value="other">Ще не визначився — потрібна консультація</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="persons">Кількість осіб *</label>
+                        <input type="number" class="form-input" id="persons" name="persons" required min="1" max="20" value="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="message">Повідомлення</label>
+                        <textarea class="form-input" id="message" name="message" placeholder="Ваші питання чи побажання..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Надіслати заявку</button>
+
+                    <p class="form-hint" style="text-align: center; margin-top: var(--space-md);">
+                        Або напишіть нам напряму в <a href="https://t.me/nanebicamp" target="_blank" style="color: var(--primary); text-decoration: underline;">Telegram</a>
+                    </p>
+                </form>
+
+                <!-- Success State -->
+                <div class="form-success" id="formSuccess" style="display: none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3>Дякуємо за заявку!</h3>
+                    <p>Ми зв'яжемось з вами протягом години. А поки — можете подивитись наш <a href="https://instagram.com/nanebicamp" target="_blank" style="color: var(--primary);">Instagram</a></p>
+                    <button class="btn btn-secondary" onclick="closeModal()" style="margin-top: var(--space-md);">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== Mobile Menu ==========
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // ========== Tour Selector ==========
+        let currentStep = 1;
+        const totalSteps = 3;
+        const selections = {
+            month: null,
+            duration: null,
+            location: null
+        };
+
+        function selectOption(element, type) {
+            // Remove selected from siblings
+            const siblings = element.parentElement.querySelectorAll('.step-option');
+            siblings.forEach(s => s.classList.remove('selected'));
+
+            // Add selected to clicked
+            element.classList.add('selected');
+
+            // Store selection
+            selections[type] = element.dataset.value;
+
+            // Enable next button
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function updateUI() {
+            // Update steps visibility
+            document.querySelectorAll('.selector-step').forEach(step => {
+                step.classList.remove('active');
+                if (parseInt(step.dataset.step) === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+
+            // Update progress dots
+            document.querySelectorAll('.progress-dot').forEach(dot => {
+                const step = parseInt(dot.dataset.step);
+                dot.classList.remove('active', 'completed');
+                if (step === currentStep) {
+                    dot.classList.add('active');
+                } else if (step < currentStep) {
+                    dot.classList.add('completed');
+                }
+            });
+
+            // Update buttons
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            prevBtn.style.display = currentStep > 1 ? 'block' : 'none';
+
+            if (currentStep === totalSteps) {
+                nextBtn.textContent = 'Показати тури';
+            } else {
+                nextBtn.textContent = 'Далі';
+            }
+
+            // Check if current step has selection
+            const stepTypes = ['month', 'duration', 'location'];
+            nextBtn.disabled = !selections[stepTypes[currentStep - 1]];
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateUI();
+            } else {
+                // Show results
+                showResults();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateUI();
+            }
+        }
+
+        function showResults() {
+            // Scroll to tours section
+            document.getElementById('tours').scrollIntoView({ behavior: 'smooth' });
+
+            // In real implementation, this would filter tours based on selections
+            console.log('Selected:', selections);
+
+            // Show notification
+            alert(`Обрано: ${getMonthName(selections.month)}, ${selections.duration} днів, ${getLocationName(selections.location)}\n\nУ реальній версії тут будуть відфільтровані тури.`);
+        }
+
+        function getMonthName(key) {
+            const months = {
+                'may': 'Травень',
+                'june': 'Червень',
+                'july': 'Липень',
+                'august': 'Серпень',
+                'september': 'Вересень'
+            };
+            return months[key] || key;
+        }
+
+        function getLocationName(key) {
+            const locations = {
+                'zakarpattia': 'Закарпаття',
+                'skole': 'Сколе'
+            };
+            return locations[key] || key;
+        }
+
+        // ========== FAQ Accordion ==========
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const wasActive = item.classList.contains('active');
+
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+
+            // Open clicked if it wasn't active
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // ========== Modal ==========
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+
+            // Reset form after close
+            setTimeout(() => {
+                document.getElementById('bookingForm').style.display = 'block';
+                document.getElementById('formSuccess').style.display = 'none';
+                document.getElementById('bookingForm').reset();
+            }, 300);
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+
+            console.log('Form submitted:', data);
+
+            // In real implementation, send to Telegram bot / KeyCRM
+            // For demo, just show success
+
+            document.getElementById('bookingForm').style.display = 'none';
+            document.getElementById('formSuccess').style.display = 'block';
+        }
+
+        // Close modal on ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                const mobileMenu = document.getElementById('mobileMenu');
+                if (mobileMenu.classList.contains('active')) {
+                    toggleMobileMenu();
+                }
+            }
+        });
+
+        // ========== Smooth scroll for anchor links ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ========== Header scroll effect ==========
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                header.style.boxShadow = 'var(--shadow-md)';
+            } else {
+                header.style.boxShadow = 'var(--shadow-sm)';
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
