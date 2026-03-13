@@ -9,23 +9,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
-  /* ── BURGER ANIMATION ── */
   .burger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .burger.active span:nth-child(2) { opacity: 0; }
   .burger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  /* ── FILTERS SECTION ── */
+  .page-shell {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 28px 24px 88px;
+  }
+
   .filters-section {
-    background: var(--bg);
-    padding: 32px 24px 20px;
+    background: rgba(254,250,244,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 28px 24px 18px;
     position: sticky;
     top: 0;
-    z-index: 50;
+    z-index: 60;
     border-bottom: 1.5px solid var(--border);
-    transition: box-shadow .2s;
+    transition: box-shadow .2s ease, border-color .2s ease;
   }
   .filters-section.shadowed {
-    box-shadow: 0 4px 24px rgba(26,31,26,.08);
+    box-shadow: 0 10px 32px rgba(26,31,26,.08);
+    border-bottom-color: rgba(26,31,26,.12);
   }
 
   .filters-header {
@@ -33,15 +40,22 @@
     align-items: flex-end;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 20px;
   }
   .filters-title {
     font-family: 'Fredoka', sans-serif;
-    font-size: clamp(28px, 6vw, 40px);
+    font-size: clamp(30px, 6vw, 44px);
     font-weight: 700;
     color: var(--ink);
     line-height: 1;
+  }
+  .filters-sub {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.55;
   }
   .filters-count {
     font-family: 'Syne', sans-serif;
@@ -52,15 +66,14 @@
   }
   .filters-count strong {
     font-family: 'Fredoka', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 22px;
     color: var(--orange);
   }
 
   .filter-row {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
     margin-bottom: 10px;
   }
@@ -71,16 +84,13 @@
     color: var(--muted);
     letter-spacing: .14em;
     text-transform: uppercase;
-    white-space: nowrap;
-    min-width: 72px;
+    min-width: 78px;
   }
   .filter-pills {
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
   }
-
-  /* Pill filter button */
   .fpill {
     position: relative;
     padding: 7px 16px;
@@ -89,185 +99,255 @@
     font-weight: 600;
     color: var(--ink);
     cursor: pointer;
-    transition: transform .15s, color .15s;
+    transition: transform .15s ease, color .15s ease;
     white-space: nowrap;
     background: none;
     border: none;
-    outline: none;
     display: inline-flex;
     align-items: center;
   }
   .fpill:hover { transform: translateY(-2px); }
   .fpill svg.fpb {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    overflow: visible; pointer-events: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
   }
-  .fpill .fpill-label { position: relative; z-index: 1; }
+  .fpill .fpill-label {
+    position: relative;
+    z-index: 1;
+  }
   .fpill.active .fpill-label { color: white; }
 
-  /* ── TOURS SECTION ── */
-  .tours-section {
-    padding: 36px 24px 80px;
-    max-width: 1320px;
-    margin: 0 auto;
-  }
-
-  .tours-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  /* ── TOUR CARD ── */
-  .tour-card {
+  .table-wrap {
+    margin-top: 28px;
     background: white;
-    border-radius: 24px;
-    padding: 24px;
-    position: relative;
+    border-radius: 28px;
     overflow: hidden;
-    box-shadow: 0 2px 16px rgba(26,31,26,.06);
-    transition: transform .2s, box-shadow .2s;
-    animation: fadeUp .4s ease both;
+    box-shadow: 0 14px 44px rgba(26,31,26,.08);
+    border: 1px solid rgba(26,31,26,.06);
   }
-  .tour-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 32px rgba(26,31,26,.12);
+  .table-scroll {
+    overflow-x: auto;
   }
-  .tour-card.hidden { display: none; }
+  .tours-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .tours-table col.col-start { width: 11%; }
+  .tours-table col.col-format { width: 16%; }
+  .tours-table col.col-location { width: 25%; }
+  .tours-table col.col-price { width: 16%; }
+  .tours-table col.col-action { width: 32%; }
+  .tours-table thead th {
+    text-align: left;
+    padding: 16px 16px;
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: #FFF9EF;
+    border-bottom: 1.5px solid var(--border);
+  }
+  .tours-table tbody tr {
+    transition: background .15s ease;
+  }
+  .tours-table tbody tr:hover {
+    background: #FFFCF5;
+  }
+  .tours-table tbody tr.hidden {
+    display: none;
+  }
+  .tours-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(26,31,26,.08);
+    vertical-align: middle;
+  }
+  .tours-table th:first-child,
+  .tours-table td:first-child {
+    padding-right: 14px;
+  }
+  .tours-table th:nth-child(2),
+  .tours-table td:nth-child(2) {
+    padding-left: 14px;
+    padding-right: 10px;
+  }
+  .tours-table tbody tr:last-child td {
+    border-bottom: none;
+  }
 
-  .card-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-  .tour-date {
+  .date-main {
     font-family: 'Fredoka', sans-serif;
-    font-size: 19px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--ink);
-    line-height: 1.1;
-    flex: 1;
+    line-height: 1.05;
   }
-
-  .tour-duration-pill {
-    position: relative;
-    padding: 5px 13px;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    white-space: nowrap;
-    flex-shrink: 0;
+  .duration-badge {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    min-width: 68px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    background: var(--green);
   }
-  .tour-duration-pill svg.dpb {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    overflow: visible; pointer-events: none;
+  .duration-badge.d4 { background: var(--orange); }
+  .duration-badge.d6 {
+    color: var(--ink);
+    background: var(--yellow);
   }
-  .tour-duration-pill .dp-label { position: relative; z-index: 1; }
-
-  .card-meta {
-    display: flex;
+  .location-chip {
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  .tour-location {
-    display: flex;
-    align-items: center;
-    gap: 7px;
+    gap: 8px;
     font-family: 'Syne', sans-serif;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--ink);
   }
-  .loc-dot {
-    width: 8px; height: 8px;
+  .location-dot {
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
     flex-shrink: 0;
   }
-  .loc-dot.zakarp { background: var(--green); }
-  .loc-dot.lviv   { background: var(--orange); }
-
-  .card-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-    padding-top: 16px;
-    border-top: 1.5px solid var(--border);
-  }
-  .tour-price {
+  .location-dot.zakarpattya { background: var(--green); }
+  .location-dot.lvivshyna { background: var(--orange); }
+  .price-main {
     font-family: 'Fredoka', sans-serif;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 700;
     color: var(--orange);
     line-height: 1;
   }
-  .tour-price-sub {
-    font-family: 'Syne', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--muted);
-    letter-spacing: .08em;
-    margin-top: 2px;
-  }
-
-  /* Organic CTA button on card */
-  .card-cta {
+  .table-cta {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 11px 24px;
+    min-width: 124px;
+    padding: 10px 16px;
     font-family: 'Fredoka', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: white;
-    cursor: pointer;
-    transition: transform .15s;
     text-decoration: none;
-    border: none;
-    background: none;
+    background: var(--orange);
+    border-radius: 999px;
+    box-shadow: 3px 3px 0 var(--green);
+    transition: transform .15s ease, box-shadow .15s ease;
     white-space: nowrap;
   }
-  .card-cta:hover { transform: translateY(-2px); }
-  .card-cta svg.ob {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    overflow: visible; z-index: 0;
+  .table-cta:hover {
+    transform: translate(-1px,-1px);
+    box-shadow: 4px 4px 0 var(--green);
   }
-  .card-cta .cta-label { position: relative; z-index: 1; }
-
-  /* Decorative blob accent top-right */
-  .card-deco {
-    position: absolute;
-    top: -16px; right: -16px;
-    width: 72px; height: 72px;
-    opacity: .06;
+  .table-cta.sold {
+    background: #D8D8D8;
+    color: #7D7D7D;
+    box-shadow: none;
     pointer-events: none;
   }
 
-  /* Sold-out card dimming */
-  .tour-card.sold-out { opacity: .72; }
+  @media (max-width: 767px) {
+    .page-shell {
+      padding: 24px 16px 72px;
+    }
+    .filters-section {
+      padding: 24px 16px 16px;
+    }
+    .filters-title {
+      font-size: 32px;
+    }
+    .filters-sub {
+      font-size: 13px;
+    }
+    .filter-label {
+      min-width: auto;
+      width: 100%;
+    }
+    .table-wrap {
+      margin-top: 22px;
+      border-radius: 22px;
+    }
+    .table-scroll {
+      overflow-x: visible;
+    }
+    .tours-table {
+      min-width: 0;
+    }
+    .tours-table col.col-start { width: 13%; }
+    .tours-table col.col-format { width: 17%; }
+    .tours-table col.col-location { width: 26%; }
+    .tours-table col.col-price { width: 16%; }
+    .tours-table col.col-action { width: 28%; }
+    .tours-table thead th,
+    .tours-table td {
+      padding: 12px 8px;
+    }
+    .tours-table th:first-child,
+    .tours-table td:first-child {
+      padding-right: 8px;
+    }
+    .tours-table th:nth-child(2),
+    .tours-table td:nth-child(2) {
+      padding-left: 8px;
+      padding-right: 6px;
+    }
+    .date-main {
+      font-size: 11px;
+      line-height: 1.15;
+    }
+    .duration-badge {
+      min-width: 0;
+      padding: 6px 8px;
+      font-size: 10px;
+    }
+    .location-chip {
+      gap: 6px;
+      font-size: 11px;
+      line-height: 1.2;
+    }
+    .location-dot {
+      width: 7px;
+      height: 7px;
+    }
+    .price-main {
+      font-size: 13px;
+    }
+    .table-cta {
+      min-width: 0;
+      width: 100%;
+      padding: 9px 8px;
+      font-size: 10px;
+      text-align: center;
+      box-shadow: 2px 2px 0 var(--green);
+    }
+  }
 
-  /* ── NO RESULTS ── */
   .no-results {
     display: none;
     text-align: center;
-    padding: 64px 24px;
-    grid-column: 1 / -1;
+    padding: 72px 24px 80px;
   }
   .no-results.visible { display: block; }
-  .no-results-icon { font-size: 52px; margin-bottom: 18px; }
+  .no-results-icon {
+    font-size: 54px;
+    margin-bottom: 16px;
+  }
   .no-results-title {
     font-family: 'Fredoka', sans-serif;
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 700;
     color: var(--ink);
     margin-bottom: 8px;
@@ -279,7 +359,6 @@
     line-height: 1.6;
   }
 
-  /* ── FOOTER (dark) ── */
   .footer-dark {
     background: var(--ink);
     padding: 0;
@@ -356,7 +435,8 @@
     color: rgba(255,255,255,.25);
   }
   .footer-dark-socials {
-    display: flex; gap: 18px;
+    display: flex;
+    gap: 18px;
   }
   .footer-dark-socials a {
     font-family: 'Syne', sans-serif;
@@ -369,23 +449,22 @@
   }
   .footer-dark-socials a:hover { color: var(--orange); }
 
-  /* ── RESPONSIVE ── */
-  @media (min-width: 600px) {
-    .tours-grid { grid-template-columns: 1fr 1fr; }
-  }
   @media (min-width: 1024px) {
-    .tours-grid { grid-template-columns: 1fr 1fr 1fr; }
-    .tours-section { padding: 48px 64px 96px; }
-    .filters-section { padding: 28px 64px 16px; }
+    .page-shell { padding: 36px 64px 96px; }
+    .filters-section { padding: 28px 64px 18px; }
     .footer-dark-inner { flex-direction: row; gap: 56px; padding: 64px 64px 48px; }
     .footer-dark-brand { flex: 0 0 240px; }
-    .footer-dark-bottom { flex-direction: row; justify-content: space-between; text-align: left; padding: 20px 64px 32px; }
+    .footer-dark-bottom {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+      padding: 20px 64px 32px;
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- ══ NAV ══ -->
 <nav class="nav" id="mainNav">
   <a href="index.html" class="logo">
     <img src="logo.jpg" alt="Na Nebi Camp" class="logo-img">
@@ -409,7 +488,6 @@
   </div>
 </nav>
 
-<!-- Mobile menu -->
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-menu-close" onclick="toggleMenu()">✕</button>
   <nav>
@@ -424,17 +502,18 @@
   </div>
 </div>
 
-<!-- ══ FILTERS ══ -->
 <section class="filters-section" id="filtersSection">
   <div class="filters-header">
-    <h1 class="filters-title">Всі тури</h1>
+    <div>
+      <h1 class="filters-title">Всі тури</h1>
+      <p class="filters-sub">Фільтруй дати за локацією, місяцем і тривалістю.</p>
+    </div>
     <div class="filters-count"><strong id="tourCount">15</strong>&nbsp;турів знайдено</div>
   </div>
 
-  <!-- Локація -->
   <div class="filter-row">
     <span class="filter-label">Локація</span>
-    <div class="filter-pills" id="filterLocation">
+    <div class="filter-pills">
       <button class="fpill active" data-filter="location" data-value="all" onclick="setFilter('location','all',this)">
         <svg class="fpb" viewBox="0 0 56 30" fill="none" preserveAspectRatio="none"><path class="fpb-bg" d="M5 3C12 0 24 1 36 1C48 1 52 4 53 9C54 14 52 22 48 26C44 30 34 30 22 30C10 30 4 29 2 24C0 19 0 10 3 5Z" fill="#E8521A"/></svg>
         <span class="fpill-label">Всі</span>
@@ -450,10 +529,9 @@
     </div>
   </div>
 
-  <!-- Місяць -->
   <div class="filter-row">
     <span class="filter-label">Місяць</span>
-    <div class="filter-pills" id="filterMonth">
+    <div class="filter-pills">
       <button class="fpill active" data-filter="month" data-value="all" onclick="setFilter('month','all',this)">
         <svg class="fpb" viewBox="0 0 56 30" fill="none" preserveAspectRatio="none"><path class="fpb-bg" d="M5 3C12 0 24 1 36 1C48 1 52 4 53 9C54 14 52 22 48 26C44 30 34 30 22 30C10 30 4 29 2 24C0 19 0 10 3 5Z" fill="#E8521A"/></svg>
         <span class="fpill-label">Всі</span>
@@ -485,10 +563,9 @@
     </div>
   </div>
 
-  <!-- Тривалість -->
   <div class="filter-row">
     <span class="filter-label">Тривалість</span>
-    <div class="filter-pills" id="filterDuration">
+    <div class="filter-pills">
       <button class="fpill active" data-filter="duration" data-value="all" onclick="setFilter('duration','all',this)">
         <svg class="fpb" viewBox="0 0 56 30" fill="none" preserveAspectRatio="none"><path class="fpb-bg" d="M5 3C12 0 24 1 36 1C48 1 52 4 53 9C54 14 52 22 48 26C44 30 34 30 22 30C10 30 4 29 2 24C0 19 0 10 3 5Z" fill="#E8521A"/></svg>
         <span class="fpill-label">Всі</span>
@@ -509,416 +586,148 @@
   </div>
 </section>
 
-<!-- ══ TOURS GRID ══ -->
-<section class="tours-section">
-  <div class="tours-grid" id="toursGrid">
-
-    <!-- 1. 15-17 травня | 3 дні | Закарпаття | 2 900 грн | Є місця -->
-    <article class="tour-card" data-location="zakarpattya" data-month="may" data-duration="3">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#1A5C3A"/></svg>
-      <div class="card-top">
-        <div class="tour-date">15–17 травня 2025</div>
-        <div class="tour-duration-pill" style="color:white">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#1A5C3A"/></svg>
-          <span class="dp-label">3 дні</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot zakarp"></span>Закарпаття</div>
-        <span class="badge badge-available"><span class="badge-dot"></span>Є місця</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">2 900 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-zak-3.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- 2. 22-27 травня | 6 днів | Львівщина | 4 500 грн | Є місця -->
-    <article class="tour-card" data-location="lvivshyna" data-month="may" data-duration="6">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#E8521A"/></svg>
-      <div class="card-top">
-        <div class="tour-date">22–27 травня 2025</div>
-        <div class="tour-duration-pill" style="color:var(--ink)">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#F0B429"/></svg>
-          <span class="dp-label">6 днів</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot lviv"></span>Львівщина</div>
-        <span class="badge badge-available"><span class="badge-dot"></span>Є місця</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">4 500 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-lv-6.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- 3. 5-8 червня | 4 дні | Закарпаття | 3 600 грн | Мало місць -->
-    <article class="tour-card" data-location="zakarpattya" data-month="jun" data-duration="4">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#1A5C3A"/></svg>
-      <div class="card-top">
-        <div class="tour-date">5–8 червня 2025</div>
-        <div class="tour-duration-pill" style="color:white">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#E8521A"/></svg>
-          <span class="dp-label">4 дні</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot zakarp"></span>Закарпаття</div>
-        <span class="badge badge-few"><span class="badge-dot"></span>Мало місць (3)</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">3 600 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-zak-4.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- 4. 12-14 червня | 3 дні | Львівщина | 2 700 грн | Є місця -->
-    <article class="tour-card" data-location="lvivshyna" data-month="jun" data-duration="3">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#E8521A"/></svg>
-      <div class="card-top">
-        <div class="tour-date">12–14 червня 2025</div>
-        <div class="tour-duration-pill" style="color:white">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#1A5C3A"/></svg>
-          <span class="dp-label">3 дні</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot lviv"></span>Львівщина</div>
-        <span class="badge badge-available"><span class="badge-dot"></span>Є місця</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">2 700 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-lv-3.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- 5. 19-24 червня | 6 днів | Закарпаття | 4 800 грн | Sold out -->
-    <article class="tour-card sold-out" data-location="zakarpattya" data-month="jun" data-duration="6">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#aaa"/></svg>
-      <div class="card-top">
-        <div class="tour-date" style="color:var(--muted)">19–24 червня 2025</div>
-        <div class="tour-duration-pill" style="color:#888">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#e8e8e8"/></svg>
-          <span class="dp-label">6 днів</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot zakarp" style="background:#bbb"></span>Закарпаття</div>
-        <span class="badge badge-sold"><span class="badge-dot"></span>Sold out</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price" style="color:var(--muted)">4 800 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <button class="card-cta" style="cursor:default">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#e0e0e0"/></svg>
-          <span class="cta-label" style="color:#999">Повідомити</span>
-        </button>
-      </div>
-    </article>
-
-    <!-- 6. 3-5 липня | 3 дні | Закарпаття | 2 900 грн | Є місця -->
-    <article class="tour-card" data-location="zakarpattya" data-month="jul" data-duration="3">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#F0B429"/></svg>
-      <div class="card-top">
-        <div class="tour-date">3–5 липня 2025</div>
-        <div class="tour-duration-pill" style="color:white">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#1A5C3A"/></svg>
-          <span class="dp-label">3 дні</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot zakarp"></span>Закарпаття</div>
-        <span class="badge badge-available"><span class="badge-dot"></span>Є місця</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">2 900 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-zak-3.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- 7. 10-13 липня | 4 дні | Закарпаття | 3 600 грн | Є місця -->
-    <article class="tour-card" data-location="zakarpattya" data-month="jul" data-duration="4">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#1A5C3A"/></svg>
-      <div class="card-top">
-        <div class="tour-date">10–13 липня 2025</div>
-        <div class="tour-duration-pill" style="color:white">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#E8521A"/></svg>
-          <span class="dp-label">4 дні</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot zakarp"></span>Закарпаття</div>
-        <span class="badge badge-available"><span class="badge-dot"></span>Є місця</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">3 600 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-zak-4.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- 8. 17-22 липня | 6 днів | Львівщина | 4 500 грн | Мало місць -->
-    <article class="tour-card" data-location="lvivshyna" data-month="jul" data-duration="6">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#E8521A"/></svg>
-      <div class="card-top">
-        <div class="tour-date">17–22 липня 2025</div>
-        <div class="tour-duration-pill" style="color:var(--ink)">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#F0B429"/></svg>
-          <span class="dp-label">6 днів</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot lviv"></span>Львівщина</div>
-        <span class="badge badge-few"><span class="badge-dot"></span>Мало місць (5)</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">4 500 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-lv-6.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- 9. 24-26 липня | 3 дні | Львівщина | 2 700 грн | Є місця -->
-    <article class="tour-card" data-location="lvivshyna" data-month="jul" data-duration="3">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#E8521A"/></svg>
-      <div class="card-top">
-        <div class="tour-date">24–26 липня 2025</div>
-        <div class="tour-duration-pill" style="color:white">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#1A5C3A"/></svg>
-          <span class="dp-label">3 дні</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot lviv"></span>Львівщина</div>
-        <span class="badge badge-available"><span class="badge-dot"></span>Є місця</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">2 700 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-lv-3.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- 10. 7-12 серпня | 6 днів | Закарпаття | 4 800 грн | Є місця -->
-    <article class="tour-card" data-location="zakarpattya" data-month="aug" data-duration="6">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#1A5C3A"/></svg>
-      <div class="card-top">
-        <div class="tour-date">7–12 серпня 2025</div>
-        <div class="tour-duration-pill" style="color:var(--ink)">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#F0B429"/></svg>
-          <span class="dp-label">6 днів</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot zakarp"></span>Закарпаття</div>
-        <span class="badge badge-available"><span class="badge-dot"></span>Є місця</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">4 800 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-zak-6.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- 11. 14-16 серпня | 3 дні | Закарпаття | 2 900 грн | Є місця -->
-    <article class="tour-card" data-location="zakarpattya" data-month="aug" data-duration="3">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#F0B429"/></svg>
-      <div class="card-top">
-        <div class="tour-date">14–16 серпня 2025</div>
-        <div class="tour-duration-pill" style="color:white">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#1A5C3A"/></svg>
-          <span class="dp-label">3 дні</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot zakarp"></span>Закарпаття</div>
-        <span class="badge badge-available"><span class="badge-dot"></span>Є місця</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">2 900 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-zak-3.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- 12. 21-24 серпня | 4 дні | Закарпаття | 3 600 грн | Sold out -->
-    <article class="tour-card sold-out" data-location="zakarpattya" data-month="aug" data-duration="4">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#aaa"/></svg>
-      <div class="card-top">
-        <div class="tour-date" style="color:var(--muted)">21–24 серпня 2025</div>
-        <div class="tour-duration-pill" style="color:#888">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#e8e8e8"/></svg>
-          <span class="dp-label">4 дні</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot zakarp" style="background:#bbb"></span>Закарпаття</div>
-        <span class="badge badge-sold"><span class="badge-dot"></span>Sold out</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price" style="color:var(--muted)">3 600 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <button class="card-cta" style="cursor:default">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#e0e0e0"/></svg>
-          <span class="cta-label" style="color:#999">Повідомити</span>
-        </button>
-      </div>
-    </article>
-
-    <!-- 13. 4-9 вересня | 6 днів | Львівщина | 4 500 грн | Є місця -->
-    <article class="tour-card" data-location="lvivshyna" data-month="sep" data-duration="6">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#E8521A"/></svg>
-      <div class="card-top">
-        <div class="tour-date">4–9 вересня 2025</div>
-        <div class="tour-duration-pill" style="color:var(--ink)">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#F0B429"/></svg>
-          <span class="dp-label">6 днів</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot lviv"></span>Львівщина</div>
-        <span class="badge badge-available"><span class="badge-dot"></span>Є місця</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">4 500 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-lv-6.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- 14. 11-13 вересня | 3 дні | Закарпаття | 2 900 грн | Мало місць -->
-    <article class="tour-card" data-location="zakarpattya" data-month="sep" data-duration="3">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#1A5C3A"/></svg>
-      <div class="card-top">
-        <div class="tour-date">11–13 вересня 2025</div>
-        <div class="tour-duration-pill" style="color:white">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#E8521A"/></svg>
-          <span class="dp-label">3 дні</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot zakarp"></span>Закарпаття</div>
-        <span class="badge badge-few"><span class="badge-dot"></span>Мало місць (2)</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">2 900 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-zak-3.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- 15. 18-23 жовтня | 6 днів | Закарпаття | 4 800 грн | Є місця -->
-    <article class="tour-card" data-location="zakarpattya" data-month="oct" data-duration="6">
-      <svg class="card-deco" viewBox="0 0 72 72" fill="none"><path d="M10 5C22 0 48 2 60 12C72 22 70 46 60 58C50 70 26 72 14 62C2 52 -2 28 4 14Z" fill="#1A5C3A"/></svg>
-      <div class="card-top">
-        <div class="tour-date">18–23 жовтня 2025</div>
-        <div class="tour-duration-pill" style="color:var(--ink)">
-          <svg class="dpb" viewBox="0 0 54 24" fill="none"><path d="M4 2C10 0 22 1 36 1C50 1 52 4 53 8C54 12 52 19 49 22C46 25 36 25 24 25C12 25 3 24 1 20C-1 16 0 8 2 4Z" fill="#F0B429"/></svg>
-          <span class="dp-label">6 днів</span>
-        </div>
-      </div>
-      <div class="card-meta">
-        <div class="tour-location"><span class="loc-dot zakarp"></span>Закарпаття</div>
-        <span class="badge badge-available"><span class="badge-dot"></span>Є місця</span>
-      </div>
-      <div class="card-bottom">
-        <div>
-          <div class="tour-price">4 800 грн</div>
-          <div class="tour-price-sub">/ особу</div>
-        </div>
-        <a href="program-zak-6.html" class="card-cta">
-          <svg class="ob" viewBox="0 0 134 46" fill="none"><path d="M8 7C22 1 54 2 84 2C114 2 126 4 131 10C136 16 134 30 128 38C122 46 98 48 70 48C42 48 14 46 7 39C0 32 0 17 4 11Z" fill="#E8521A"/></svg>
-          <span class="cta-label">Записатись →</span>
-        </a>
-      </div>
-    </article>
-
-    <!-- No results -->
-    <div class="no-results" id="noResults">
-      <div class="no-results-icon">🏔</div>
-      <div class="no-results-title">Нічого не знайдено</div>
-      <div class="no-results-sub">Спробуй інші фільтри.<br>Ми підберемо тур саме для тебе.</div>
+<main class="page-shell">
+  <div class="table-wrap">
+    <div class="table-scroll">
+      <table class="tours-table">
+        <colgroup>
+          <col class="col-start">
+          <col class="col-format">
+          <col class="col-location">
+          <col class="col-price">
+          <col class="col-action">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Старт</th>
+            <th>Формат</th>
+            <th>Локація</th>
+            <th>Ціна</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tourTableBody">
+          <tr data-location="zakarpattya" data-month="may" data-duration="3">
+            <td><div class="date-main">15.05</div></td>
+            <td><span class="duration-badge d3">3 дні</span></td>
+            <td><span class="location-chip"><span class="location-dot zakarpattya"></span>Закарпаття</span></td>
+            <td><div class="price-main">2,900₴</div></td>
+            <td><a href="program-zak-3.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="lvivshyna" data-month="may" data-duration="6">
+            <td><div class="date-main">22.05</div></td>
+            <td><span class="duration-badge d6">6 днів</span></td>
+            <td><span class="location-chip"><span class="location-dot lvivshyna"></span>Львівщина</span></td>
+            <td><div class="price-main">4,500₴</div></td>
+            <td><a href="program-lv-6.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="zakarpattya" data-month="jun" data-duration="4">
+            <td><div class="date-main">05.06</div></td>
+            <td><span class="duration-badge d4">4 дні</span></td>
+            <td><span class="location-chip"><span class="location-dot zakarpattya"></span>Закарпаття</span></td>
+            <td><div class="price-main">3,600₴</div></td>
+            <td><a href="program-zak-4.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="lvivshyna" data-month="jun" data-duration="3">
+            <td><div class="date-main">12.06</div></td>
+            <td><span class="duration-badge d3">3 дні</span></td>
+            <td><span class="location-chip"><span class="location-dot lvivshyna"></span>Львівщина</span></td>
+            <td><div class="price-main">2,700₴</div></td>
+            <td><a href="program-lv-3.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="zakarpattya" data-month="jun" data-duration="6">
+            <td><div class="date-main">19.06</div></td>
+            <td><span class="duration-badge d6">6 днів</span></td>
+            <td><span class="location-chip"><span class="location-dot zakarpattya"></span>Закарпаття</span></td>
+            <td><div class="price-main">4,800₴</div></td>
+            <td><a href="program-zak-6.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="zakarpattya" data-month="jul" data-duration="3">
+            <td><div class="date-main">03.07</div></td>
+            <td><span class="duration-badge d3">3 дні</span></td>
+            <td><span class="location-chip"><span class="location-dot zakarpattya"></span>Закарпаття</span></td>
+            <td><div class="price-main">2,900₴</div></td>
+            <td><a href="program-zak-3.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="zakarpattya" data-month="jul" data-duration="4">
+            <td><div class="date-main">10.07</div></td>
+            <td><span class="duration-badge d4">4 дні</span></td>
+            <td><span class="location-chip"><span class="location-dot zakarpattya"></span>Закарпаття</span></td>
+            <td><div class="price-main">3,600₴</div></td>
+            <td><a href="program-zak-4.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="lvivshyna" data-month="jul" data-duration="6">
+            <td><div class="date-main">17.07</div></td>
+            <td><span class="duration-badge d6">6 днів</span></td>
+            <td><span class="location-chip"><span class="location-dot lvivshyna"></span>Львівщина</span></td>
+            <td><div class="price-main">4,500₴</div></td>
+            <td><a href="program-lv-6.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="lvivshyna" data-month="jul" data-duration="3">
+            <td><div class="date-main">24.07</div></td>
+            <td><span class="duration-badge d3">3 дні</span></td>
+            <td><span class="location-chip"><span class="location-dot lvivshyna"></span>Львівщина</span></td>
+            <td><div class="price-main">2,700₴</div></td>
+            <td><a href="program-lv-3.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="zakarpattya" data-month="aug" data-duration="6">
+            <td><div class="date-main">07.08</div></td>
+            <td><span class="duration-badge d6">6 днів</span></td>
+            <td><span class="location-chip"><span class="location-dot zakarpattya"></span>Закарпаття</span></td>
+            <td><div class="price-main">4,800₴</div></td>
+            <td><a href="program-zak-6.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="zakarpattya" data-month="aug" data-duration="3">
+            <td><div class="date-main">14.08</div></td>
+            <td><span class="duration-badge d3">3 дні</span></td>
+            <td><span class="location-chip"><span class="location-dot zakarpattya"></span>Закарпаття</span></td>
+            <td><div class="price-main">2,900₴</div></td>
+            <td><a href="program-zak-3.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="zakarpattya" data-month="aug" data-duration="4">
+            <td><div class="date-main">21.08</div></td>
+            <td><span class="duration-badge d4">4 дні</span></td>
+            <td><span class="location-chip"><span class="location-dot zakarpattya"></span>Закарпаття</span></td>
+            <td><div class="price-main">3,600₴</div></td>
+            <td><a href="program-zak-4.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="lvivshyna" data-month="sep" data-duration="6">
+            <td><div class="date-main">04.09</div></td>
+            <td><span class="duration-badge d6">6 днів</span></td>
+            <td><span class="location-chip"><span class="location-dot lvivshyna"></span>Львівщина</span></td>
+            <td><div class="price-main">4,500₴</div></td>
+            <td><a href="program-lv-6.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="zakarpattya" data-month="sep" data-duration="3">
+            <td><div class="date-main">11.09</div></td>
+            <td><span class="duration-badge d3">3 дні</span></td>
+            <td><span class="location-chip"><span class="location-dot zakarpattya"></span>Закарпаття</span></td>
+            <td><div class="price-main">2,900₴</div></td>
+            <td><a href="program-zak-3.html" class="table-cta">Забронювати</a></td>
+          </tr>
+          <tr data-location="zakarpattya" data-month="oct" data-duration="6">
+            <td><div class="date-main">18.10</div></td>
+            <td><span class="duration-badge d6">6 днів</span></td>
+            <td><span class="location-chip"><span class="location-dot zakarpattya"></span>Закарпаття</span></td>
+            <td><div class="price-main">4,800₴</div></td>
+            <td><a href="program-zak-6.html" class="table-cta">Забронювати</a></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 
-  </div><!-- /tours-grid -->
-</section>
+  <div class="no-results" id="noResults">
+    <div class="no-results-icon">🏕</div>
+    <div class="no-results-title">Турів не знайдено</div>
+    <div class="no-results-sub">Спробуй змінити один із фільтрів або скинь вибір.</div>
+  </div>
+</main>
 
-<!-- Wavy footer transition -->
 <svg viewBox="0 0 1440 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;margin-bottom:-2px" preserveAspectRatio="none">
   <path d="M0 0C180 52 360 52 540 26C720 0 900 0 1080 26C1260 52 1350 52 1440 26L1440 52L0 52Z" fill="#1A1F1A"/>
 </svg>
 
-<!-- ══ FOOTER ══ -->
 <footer class="footer-dark">
   <div class="footer-dark-inner">
     <div class="footer-dark-brand">
@@ -953,80 +762,84 @@
 </footer>
 
 <script>
-  /* ── Filter state ── */
   const filters = { location: 'all', month: 'all', duration: 'all' };
+
+  function updatePillState(group, activeBtn) {
+    group.querySelectorAll('.fpill').forEach((pill) => {
+      pill.classList.remove('active');
+      const bg = pill.querySelector('.fpb-bg');
+      bg.setAttribute('fill', 'none');
+      bg.setAttribute('stroke', 'rgba(26,31,26,.18)');
+      bg.setAttribute('stroke-width', '1.5');
+    });
+
+    activeBtn.classList.add('active');
+    const activeBg = activeBtn.querySelector('.fpb-bg');
+    activeBg.setAttribute('fill', '#E8521A');
+    activeBg.removeAttribute('stroke');
+    activeBg.removeAttribute('stroke-width');
+  }
 
   function setFilter(type, value, btn) {
     filters[type] = value;
-
-    // Update pills in this group
-    const group = btn.closest('.filter-pills');
-    group.querySelectorAll('.fpill').forEach(p => {
-      p.classList.remove('active');
-      const bg = p.querySelector('.fpb-bg');
-      if (bg) {
-        bg.setAttribute('fill', 'none');
-        bg.setAttribute('stroke', 'rgba(26,31,26,.18)');
-        bg.setAttribute('stroke-width', '1.5');
-      }
-    });
-
-    btn.classList.add('active');
-    const activeBg = btn.querySelector('.fpb-bg');
-    if (activeBg) {
-      activeBg.setAttribute('fill', '#E8521A');
-      activeBg.removeAttribute('stroke');
-      activeBg.removeAttribute('stroke-width');
-    }
-
+    updatePillState(btn.closest('.filter-pills'), btn);
     applyFilters();
   }
 
   function applyFilters() {
-    const cards = document.querySelectorAll('.tour-card[data-location]');
+    const rows = document.querySelectorAll('#tourTableBody tr');
     let visible = 0;
 
-    cards.forEach(card => {
-      const locMatch  = filters.location === 'all' || filters.location === card.dataset.location;
-      const monthMatch = filters.month === 'all'    || filters.month    === card.dataset.month;
-      const durMatch  = filters.duration === 'all'  || filters.duration  === card.dataset.duration;
+    rows.forEach((row) => {
+      const locationMatch = filters.location === 'all' || row.dataset.location === filters.location;
+      const monthMatch = filters.month === 'all' || row.dataset.month === filters.month;
+      const durationMatch = filters.duration === 'all' || row.dataset.duration === filters.duration;
+      const show = locationMatch && monthMatch && durationMatch;
 
-      if (locMatch && monthMatch && durMatch) {
-        card.classList.remove('hidden');
-        visible++;
-      } else {
-        card.classList.add('hidden');
-      }
+      row.classList.toggle('hidden', !show);
+      if (show) visible++;
     });
 
     document.getElementById('tourCount').textContent = visible;
     document.getElementById('noResults').classList.toggle('visible', visible === 0);
+    document.querySelector('.table-wrap').style.display = visible === 0 ? 'none' : 'block';
   }
 
-  /* ── Nav scroll ── */
+  function applyQueryFilters() {
+    const params = new URLSearchParams(window.location.search);
+    const location = params.get('location');
+    const duration = params.get('duration') || params.get('days');
+    const month = params.get('month');
+
+    if (location) {
+      const btn = document.querySelector(`.fpill[data-filter="location"][data-value="${location}"]`);
+      if (btn) setFilter('location', location, btn);
+    }
+    if (duration) {
+      const btn = document.querySelector(`.fpill[data-filter="duration"][data-value="${duration}"]`);
+      if (btn) setFilter('duration', duration, btn);
+    }
+    if (month) {
+      const btn = document.querySelector(`.fpill[data-filter="month"][data-value="${month}"]`);
+      if (btn) setFilter('month', month, btn);
+    }
+  }
+
   window.addEventListener('scroll', () => {
-    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 8);
-    document.getElementById('filtersSection').classList.toggle('shadowed', window.scrollY > 60);
+    document.getElementById('filtersSection').classList.toggle('shadowed', window.scrollY > 20);
   }, { passive: true });
 
-  /* ── Mobile menu ── */
   function toggleMenu() {
-    const menu   = document.getElementById('mobileMenu');
+    const menu = document.getElementById('mobileMenu');
     const burger = document.getElementById('burger');
     const isOpen = menu.classList.toggle('open');
     burger.classList.toggle('active', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
   }
 
-  /* ── Init: paint active pills orange on load ── */
-  document.querySelectorAll('.fpill.active').forEach(btn => {
-    const bg = btn.querySelector('.fpb-bg');
-    if (bg) {
-      bg.setAttribute('fill', '#E8521A');
-      bg.removeAttribute('stroke');
-      bg.removeAttribute('stroke-width');
-    }
-  });
+  applyFilters();
+  applyQueryFilters();
 </script>
+
 </body>
 </html>

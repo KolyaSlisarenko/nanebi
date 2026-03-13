@@ -67,14 +67,14 @@ html, body {
   padding: 14px 24px 10px;
   position: sticky;
   top: 0;
-  background: var(--bg);
+  background: transparent;
   z-index: 100;
   border-bottom: 1.5px solid transparent;
   transition: border-color .2s, box-shadow .2s;
 }
 .nav.scrolled {
-  border-color: var(--border);
-  box-shadow: 0 2px 16px rgba(26,31,26,.06);
+  border-color: transparent;
+  box-shadow: none;
 }
 
 .logo { display:flex; align-items:center; gap:10px; flex-shrink:0; text-decoration:none; }
@@ -279,6 +279,10 @@ html, body {
   content:''; position:absolute; top:-2px; left:0; right:0;
   height:40px; background:inherit;
   clip-path:ellipse(52% 100% at 50% 0%);
+}
+
+@media (max-width: 767px) {
+  .section { padding:36px 16px; }
 }
 
 /* ═══ DESKTOP ≥ 1024px ═══ */

@@ -67,9 +67,67 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    background: var(--bg);
+    background: #0F2417;
     position: relative;
     padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  .hero-media-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background: #0F2417;
+  }
+  .hero-media-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(15,36,23,.38) 0%, rgba(15,36,23,.26) 28%, rgba(15,36,23,.52) 100%),
+      linear-gradient(90deg, rgba(15,36,23,.64) 0%, rgba(15,36,23,.42) 34%, rgba(15,36,23,.18) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hero-section .nav {
+    background: transparent;
+    border-bottom-color: transparent;
+    box-shadow: none;
+  }
+  .hero-section .nav.scrolled {
+    background: rgba(15,36,23,.32);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom-color: rgba(255,255,255,.08);
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  }
+  .hero-section .nav-links a {
+    color: rgba(255,255,255,.82);
+  }
+  .hero-section .nav-links a:hover,
+  .hero-section .nav-links a.active {
+    color: white;
+  }
+  .hero-section .logo-name {
+    color: white;
+  }
+  .hero-section .burger span {
+    background: white;
+  }
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+  .hero-video.is-active {
+    display: block;
+    opacity: 1;
   }
 
   .hero-body {
@@ -79,6 +137,8 @@
     min-height: 0;
     width: min(100%, 1440px);
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
   }
 
   .hero-content {
@@ -93,8 +153,7 @@
     max-width: 760px;
     margin: 0 auto;
   }
-
-  .hero-scene { display: none; }
+  .hero-scene { display: none !important; }
 
   /* Status badge */
   .status-wrap { margin-bottom: 4px; animation: fadeUp .5s .1s ease both; }
@@ -109,14 +168,14 @@
   }
   .status-text {
     font-family:'Syne',sans-serif;font-size:11.5px;font-weight:600;
-    color:var(--green);letter-spacing:.04em;white-space:nowrap;position:relative;z-index:1;
+    color:#E8F1D8;letter-spacing:.04em;white-space:nowrap;position:relative;z-index:1;
   }
 
   /* Overline */
   .overline {
     margin-bottom: 5px;
     font-family:'Syne',sans-serif;font-size:10.5px;font-weight:600;
-    color:var(--muted);letter-spacing:.14em;text-transform:uppercase;
+    color:rgba(255,255,255,.72);letter-spacing:.14em;text-transform:uppercase;
     animation:fadeUp .5s .15s ease both;
   }
 
@@ -125,17 +184,26 @@
   .hl-row {
     display: block;
     font-family:'Fredoka',sans-serif;
-    font-size: clamp(58px, 17vw, 80px);
+    font-size: clamp(26px, 8.5vw, 30px);
     font-weight:700;line-height:.88;
-    color:var(--ink);letter-spacing:-.025em;
+    color:white;letter-spacing:-.025em;
   }
   .hl-accent { position:relative;display:inline-block; }
   .hl-accent .blob-bg {
     position:absolute;inset:-6px -10px -3px -6px;z-index:-1;
     animation:floatBlob 5s ease-in-out infinite;
   }
-  .hl-green { color: var(--green); }
-  .hl-orange { color:var(--orange);display:block;font-size: clamp(64px, 19vw, 88px); }
+  .hl-green { color: #DDF2BA; }
+  .hero-subtitle {
+    padding-top: 10px;
+    font-family:'Syne',sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color:#FFD166;
+  }
   .hl-underline { position:relative;display:inline-block; }
   .hl-underline svg {
     position:absolute;bottom:-5px;left:-3px;
@@ -150,7 +218,7 @@
   .body-copy {
     padding-top: 8px;
     font-family:'Syne',sans-serif;font-size:14px;font-weight:400;
-    line-height:1.5;color:var(--muted);
+    line-height:1.5;color:rgba(255,255,255,.82);
     animation:fadeUp .6s .35s ease both;
   }
 
@@ -159,11 +227,16 @@
     display:flex;flex-wrap:wrap;gap:7px;
     padding-top:9px;
     animation:fadeUp .6s .42s ease both;
+    width:min(100%, 430px);
   }
   .pill {
     position:relative;padding:6px 15px;
     font-family:'Fredoka',sans-serif;font-size:14px;font-weight:600;
     cursor:pointer;transition:transform .15s;white-space:nowrap;color:var(--ink);
+  }
+  .pill-break {
+    flex-basis: 100%;
+    height: 0;
   }
   .pill:hover { transform:translateY(-2px); }
   .pill:active { transform:scale(.96); }
@@ -174,7 +247,7 @@
   .stats-row {
     display:flex;align-items:stretch;padding-top:10px;
     animation:fadeUp .6s .48s ease both;
-    width: 100%;
+    width:min(100%, 430px);
   }
   .stat-item { flex:1;display:flex;flex-direction:column;gap:2px;padding:0 14px; }
   .stat-item:first-child { padding-left:0; }
@@ -186,11 +259,15 @@
   }
   .hero-stat-label {
     font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;
-    color:var(--muted);letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(255,255,255,.72);letter-spacing:.1em;text-transform:uppercase;
   }
 
   /* CTA */
-  .cta-wrap { padding-top: 14px; animation:fadeUp .6s .55s ease both; }
+  .cta-wrap {
+    padding-top: 14px;
+    animation:fadeUp .6s .55s ease both;
+    width:min(100%, 430px);
+  }
   .cta-btn {
     position:relative;display:flex;align-items:center;
     justify-content:space-between;width:100%;
@@ -221,7 +298,7 @@
   .cta-link {
     display:inline-block;
     font-family:'Syne',sans-serif;font-size:12px;font-weight:500;
-    color:var(--muted);text-decoration:none;position:relative;
+    color:rgba(255,255,255,.72);text-decoration:none;position:relative;
   }
   .cta-link svg {
     position:absolute;bottom:-3px;left:0;
@@ -266,6 +343,31 @@
   .smoke-1 { animation: smokePuff 2.2s 1.5s ease-out infinite; }
   .smoke-2 { animation: smokePuff 2.2s 1.9s ease-out infinite; }
   .smoke-3 { animation: smokePuff 2.2s 2.3s ease-out infinite; }
+
+  @media (max-width: 767px) {
+    .hero-section {
+      padding-bottom: max(8px, env(safe-area-inset-bottom));
+    }
+    .hero-content {
+      padding-left: 16px;
+      padding-right: 16px;
+      padding-top: clamp(64px, 13vh, 112px);
+    }
+    .status-wrap { margin-bottom: 2px; }
+    .headline-block { margin-bottom: 0; }
+    .hl-row { margin-bottom: 2px; }
+    .headline-block .hl-row:last-of-type { margin-bottom: 0; }
+    .body-copy { padding-top: 6px; }
+    .pills-row { padding-top: 8px; }
+    .stats-row {
+      padding-top: 8px;
+      margin-top: auto;
+    }
+    .cta-wrap {
+      padding-top: 10px;
+      margin-top: 0;
+    }
+  }
 
   /* ─── SECTION 2: PRO KEMP ─── */
   .s-about { background: var(--cream); }
@@ -697,38 +799,29 @@
   @media (min-width: 1024px) {
     /* Hero desktop */
     .hero-body {
-      flex-direction: row;
-      align-items: stretch;
+      flex-direction: column;
+      align-items: flex-start;
       padding: 0 64px;
     }
     .hero-content {
-      flex: 0 0 52%;
+      flex: 1;
       padding: 40px 44px 40px 0;
       justify-content: center;
+      width: min(60%, 760px);
       max-width: none;
       margin: 0;
     }
-    .hero-scene {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      padding: 32px 0 32px 36px;
+    .hl-row { font-size: clamp(54px, 5.2vw, 70px); }
+    .hero-subtitle {
+      padding-top: 14px;
+      font-size: 26px;
     }
-    .scene-container {
-      border-radius: 32px;
-      overflow: hidden;
-      height: 100%;
-      width: 100%;
-    }
-    .scene-svg { display: block; width: 100%; height: 100%; }
-    .hl-row { font-size: clamp(78px, 7vw, 104px); }
-    .hl-orange { font-size: clamp(86px, 7.8vw, 114px); }
     .body-copy { font-size: 16px; max-width: 440px; padding-top: 12px; }
     .pills-row { padding-top: 14px; }
     .stats-row { padding-top: 18px; }
     .hero-stat-num { font-size: 48px; }
     .cta-wrap { padding-top: 22px; }
-    .cta-btn { max-width: 400px; }
+    .cta-btn { max-width: none; }
 
     /* Sections desktop */
     .stats-grid { grid-template-columns: repeat(4, 1fr); }
@@ -747,6 +840,10 @@
 </head>
 <body>
 
+<audio id="bgAudio" loop preload="auto" style="display:none" aria-hidden="true">
+  <source src="walk.mp3" type="audio/mpeg">
+</audio>
+
 <!-- ══ MOBILE MENU ══ -->
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-menu-close" onclick="closeMobileMenu()" aria-label="Закрити">&times;</button>
@@ -764,6 +861,14 @@
 
 <!-- ══ HERO SECTION (100dvh) ══ -->
 <section class="hero-section">
+  <div class="hero-media-bg" aria-hidden="true">
+    <video id="heroVideoMobile" class="hero-video mobile is-active" autoplay muted loop playsinline preload="auto">
+      <source src="mobile.MOV">
+    </video>
+    <video id="heroVideoDesktop" class="hero-video desktop" autoplay muted loop playsinline preload="auto">
+      <source src="desktop.MOV">
+    </video>
+  </div>
 
   <!-- NAV -->
   <nav class="nav" id="mainNav">
@@ -791,7 +896,6 @@
         <div class="nav-badge-dot"></div>
         <span class="nav-badge-text">Є місця на літо 2025</span>
       </div>
-      <a href="vsi-turi.html" class="nav-cta">Підібрати тур →</a>
       <div class="burger" onclick="openMobileMenu()" aria-label="Меню">
         <span></span><span></span><span></span>
       </div>
@@ -814,22 +918,18 @@
         </div>
       </div>
 
-      <div class="overline">Намети на деревах · Карпати</div>
-
       <div class="headline-block">
-        <span class="hl-row">Твій</span>
+        <span class="hl-row">Безтурботний</span>
         <span class="hl-row">
-          <span class="hl-accent hl-green">
-            <svg class="blob-bg" viewBox="0 0 160 90" fill="none" preserveAspectRatio="none">
+          <span class="hl-accent hl-greenі">
+            <svg class="blob-bg" style="display: none;" viewBox="0 0 160 90" fill="none" preserveAspectRatio="none">
               <path d="M10 18 C8 8 20 2 35 4 C55 6 90 2 120 5 C140 7 155 12 156 26 C158 40 152 58 140 66 C128 74 108 78 85 76 C60 74 35 76 20 68 C6 60 2 48 4 34 C5 26 12 28 10 18 Z" fill="#F0B429" opacity="0.28"/>
             </svg>
-            кемп
+            табір для дорослих
           </span>
         </span>
-        <span class="hl-row hl-orange">на <span class="hl-underline">небі<svg viewBox="0 0 200 12" fill="none" preserveAspectRatio="none"><path d="M2 6 C22 1 44 11 66 6 C88 1 110 11 132 6 C154 1 176 10 198 5" stroke="#E8521A" stroke-width="3" stroke-linecap="round" fill="none" style="stroke-dasharray:300;stroke-dashoffset:300;animation:draw1200 1.2s .8s cubic-bezier(.4,0,.2,1) forwards;"/></svg></span></span>
+        <div class="hero-subtitle">З наметами на деревах</div>
       </div>
-
-      <p class="body-copy">Намети на деревах, ранковий туман, Карпати — без досвіду кемпінгу. Просто приїдь і відпочинь.</p>
 
       <div class="pills-row">
         <div class="pill">
@@ -850,6 +950,7 @@
           </svg>
           <span class="pill-label">6 днів</span>
         </div>
+        <div class="pill-break" aria-hidden="true"></div>
         <div class="pill">
           <svg class="pb" viewBox="0 0 110 36" fill="none" preserveAspectRatio="none">
             <path d="M7 3 C16 1 38 2 55 2 C78 2 98 2 104 5 C108 9 108 15 107 21 C106 27 103 33 96 35 C86 37 26 37 16 35 C6 33 1 27 1 21 C0 15 1 7 5 4 Z" fill="white" stroke="#1A1F1A" stroke-width="1.5"/>
@@ -866,8 +967,8 @@
 
       <div class="stats-row">
         <div class="stat-item">
-          <span class="hero-stat-num" style="color:var(--ink)">4</span>
-          <span class="hero-stat-label">роки</span>
+          <span class="hero-stat-num" style="color:#F7F4ED">8</span>
+          <span class="hero-stat-label">років кемпу</span>
         </div>
         <div class="stat-sep">
           <svg width="2" height="46" viewBox="0 0 2 46" fill="none">
@@ -875,7 +976,7 @@
           </svg>
         </div>
         <div class="stat-item">
-          <span class="hero-stat-num" style="color:var(--green-md)">2</span>
+          <span class="hero-stat-num" style="color:#F7F4ED">2</span>
           <span class="hero-stat-label">локації</span>
         </div>
         <div class="stat-sep">
@@ -884,8 +985,8 @@
           </svg>
         </div>
         <div class="stat-item">
-          <span class="hero-stat-num" style="color:var(--orange)">5.0</span>
-          <span class="hero-stat-label">Google Maps</span>
+          <span class="hero-stat-num" style="color:#F7F4ED">9.5</span>
+          <span class="hero-stat-label">Середня оцінка туру</span>
         </div>
       </div>
 
@@ -915,94 +1016,6 @@
       </div>
 
     </div><!-- /hero-content -->
-
-    <!-- RIGHT: Illustration (desktop only) -->
-    <div class="hero-scene">
-      <div class="scene-container">
-        <svg class="scene-svg" viewBox="0 0 360 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="skyRad" cx="50%" cy="42%" r="66%">
-              <stop offset="0%"   stop-color="#52D494"/>
-              <stop offset="55%"  stop-color="#28B872"/>
-              <stop offset="100%" stop-color="#148850"/>
-            </radialGradient>
-            <linearGradient id="mtnGrad" x1="0.35" y1="0" x2="0.65" y2="1">
-              <stop offset="0%"  stop-color="#3C3C3C"/>
-              <stop offset="100%" stop-color="#1E1E1E"/>
-            </linearGradient>
-            <linearGradient id="mtnGrad2" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"  stop-color="#484848"/>
-              <stop offset="100%" stop-color="#282828"/>
-            </linearGradient>
-            <linearGradient id="tentGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"  stop-color="#F8C840"/>
-              <stop offset="100%" stop-color="#E07010"/>
-            </linearGradient>
-            <linearGradient id="tentShade" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"  stop-color="#C04800"/>
-              <stop offset="100%" stop-color="#E07010" stop-opacity="0"/>
-            </linearGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <ellipse cx="180" cy="165" rx="178" ry="164" fill="url(#skyRad)" class="il-sky"/>
-          <g class="il-stars">
-            <circle cx="66"  cy="42"  r="2.5" fill="white" opacity=".75" class="light-1"/>
-            <circle cx="86"  cy="26"  r="1.5" fill="white" opacity=".55" class="light-3"/>
-            <circle cx="110" cy="50"  r="2"   fill="white" opacity=".65" class="light-5"/>
-            <circle cx="254" cy="34"  r="2"   fill="white" opacity=".7"  class="light-2"/>
-            <circle cx="278" cy="54"  r="1.5" fill="white" opacity=".5"  class="light-4"/>
-            <circle cx="296" cy="38"  r="2.5" fill="white" opacity=".65" class="light-6"/>
-            <circle cx="138" cy="32"  r="1.5" fill="white" opacity=".45" class="light-7"/>
-            <circle cx="230" cy="48"  r="1.5" fill="white" opacity=".5"  class="light-1"/>
-          </g>
-          <g class="il-moon">
-            <circle cx="54" cy="78" r="28" fill="#FFFCE0" opacity=".92" filter="url(#glow)"/>
-            <circle cx="66" cy="70" r="22" fill="#28B872"/>
-          </g>
-          <path class="il-mtn-fill" d="M28 300 C36 274 50 248 68 228 C82 212 94 204 104 196 C112 188 116 178 110 168 C106 160 100 155 108 148 C114 142 124 140 130 148 C136 156 134 168 130 180 C126 192 128 204 138 214 C148 222 156 232 160 248 C162 256 164 270 164 290 Z" fill="url(#mtnGrad2)" opacity=".85"/>
-          <path class="il-mtn-fill" d="M52 300 C60 278 72 254 88 234 C102 216 116 200 130 184 C142 170 150 156 158 138 C164 124 168 110 174 96 C180 110 184 126 192 142 C202 160 214 174 226 188 C240 204 254 218 264 236 C278 256 288 278 294 300 Z" fill="url(#mtnGrad)"/>
-          <path class="il-mtn-line" d="M28 300 C36 274 50 248 68 228 C82 212 94 204 104 196 C112 188 116 178 110 168 C106 160 100 155 108 148 C114 142 124 140 130 148 C136 156 134 168 130 180 C126 192 128 204 138 214 C148 222 156 232 160 248 C162 256 164 270 164 290" stroke="#111" stroke-width="2" stroke-linecap="round" fill="none"/>
-          <path class="il-mtn-line" d="M52 300 C60 278 72 254 88 234 C102 216 116 200 130 184 C142 170 150 156 158 138 C164 124 168 110 174 96 C180 110 184 126 192 142 C202 160 214 174 226 188 C240 204 254 218 264 236 C278 256 288 278 294 300" stroke="#111" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-          <path class="il-snow" d="M168 98 C170 90 172 80 174 72 C176 64 178 58 176 56 C172 54 168 62 164 72 C160 82 158 94 158 104 C161 99 165 97 168 98 Z" fill="white" opacity=".95"/>
-          <path class="il-snow" d="M196 132 C200 122 206 114 210 110 C213 106 215 107 212 115 C210 121 206 128 202 134 Z" fill="white" opacity=".82"/>
-          <path class="il-snow" d="M155 144 C151 136 148 128 147 122 C146 117 147 116 150 122 C153 128 156 138 158 146 Z" fill="white" opacity=".78"/>
-          <g class="il-ground">
-            <path d="M0 308 C18 286 44 268 72 264 C90 261 104 270 120 266 C134 263 142 253 154 257 C166 261 170 276 174 296 L174 340 L0 340 Z" fill="#193619"/>
-            <path d="M190 296 C194 276 200 262 214 258 C228 254 240 264 254 268 C270 272 284 263 300 266 C326 270 348 287 362 308 L362 340 L190 340 Z" fill="#193619"/>
-            <path d="M0 322 C28 310 66 317 108 313 C144 309 172 316 200 312 C228 308 258 315 298 311 C328 308 348 314 362 318 L362 340 L0 340 Z" fill="#0E2410"/>
-          </g>
-          <path class="il-tree-fill" d="M89 318 L89 305 C78 302 60 296 42 288 C34 283 34 276 40 272 C50 268 62 265 64 263 C60 260 52 254 50 250 C44 246 44 240 52 237 C60 234 70 231 72 229 C68 226 60 220 58 216 C54 212 56 207 64 204 C70 201 78 199 80 197 C76 194 68 188 66 185 C62 181 66 176 74 174 C80 172 88 170 90 169 C88 165 82 160 80 157 C78 153 82 148 88 144 C92 141 95 140 95 140 L95 132 C95 140 98 141 100 144 C108 148 112 153 110 157 C108 160 102 165 100 169 C100 170 112 172 120 174 C128 176 132 181 126 185 C124 188 116 194 110 197 C112 199 122 201 126 204 C134 207 136 212 132 216 C130 220 122 226 118 229 C120 231 130 234 134 237 C142 240 146 246 140 250 C138 254 130 260 126 263 C128 265 140 268 150 272 C156 276 156 283 150 288 C144 296 126 302 101 305 L101 318 Z" fill="#183E17"/>
-          <path class="il-tree-line" d="M89 318 L89 305 C78 302 60 296 42 288 C34 283 34 276 40 272 C50 268 62 265 64 263 C60 260 52 254 50 250 C44 246 44 240 52 237 C60 234 70 231 72 229 C68 226 60 220 58 216 C54 212 56 207 64 204 C70 201 78 199 80 197 C76 194 68 188 66 185 C62 181 66 176 74 174 C80 172 88 170 90 169 C88 165 82 160 80 157 C78 153 82 148 88 144 C92 141 95 140 95 140 L95 132 C95 140 98 141 100 144 C108 148 112 153 110 157 C108 160 102 165 100 169 C100 170 112 172 120 174 C128 176 132 181 126 185 C124 188 116 194 110 197 C112 199 122 201 126 204 C134 207 136 212 132 216 C130 220 122 226 118 229 C120 231 130 234 134 237 C142 240 146 246 140 250 C138 254 130 260 126 263 C128 265 140 268 150 272 C156 276 156 283 150 288 C144 296 126 302 101 305 L101 318" stroke="#0B1D0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path class="il-tree2-fill" d="M268 318 L268 305 C279 302 297 296 315 288 C323 283 323 276 317 272 C307 268 295 265 293 263 C297 260 305 254 307 250 C313 246 313 240 305 237 C297 234 287 231 285 229 C289 226 297 220 299 216 C303 212 301 207 293 204 C287 201 279 199 277 197 C281 194 289 188 291 185 C295 181 291 176 283 174 C277 172 269 170 267 169 C269 165 275 160 277 157 C279 153 275 148 269 144 C265 141 262 140 262 140 L262 132 C262 140 259 141 257 144 C249 148 245 153 247 157 C249 160 255 165 257 169 C257 170 245 172 237 174 C229 176 225 181 231 185 C233 188 241 194 247 197 C245 199 235 201 231 204 C223 207 221 212 225 216 C227 220 235 226 239 229 C237 231 227 234 223 237 C215 240 211 246 217 250 C219 254 227 260 231 263 C229 265 217 268 207 272 C201 276 201 283 207 288 C213 296 231 302 256 305 L256 318 Z" fill="#183E17"/>
-          <path class="il-tree2-line" d="M268 318 L268 305 C279 302 297 296 315 288 C323 283 323 276 317 272 C307 268 295 265 293 263 C297 260 305 254 307 250 C313 246 313 240 305 237 C297 234 287 231 285 229 C289 226 297 220 299 216 C303 212 301 207 293 204 C287 201 279 199 277 197 C281 194 289 188 291 185 C295 181 291 176 283 174 C277 172 269 170 267 169 C269 165 275 160 277 157 C279 153 275 148 269 144 C265 141 262 140 262 140 L262 132 C262 140 259 141 257 144 C249 148 245 153 247 157 C249 160 255 165 257 169 C257 170 245 172 237 174 C229 176 225 181 231 185 C233 188 241 194 247 197 C245 199 235 201 231 204 C223 207 221 212 225 216 C227 220 235 226 239 229 C237 231 227 234 223 237 C215 240 211 246 217 250 C219 254 227 260 231 263 C229 265 217 268 207 272 C201 276 201 283 207 288 C213 296 231 302 256 305 L256 318" stroke="#0B1D0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path class="il-tent-fill" d="M142 320 C147 298 157 274 166 258 C169 253 172 250 174 248 C176 250 179 253 182 258 C191 274 201 298 206 320 Z" fill="url(#tentGrad)"/>
-          <path class="il-tent-fill" d="M142 320 C148 298 158 274 166 258 C163 264 158 282 154 300 C151 308 148 314 146 320 Z" fill="url(#tentShade)" opacity=".45"/>
-          <path class="il-tent-line" d="M142 320 C148 296 159 270 167 256 C170 250 173 247 174 246 C175 247 178 250 181 256 C189 270 200 296 206 320" stroke="#B84800" stroke-width="2" stroke-linecap="round" fill="none"/>
-          <path class="il-tent-fill" d="M168 320 C167 308 167 296 169 288 C170 283 172 280 174 280 C176 280 178 283 179 288 C181 296 181 308 180 320 Z" fill="#FFE090" opacity=".55"/>
-          <circle cx="174" cy="246" r="3" fill="#F8C840" opacity=".8" class="il-tent-fill"/>
-          <g class="il-lights">
-            <path d="M136 272 C144 268 152 270 160 266 C166 263 171 261 174 261 C177 261 182 263 188 266 C196 270 204 268 212 272" stroke="#7A5020" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <circle cx="139" cy="274" r="3.5" fill="#FFE566" class="light-1" filter="url(#glow)"/>
-            <circle cx="150" cy="270" r="3"   fill="#FFE566" class="light-3"/>
-            <circle cx="160" cy="267" r="3"   fill="#FFE566" class="light-5"/>
-            <circle cx="170" cy="262" r="4"   fill="#FFFAAA" class="light-2" filter="url(#glow)"/>
-            <circle cx="180" cy="267" r="3"   fill="#FFE566" class="light-4"/>
-            <circle cx="190" cy="270" r="3"   fill="#FFE566" class="light-6"/>
-            <circle cx="200" cy="274" r="3.5" fill="#FFE566" class="light-7" filter="url(#glow)"/>
-          </g>
-          <g class="il-smoke">
-            <ellipse cx="174" cy="242" rx="5"   ry="4.5" fill="white" opacity=".4"  class="smoke-1"/>
-            <ellipse cx="177" cy="230" rx="4.5" ry="4"   fill="white" opacity=".28" class="smoke-2"/>
-            <ellipse cx="173" cy="220" rx="3.5" ry="3"   fill="white" opacity=".18" class="smoke-3"/>
-          </g>
-          <path class="il-ground" d="M0 330 C28 322 64 328 102 324 C140 320 172 327 200 323 C228 319 260 326 300 322 C328 319 350 325 362 322 L362 340 L0 340 Z" fill="#091A09"/>
-        </svg>
-      </div>
-    </div>
-
   </div><!-- /hero-body -->
 </section>
 
@@ -1025,9 +1038,9 @@
     <div class="stats-grid">
       <div class="stat-card reveal reveal-delay-1">
         <div class="stat-card-accent" style="background:var(--orange)"></div>
-        <div class="stat-num" style="color:var(--orange)">4+</div>
-        <div class="stat-label">роки поспіль</div>
-        <p>Кемп працює з 2021 року</p>
+        <div class="stat-num" style="color:var(--orange)">8+</div>
+        <div class="stat-label">років поспіль</div>
+        <p>Кемп працює з 2017 року</p>
       </div>
       <div class="stat-card reveal reveal-delay-2">
         <div class="stat-card-accent" style="background:var(--yellow)"></div>
@@ -1633,6 +1646,54 @@
     document.getElementById('mobileMenu').classList.remove('open');
     document.body.style.overflow = '';
   }
+
+  // ─── BACKGROUND AUDIO ───
+  const bgAudio = document.getElementById('bgAudio');
+
+  function tryStartBackgroundAudio() {
+    if (!bgAudio) return;
+    bgAudio.volume = 0.35;
+    bgAudio.play().catch(() => {});
+  }
+
+  function unlockBackgroundAudio() {
+    tryStartBackgroundAudio();
+    window.removeEventListener('pointerdown', unlockBackgroundAudio);
+    window.removeEventListener('keydown', unlockBackgroundAudio);
+    window.removeEventListener('touchstart', unlockBackgroundAudio);
+  }
+
+  tryStartBackgroundAudio();
+  window.addEventListener('pointerdown', unlockBackgroundAudio, { once: true });
+  window.addEventListener('keydown', unlockBackgroundAudio, { once: true });
+  window.addEventListener('touchstart', unlockBackgroundAudio, { once: true });
+
+  // ─── HERO VIDEO SWITCH ───
+  const heroVideoMobile = document.getElementById('heroVideoMobile');
+  const heroVideoDesktop = document.getElementById('heroVideoDesktop');
+  const heroDesktopMedia = window.matchMedia('(min-width: 1024px)');
+
+  function syncHeroVideo() {
+    const useDesktop = heroDesktopMedia.matches;
+    const activeVideo = useDesktop ? heroVideoDesktop : heroVideoMobile;
+    const inactiveVideo = useDesktop ? heroVideoMobile : heroVideoDesktop;
+
+    activeVideo.classList.add('is-active');
+    inactiveVideo.classList.remove('is-active');
+
+    inactiveVideo.pause();
+
+    const playActive = () => activeVideo.play().catch(() => {});
+    if (activeVideo.readyState >= 2) {
+      playActive();
+    } else {
+      activeVideo.load();
+      activeVideo.addEventListener('loadeddata', playActive, { once: true });
+    }
+  }
+
+  syncHeroVideo();
+  heroDesktopMedia.addEventListener('change', syncHeroVideo);
 
   // ─── INTERSECTION OBSERVER ───
   const revealEls = document.querySelectorAll('.reveal');
