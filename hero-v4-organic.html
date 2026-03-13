@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Na Nebi — Hero v4 Organic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange:   #E8521A;
+    --yellow:   #F0B429;
+    --yellow-lt:#FFD966;
+    --green:    #1A5C3A;
+    --green-md: #2D8A58;
+    --green-lt: #A8D5B8;
+    --bg:       #FEFAF4;
+    --ink:      #1A1F1A;
+    --muted:    #6B7566;
+    --cream:    #F0EAD6;
+  }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg);
+    font-family: 'Syne', sans-serif;
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ─── KEYFRAMES ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes draw2400 { from { stroke-dashoffset: 2400; } to { stroke-dashoffset: 0; } }
+  @keyframes draw1200 { from { stroke-dashoffset: 1200; } to { stroke-dashoffset: 0; } }
+  @keyframes draw800  { from { stroke-dashoffset: 800;  } to { stroke-dashoffset: 0; } }
+  @keyframes draw400  { from { stroke-dashoffset: 400;  } to { stroke-dashoffset: 0; } }
+  @keyframes draw200  { from { stroke-dashoffset: 200;  } to { stroke-dashoffset: 0; } }
+  @keyframes floatBlob {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    50%     { transform: translateY(-6px) rotate(2deg); }
+  }
+  @keyframes pulseDot {
+    0%,100% { transform: scale(1); opacity:1; }
+    50%     { transform: scale(1.5); opacity:.6; }
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: 1; r: 3; }
+    50%     { opacity: 0.3; r: 1.5; }
+  }
+  @keyframes smokePuff {
+    0%   { transform: translateY(0) scale(1); opacity: 0.5; }
+    100% { transform: translateY(-18px) scale(1.6); opacity: 0; }
+  }
+  @keyframes fillIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes fillInHalf {
+    from { opacity: 0; }
+    to   { opacity: 0.5; }
+  }
+
+  /* ══════ WRAPPER ══════ */
+  .page {
+    max-width: 1440px;
+    margin: 0 auto;
+    /* Fit exactly one screen — dvh accounts for macOS menu + browser chrome */
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ══════ NAV ══════ */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px 10px;
+    animation: fadeUp .5s ease both;
+  }
+
+  .logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+  .logo-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .logo-text { display: flex; flex-direction: column; }
+  .logo-name {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--ink); line-height: 1; letter-spacing: -.01em;
+  }
+  .logo-sub {
+    font-family: 'Syne', sans-serif;
+    font-size: 9px; font-weight: 700;
+    color: var(--orange); letter-spacing: .18em;
+    text-transform: uppercase; line-height: 1; margin-top: 2px;
+  }
+
+  .nav-links { display: none; gap: 28px; align-items: center; }
+  .nav-links a {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--ink); text-decoration: none;
+    transition: color .15s;
+  }
+  .nav-links a:hover { color: var(--orange); }
+
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+
+  .nav-badge {
+    display: none; align-items: center; gap: 7px;
+    padding: 6px 14px 6px 10px; position: relative;
+  }
+  .nav-badge svg.bb { position:absolute;inset:0;width:100%;height:100%;overflow:visible; }
+  .nav-badge-dot {
+    width:7px;height:7px;background:var(--green-md);border-radius:50%;
+    flex-shrink:0;animation:pulseDot 2s infinite;position:relative;z-index:1;
+  }
+  .nav-badge-text {
+    font-family:'Syne',sans-serif;font-size:12px;font-weight:600;
+    color:var(--green);white-space:nowrap;position:relative;z-index:1;
+  }
+
+  .nav-cta {
+    font-family:'Fredoka',sans-serif;font-size:15px;font-weight:600;
+    color:white;background:var(--orange);padding:10px 20px;
+    border-radius:50px;cursor:pointer;letter-spacing:.01em;
+    box-shadow:3px 3px 0 var(--green);
+    transition:transform .15s,box-shadow .15s;white-space:nowrap;
+  }
+  .nav-cta:hover { transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--green); }
+  .nav-cta:active { transform:translate(2px,2px);box-shadow:1px 1px 0 var(--green); }
+
+  /* ══════ HERO LAYOUT ══════ */
+  .hero-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;          /* fill remaining height after nav */
+    min-height: 0;    /* allow flex child to shrink below content size */
+  }
+
+  /* Content column */
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px;
+    /* On mobile: fill all available height and justify content evenly */
+    flex: 1;
+    min-height: 0;
+    justify-content: space-between;
+    padding-bottom: 20px;
+  }
+
+  /* Scene column — hidden on mobile first screen */
+  .hero-scene {
+    display: none;
+    padding: 10px 20px 0;
+    animation: fadeUp .6s .25s ease both;
+    flex-shrink: 0;
+  }
+
+  /* Scene shown as second section when scrolling on mobile */
+  .hero-scene-mobile {
+    padding: 16px 20px 24px;
+    animation: fadeUp .6s .3s ease both;
+  }
+
+  .scene-container {
+    position: relative;
+    width: 100%;
+    border-radius: 26px;
+    overflow: hidden;
+  }
+
+  .scene-svg { display: block; width: 100%; height: auto; }
+
+  /* ── Status badge ── */
+  .status-wrap {
+    margin-bottom: 4px;
+    animation: fadeUp .5s .1s ease both;
+  }
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    position: relative; padding: 6px 14px 6px 11px;
+  }
+  .status-badge svg.bb { position:absolute;inset:0;width:100%;height:100%;overflow:visible; }
+  .status-dot {
+    width:8px;height:8px;background:var(--green-md);border-radius:50%;
+    flex-shrink:0;animation:pulseDot 2s infinite;position:relative;z-index:1;
+  }
+  .status-text {
+    font-family:'Syne',sans-serif;font-size:11.5px;font-weight:600;
+    color:var(--green);letter-spacing:.04em;white-space:nowrap;
+    position:relative;z-index:1;
+  }
+
+  /* ── Overline ── */
+  .overline {
+    margin-bottom: 5px;
+    font-family:'Syne',sans-serif;font-size:10.5px;font-weight:600;
+    color:var(--muted);letter-spacing:.14em;text-transform:uppercase;
+    animation:fadeUp .5s .15s ease both;
+  }
+
+  /* ── Headline ── */
+  .headline-block {
+    margin-bottom: 2px;
+    animation: fadeUp .6s .2s ease both;
+  }
+
+  .hl-row {
+    display: block;
+    font-family:'Fredoka',sans-serif;
+    font-size: clamp(58px, 17vw, 80px);
+    font-weight:700;line-height:.88;
+    color:var(--ink);letter-spacing:-.025em;
+  }
+
+  .hl-accent { position:relative;display:inline-block; }
+  .hl-accent .blob-bg {
+    position:absolute;inset:-6px -10px -3px -6px;z-index:-1;
+    animation:floatBlob 5s ease-in-out infinite;
+  }
+  .hl-green  { color: var(--green); }
+  .hl-orange {
+    color:var(--orange);display:block;
+    font-size: clamp(64px, 19vw, 88px);
+  }
+
+  .hl-underline { position:relative;display:inline-block; }
+  .hl-underline svg {
+    position:absolute;bottom:-5px;left:-3px;
+    width:calc(100% + 6px);height:12px;overflow:visible;
+  }
+  .hl-underline path {
+    stroke-dasharray:300;stroke-dashoffset:300;
+    animation:draw1200 1.2s .8s cubic-bezier(.4,0,.2,1) forwards;
+  }
+
+  /* ── Body copy ── */
+  .body-copy {
+    padding-top: 8px;
+    font-family:'Syne',sans-serif;font-size:14px;font-weight:400;
+    line-height:1.5;color:var(--muted);
+    animation:fadeUp .6s .35s ease both;
+  }
+
+  /* ── Pills ── */
+  .pills-row {
+    display:flex;flex-wrap:wrap;gap:7px;
+    padding-top:9px;
+    animation:fadeUp .6s .42s ease both;
+  }
+  .pill {
+    position:relative;padding:6px 15px;
+    font-family:'Fredoka',sans-serif;font-size:14px;font-weight:600;
+    cursor:pointer;transition:transform .15s;white-space:nowrap;color:var(--ink);
+  }
+  .pill:hover  { transform:translateY(-2px); }
+  .pill:active { transform:scale(.96); }
+  .pill svg.pb { position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none; }
+  .pill-label  { position:relative;z-index:1; }
+
+  /* ── Stats ── */
+  .stats-row {
+    display:flex;align-items:stretch;padding-top:10px;
+    animation:fadeUp .6s .48s ease both;
+  }
+  .stat-item { flex:1;display:flex;flex-direction:column;gap:2px;padding:0 14px; }
+  .stat-item:first-child { padding-left:0; }
+  .stat-item:last-child  { padding-right:0; }
+  .stat-sep  { width:2px;align-self:stretch;display:flex;align-items:center; }
+  .stat-num  {
+    font-family:'Fredoka',sans-serif;font-size:34px;font-weight:700;
+    line-height:1;letter-spacing:-.02em;
+  }
+  .stat-label {
+    font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;
+    color:var(--muted);letter-spacing:.1em;text-transform:uppercase;
+  }
+
+  /* ── CTA ── */
+  .cta-wrap {
+    padding-top: 14px;
+    animation:fadeUp .6s .55s ease both;
+  }
+
+  .cta-btn {
+    position:relative;display:flex;align-items:center;
+    justify-content:space-between;width:100%;
+    padding:15px 22px;cursor:pointer;transition:transform .15s;
+  }
+  .cta-btn:hover  { transform:translateY(-2px); }
+  .cta-btn:active { transform:scale(.98); }
+  .cta-btn svg.btn-border {
+    position:absolute;inset:0;width:100%;height:100%;
+    overflow:visible;z-index:0;
+  }
+  .cta-text-wrap { position:relative;z-index:1; }
+  .cta-main {
+    font-family:'Fredoka',sans-serif;font-size:21px;font-weight:700;
+    color:white;letter-spacing:.01em;line-height:1.1;
+  }
+  .cta-sub {
+    font-family:'Syne',sans-serif;font-size:11px;font-weight:500;
+    color:rgba(255,255,255,.75);margin-top:2px;letter-spacing:.02em;
+  }
+  .cta-arrow {
+    position:relative;z-index:1;width:40px;height:40px;
+    background:rgba(255,255,255,.2);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .cta-arrow svg { width:18px;height:18px; }
+
+  .cta-link-wrap {
+    text-align: left;
+    margin-top: 8px;
+    overflow: hidden;
+    padding-bottom: 6px;
+  }
+  .cta-link {
+    display: inline-block;
+    font-family:'Syne',sans-serif;font-size:12px;font-weight:500;
+    color:var(--muted);text-decoration:none;
+    position:relative;
+  }
+  .cta-link svg {
+    position:absolute;bottom:-3px;left:0;
+    width:100%;height:5px;overflow:visible;
+  }
+  .cta-link path {
+    stroke-dasharray:200;stroke-dashoffset:200;
+    animation:draw200 1s 1.3s ease forwards;
+  }
+
+  /* SVG draw animations — sequenced for progressive reveal */
+  /* 1. Sky & moon: 0–0.6s */
+  .il-sky  { opacity:0; animation: fillIn .6s .1s ease both; }
+  .il-moon { opacity:0; stroke-dasharray:200; stroke-dashoffset:200;
+             animation: draw200 .8s .2s ease both, fillIn .5s .2s ease both; }
+  .il-stars{ opacity:0; animation: fillIn .4s .5s ease both; }
+
+  /* 2. Mountain body: 0.6–2.0s */
+  .il-mtn-fill  { opacity:0; animation: fillIn .6s 1.6s ease both; }
+  .il-mtn-line  { stroke-dasharray:1400; stroke-dashoffset:1400;
+                  animation: draw1200 1.8s .6s cubic-bezier(.4,0,.2,1) both; }
+
+  /* 3. Snow: 1.6–2.2s */
+  .il-snow { opacity:0; animation: fillIn .5s 1.8s ease both; }
+
+  /* 4. Trees: 1.4–3.0s */
+  .il-tree-fill { opacity:0; animation: fillIn .7s 2.4s ease both; }
+  .il-tree-line { stroke-dasharray:2400; stroke-dashoffset:2400;
+                  animation: draw2400 2.2s 1.4s cubic-bezier(.4,0,.2,1) both; }
+  .il-tree2-line{ stroke-dasharray:2400; stroke-dashoffset:2400;
+                  animation: draw2400 2.2s 1.7s cubic-bezier(.4,0,.2,1) both; }
+  .il-tree2-fill{ opacity:0; animation: fillIn .7s 2.7s ease both; }
+  .il-tree-sm   { stroke-dasharray:600; stroke-dashoffset:600; opacity:0;
+                  animation: draw800 1.2s 2s cubic-bezier(.4,0,.2,1) both, fillIn .5s 2s ease both; }
+
+  /* 5. Ground: 2.2s */
+  .il-ground { opacity:0; animation: fillIn .5s 2.2s ease both; }
+
+  /* 6. Tent: 2.6–3.2s */
+  .il-tent-fill { opacity:0; animation: fillIn .6s 3s ease both; }
+  .il-tent-line { stroke-dasharray:500; stroke-dashoffset:500;
+                  animation: draw400 1s 2.6s cubic-bezier(.4,0,.2,1) both; }
+
+  /* 7. Lights & smoke: 3.2s+ */
+  .il-lights { opacity:0; animation: fillIn .4s 3.2s ease both; }
+  .il-smoke  { opacity:0; animation: fillIn .3s 3.4s ease both; }
+
+  /* String lights twinkle */
+  .light-1 { animation: twinkle 1.4s .2s infinite; }
+  .light-2 { animation: twinkle 1.4s .5s infinite; }
+  .light-3 { animation: twinkle 1.4s .8s infinite; }
+  .light-4 { animation: twinkle 1.4s 1.1s infinite; }
+  .light-5 { animation: twinkle 1.4s 1.4s infinite; }
+  .light-6 { animation: twinkle 1.4s .35s infinite; }
+  .light-7 { animation: twinkle 1.4s .65s infinite; }
+
+  /* Smoke puffs */
+  .smoke-1 { animation: smokePuff 2.2s 1.5s ease-out infinite; }
+  .smoke-2 { animation: smokePuff 2.2s 1.9s ease-out infinite; }
+  .smoke-3 { animation: smokePuff 2.2s 2.3s ease-out infinite; }
+
+
+  /* ══════════════════════════
+     DESKTOP ≥ 1024px
+  ══════════════════════════ */
+  @media (min-width: 1024px) {
+    .nav {
+      padding: 22px 64px 18px;
+      border-bottom: 1.5px solid rgba(26,31,26,.08);
+      flex-shrink: 0;
+    }
+    .nav-links { display: flex; }
+    .nav-badge  { display: flex; }
+
+    .hero-body {
+      flex-direction: row;
+      align-items: stretch;
+      padding: 0 64px;
+      gap: 0;
+    }
+
+    .hero-content {
+      flex: 0 0 52%;
+      padding: 40px 44px 40px 0;
+      justify-content: center;
+      padding-bottom: 40px;
+    }
+
+    /* Show illustration column on desktop */
+    .hero-scene {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 32px 0 32px 36px;
+    }
+
+    /* Hide the mobile-only illustration strip */
+    .hero-scene-mobile { display: none; }
+
+    .hero-scene .scene-container {
+      border-radius: 32px;
+      height: 100%;
+      width: 100%;
+    }
+    .hero-scene .scene-svg {
+      height: 100%;
+      width: 100%;
+    }
+
+    .status-wrap-mobile { display: none; }
+
+    .hl-row   { font-size: clamp(78px, 7vw, 104px); }
+    .hl-orange{ font-size: clamp(86px, 7.8vw, 114px); }
+
+    .body-copy { font-size: 16px; max-width: 440px; padding-top: 12px; }
+    .pills-row { padding-top: 14px; }
+    .stats-row { padding-top: 18px; }
+    .stat-num  { font-size: 48px; }
+
+    .cta-wrap  { padding-top: 22px; }
+    .cta-btn   { max-width: 400px; }
+    .cta-link  { margin-left: 0; }
+  }
+
+  /* ══════════════════════════
+     TABLET 768–1023px
+  ══════════════════════════ */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .nav { padding: 20px 40px; }
+    .hero-content { padding: 0 40px; }
+    .hero-scene   { padding: 12px 40px 0; }
+    .hl-row   { font-size: clamp(68px, 11vw, 90px); }
+    .hl-orange{ font-size: clamp(76px, 12vw, 100px); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══════ NAV ══════ -->
+<nav class="nav">
+  <div class="logo">
+    <img class="logo-img" src="http://localhost:29979/media/Users/mykola/workspace/na nebi design/logo.jpg" alt="Na Nebi Camp logo">
+    <div class="logo-text">
+      <span class="logo-name">na nebi</span>
+      <span class="logo-sub">camp</span>
+    </div>
+  </div>
+
+  <nav class="nav-links">
+    <a href="#">Про кемп</a>
+    <a href="#">Закарпаття</a>
+    <a href="#">Львівщина</a>
+    <a href="#">Всі тури</a>
+    <a href="#">Корпоративні</a>
+  </nav>
+
+  <div class="nav-right">
+    <div class="nav-badge">
+      <svg class="bb" viewBox="0 0 172 32" fill="none" preserveAspectRatio="none">
+        <path d="M8 3 Q14 1 22 2 Q60 0 86 2 Q126 0 154 2 Q166 2 169 7 Q172 13 170 19 Q169 26 160 29 C150 32 122 31 86 31 C50 31 24 33 14 30 Q4 28 2 20 Q0 13 4 7 Q5 4 8 3 Z" stroke="#1A5C3A" stroke-width="1.5" fill="none"/>
+      </svg>
+      <div class="nav-badge-dot"></div>
+      <span class="nav-badge-text">Є місця на літо 2025</span>
+    </div>
+    <div class="nav-cta">Підібрати тур →</div>
+  </div>
+</nav>
+
+<!-- ══════ HERO ══════ -->
+<div class="hero-body">
+
+  <!-- LEFT: Content -->
+  <div class="hero-content">
+
+    <!-- Mobile status badge -->
+    <div class="status-wrap status-wrap-mobile">
+      <div class="status-badge">
+        <svg class="bb" viewBox="0 0 182 34" fill="none" preserveAspectRatio="none">
+          <path d="M8 4 Q12 1 22 2 Q62 0 91 2 Q132 0 162 2 Q176 2 179 8 Q182 14 180 20 Q179 28 172 31 Q162 34 142 33 Q102 35 62 33 Q32 35 16 32 Q4 30 2 22 Q0 14 4 8 Q5 5 8 4 Z" stroke="#1A5C3A" stroke-width="1.5" fill="none"/>
+        </svg>
+        <div class="status-dot"></div>
+        <span class="status-text">Є місця на літо 2025</span>
+      </div>
+    </div>
+
+    <div class="overline">Намети на деревах · Карпати</div>
+
+    <div class="headline-block">
+      <span class="hl-row">Твій</span>
+      <span class="hl-row">
+        <span class="hl-accent hl-green">
+          <svg class="blob-bg" viewBox="0 0 160 90" fill="none" preserveAspectRatio="none">
+            <path d="M10 18 C8 8 20 2 35 4 C55 6 90 2 120 5 C140 7 155 12 156 26 C158 40 152 58 140 66 C128 74 108 78 85 76 C60 74 35 76 20 68 C6 60 2 48 4 34 C5 26 12 28 10 18 Z" fill="#F0B429" opacity="0.28"/>
+          </svg>
+          кемп
+        </span>
+      </span>
+      <span class="hl-row hl-orange">на <span class="hl-underline">небі<svg viewBox="0 0 200 12" fill="none" preserveAspectRatio="none"><path class="d-fast" d="M2 6 C22 1 44 11 66 6 C88 1 110 11 132 6 C154 1 176 10 198 5" stroke="#E8521A" stroke-width="3" stroke-linecap="round" fill="none"/></svg></span></span>
+    </div>
+
+    <p class="body-copy">Намети на деревах, ранковий туман, Карпати — без досвіду кемпінгу. Просто приїдь і відпочинь.</p>
+
+    <div class="pills-row">
+      <div class="pill">
+        <svg class="pb" viewBox="0 0 70 36" fill="none" preserveAspectRatio="none">
+          <path d="M7 3 C13 1 26 2 35 2 C48 2 62 2 66 5 C69 9 69 15 68 21 C67 27 64 33 58 35 C50 37 21 37 13 35 C5 33 1 27 1 21 C0 15 1 7 5 4 Z" fill="#F0B429" stroke="#1A1F1A" stroke-width="1.5"/>
+        </svg>
+        <span class="pill-label">3 дні</span>
+      </div>
+      <div class="pill">
+        <svg class="pb" viewBox="0 0 70 36" fill="none" preserveAspectRatio="none">
+          <path d="M7 3 C13 1 26 2 35 2 C48 2 62 2 66 5 C69 9 69 15 68 21 C67 27 64 33 58 35 C50 37 21 37 13 35 C5 33 1 27 1 21 C0 15 1 7 5 4 Z" fill="#F0B429" stroke="#1A1F1A" stroke-width="1.5"/>
+        </svg>
+        <span class="pill-label">4 дні</span>
+      </div>
+      <div class="pill">
+        <svg class="pb" viewBox="0 0 76 36" fill="none" preserveAspectRatio="none">
+          <path d="M7 3 C14 1 28 2 38 2 C52 2 68 2 72 5 C75 9 75 15 74 21 C73 27 70 33 64 35 C55 37 23 37 13 35 C5 33 1 27 1 21 C0 15 1 7 5 4 Z" fill="#F0B429" stroke="#1A1F1A" stroke-width="1.5"/>
+        </svg>
+        <span class="pill-label">6 днів</span>
+      </div>
+      <div class="pill">
+        <svg class="pb" viewBox="0 0 110 36" fill="none" preserveAspectRatio="none">
+          <path d="M7 3 C16 1 38 2 55 2 C78 2 98 2 104 5 C108 9 108 15 107 21 C106 27 103 33 96 35 C86 37 26 37 16 35 C6 33 1 27 1 21 C0 15 1 7 5 4 Z" fill="white" stroke="#1A1F1A" stroke-width="1.5"/>
+        </svg>
+        <span class="pill-label">Закарпаття</span>
+      </div>
+      <div class="pill">
+        <svg class="pb" viewBox="0 0 108 36" fill="none" preserveAspectRatio="none">
+          <path d="M7 3 C16 1 36 2 54 2 C76 2 96 2 102 5 C106 9 106 15 105 21 C104 27 101 33 94 35 C84 37 26 37 16 35 C6 33 1 27 1 21 C0 15 1 7 5 4 Z" fill="white" stroke="#1A1F1A" stroke-width="1.5"/>
+        </svg>
+        <span class="pill-label">Львівщина</span>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-num" style="color:var(--ink)">4</span>
+        <span class="stat-label">роки</span>
+      </div>
+      <div class="stat-sep">
+        <svg width="2" height="46" viewBox="0 0 2 46" fill="none">
+          <path d="M1 2 C2 8 0 15 1 22 C2 29 0 36 1 42 C2 44 1 44 1 44" stroke="#C8D8C0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" style="color:var(--green-md)">2</span>
+        <span class="stat-label">локації</span>
+      </div>
+      <div class="stat-sep">
+        <svg width="2" height="46" viewBox="0 0 2 46" fill="none">
+          <path d="M1 2 C2 8 0 15 1 22 C2 29 0 36 1 42 C2 44 1 44 1 44" stroke="#C8D8C0" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" style="color:var(--orange)">5.0</span>
+        <span class="stat-label">Google Maps</span>
+      </div>
+    </div>
+
+    <!-- CTA — inside hero content so visible on first screen -->
+    <div class="cta-wrap">
+      <div class="cta-btn">
+        <svg class="btn-border" viewBox="0 0 340 72" fill="none" preserveAspectRatio="none">
+          <path d="M14 4 C26 1 78 2 118 2 C198 1 278 1 324 4 C334 6 338 12 338 19 C339 29 338 44 338 54 C338 62 334 68 324 71 C312 74 238 73 198 74 C138 74 58 74 18 72 C6 70 2 64 2 54 C1 44 1 29 2 19 C3 9 7 6 14 4 Z" fill="#E8521A"/>
+        </svg>
+        <div class="cta-text-wrap">
+          <div class="cta-main">Підібрати тур</div>
+          <div class="cta-sub">Закарпаття · Львівщина</div>
+        </div>
+        <div class="cta-arrow">
+          <svg viewBox="0 0 20 20" fill="none">
+            <path d="M4 10 C8 10 12 10 16 10 M12 6 C14 8 16 10 12 14" stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+      </div>
+      <div class="cta-link-wrap">
+      <a class="cta-link" href="#">
+        або написати менеджеру
+        <svg viewBox="0 0 158 5" fill="none" preserveAspectRatio="none">
+          <path d="M1 3 C20 1 42 5 62 3 C82 1 102 5 122 3 C138 1 150 4 157 2" stroke="#E8521A" stroke-width="1.5" stroke-linecap="round" fill="none" style="stroke-dasharray:200;stroke-dashoffset:200;animation:draw200 1s 1.3s ease forwards;"/>
+        </svg>
+      </a>
+    </div>
+    </div>
+
+  </div><!-- /hero-content -->
+
+  <!-- RIGHT / BOTTOM: Illustration -->
+  <div class="hero-scene">
+    <div class="scene-container">
+      <svg class="scene-svg" viewBox="0 0 360 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="skyRad" cx="50%" cy="42%" r="66%">
+            <stop offset="0%"   stop-color="#52D494"/>
+            <stop offset="55%"  stop-color="#28B872"/>
+            <stop offset="100%" stop-color="#148850"/>
+          </radialGradient>
+          <linearGradient id="mtnGrad" x1="0.35" y1="0" x2="0.65" y2="1">
+            <stop offset="0%"  stop-color="#3C3C3C"/>
+            <stop offset="100%" stop-color="#1E1E1E"/>
+          </linearGradient>
+          <linearGradient id="mtnGrad2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"  stop-color="#484848"/>
+            <stop offset="100%" stop-color="#282828"/>
+          </linearGradient>
+          <linearGradient id="tentGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"  stop-color="#F8C840"/>
+            <stop offset="100%" stop-color="#E07010"/>
+          </linearGradient>
+          <linearGradient id="tentShade" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"  stop-color="#C04800"/>
+            <stop offset="100%" stop-color="#E07010" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- ① SKY -->
+        <ellipse cx="180" cy="165" rx="178" ry="164" fill="url(#skyRad)" class="il-sky"/>
+
+        <!-- ② STARS -->
+        <g class="il-stars">
+          <circle cx="66"  cy="42"  r="2.5" fill="white" opacity=".75" class="light-1"/>
+          <circle cx="86"  cy="26"  r="1.5" fill="white" opacity=".55" class="light-3"/>
+          <circle cx="110" cy="50"  r="2"   fill="white" opacity=".65" class="light-5"/>
+          <circle cx="254" cy="34"  r="2"   fill="white" opacity=".7"  class="light-2"/>
+          <circle cx="278" cy="54"  r="1.5" fill="white" opacity=".5"  class="light-4"/>
+          <circle cx="296" cy="38"  r="2.5" fill="white" opacity=".65" class="light-6"/>
+          <circle cx="138" cy="32"  r="1.5" fill="white" opacity=".45" class="light-7"/>
+          <circle cx="230" cy="48"  r="1.5" fill="white" opacity=".5"  class="light-1"/>
+        </g>
+
+        <!-- ③ MOON — crescent (filled circle + cutout) -->
+        <g class="il-moon">
+          <circle cx="54" cy="78" r="28" fill="#FFFCE0" opacity=".92" filter="url(#glow)"/>
+          <circle cx="66" cy="70" r="22" fill="#28B872"/>
+          <circle cx="54" cy="78" r="36" fill="#FFFCE0" opacity=".06"/>
+        </g>
+
+        <!-- ④ MOUNTAIN FILL (fades in after outline draws) -->
+        <!-- Secondary peak left -->
+        <path class="il-mtn-fill"
+          d="M28 300 C36 274 50 248 68 228 C82 212 94 204 104 196 C112 188 116 178 110 168 C106 160 100 155 108 148 C114 142 124 140 130 148 C136 156 134 168 130 180 C126 192 128 204 138 214 C148 222 156 232 160 248 C162 256 164 270 164 290 Z"
+          fill="url(#mtnGrad2)" opacity=".85"/>
+        <!-- Main central peak -->
+        <path class="il-mtn-fill"
+          d="M52 300 C60 278 72 254 88 234 C102 216 116 200 130 184 C142 170 150 156 158 138 C164 124 168 110 174 96 C180 110 184 126 192 142 C202 160 214 174 226 188 C240 204 254 218 264 236 C278 256 288 278 294 300 Z"
+          fill="url(#mtnGrad)"/>
+
+        <!-- ④ MOUNTAIN OUTLINE — draws in -->
+        <!-- Secondary left peak outline -->
+        <path class="il-mtn-line"
+          d="M28 300 C36 274 50 248 68 228 C82 212 94 204 104 196 C112 188 116 178 110 168 C106 160 100 155 108 148 C114 142 124 140 130 148 C136 156 134 168 130 180 C126 192 128 204 138 214 C148 222 156 232 160 248 C162 256 164 270 164 290"
+          stroke="#111" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <!-- Main central peak outline -->
+        <path class="il-mtn-line"
+          d="M52 300 C60 278 72 254 88 234 C102 216 116 200 130 184 C142 170 150 156 158 138 C164 124 168 110 174 96 C180 110 184 126 192 142 C202 160 214 174 226 188 C240 204 254 218 264 236 C278 256 288 278 294 300"
+          stroke="#111" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+        <!-- ⑤ SNOW — organic blobs -->
+        <!-- Main snow cap -->
+        <path class="il-snow"
+          d="M168 98 C170 90 172 80 174 72 C176 64 178 58 176 56 C172 54 168 62 164 72 C160 82 158 94 158 104 C161 99 165 97 168 98 Z"
+          fill="white" opacity=".95"/>
+        <!-- Snow right shoulder -->
+        <path class="il-snow"
+          d="M196 132 C200 122 206 114 210 110 C213 106 215 107 212 115 C210 121 206 128 202 134 Z"
+          fill="white" opacity=".82"/>
+        <!-- Snow left trickle -->
+        <path class="il-snow"
+          d="M155 144 C151 136 148 128 147 122 C146 117 147 116 150 122 C153 128 156 138 158 146 Z"
+          fill="white" opacity=".78"/>
+
+        <!-- ⑥ GROUND HILLS -->
+        <g class="il-ground">
+          <!-- Far rolling hill left -->
+          <path d="M0 308 C18 286 44 268 72 264 C90 261 104 270 120 266 C134 263 142 253 154 257 C166 261 170 276 174 296 L174 340 L0 340 Z" fill="#193619"/>
+          <!-- Far rolling hill right -->
+          <path d="M190 296 C194 276 200 262 214 258 C228 254 240 264 254 268 C270 272 284 263 300 266 C326 270 348 287 362 308 L362 340 L190 340 Z" fill="#193619"/>
+          <!-- Near ground wave -->
+          <path d="M0 322 C28 310 66 317 108 313 C144 309 172 316 200 312 C228 308 258 315 298 311 C328 308 348 314 362 318 L362 340 L0 340 Z" fill="#0E2410"/>
+        </g>
+
+        <!-- ⑦ LEFT PINE TREE — logo-style 4-tier silhouette -->
+        <path class="il-tree-fill"
+          d="M89 318 L89 305
+             C78 302 60 296 42 288 C34 283 34 276 40 272 C50 268 62 265 64 263
+             C60 260 52 254 50 250 C44 246 44 240 52 237 C60 234 70 231 72 229
+             C68 226 60 220 58 216 C54 212 56 207 64 204 C70 201 78 199 80 197
+             C76 194 68 188 66 185 C62 181 66 176 74 174 C80 172 88 170 90 169
+             C88 165 82 160 80 157 C78 153 82 148 88 144 C92 141 95 140 95 140
+             L95 132
+             C95 140 98 141 100 144 C108 148 112 153 110 157 C108 160 102 165 100 169
+             C100 170 112 172 120 174 C128 176 132 181 126 185 C124 188 116 194 110 197
+             C112 199 122 201 126 204 C134 207 136 212 132 216 C130 220 122 226 118 229
+             C120 231 130 234 134 237 C142 240 146 246 140 250 C138 254 130 260 126 263
+             C128 265 140 268 150 272 C156 276 156 283 150 288 C144 296 126 302 101 305
+             L101 318 Z"
+          fill="#183E17"/>
+        <path class="il-tree-line"
+          d="M89 318 L89 305
+             C78 302 60 296 42 288 C34 283 34 276 40 272 C50 268 62 265 64 263
+             C60 260 52 254 50 250 C44 246 44 240 52 237 C60 234 70 231 72 229
+             C68 226 60 220 58 216 C54 212 56 207 64 204 C70 201 78 199 80 197
+             C76 194 68 188 66 185 C62 181 66 176 74 174 C80 172 88 170 90 169
+             C88 165 82 160 80 157 C78 153 82 148 88 144 C92 141 95 140 95 140
+             L95 132
+             C95 140 98 141 100 144 C108 148 112 153 110 157 C108 160 102 165 100 169
+             C100 170 112 172 120 174 C128 176 132 181 126 185 C124 188 116 194 110 197
+             C112 199 122 201 126 204 C134 207 136 212 132 216 C130 220 122 226 118 229
+             C120 231 130 234 134 237 C142 240 146 246 140 250 C138 254 130 260 126 263
+             C128 265 140 268 150 272 C156 276 156 283 150 288 C144 296 126 302 101 305
+             L101 318"
+          stroke="#0B1D0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+        <!-- ⑧ RIGHT PINE TREE — mirror of left -->
+        <path class="il-tree2-fill"
+          d="M268 318 L268 305
+             C279 302 297 296 315 288 C323 283 323 276 317 272 C307 268 295 265 293 263
+             C297 260 305 254 307 250 C313 246 313 240 305 237 C297 234 287 231 285 229
+             C289 226 297 220 299 216 C303 212 301 207 293 204 C287 201 279 199 277 197
+             C281 194 289 188 291 185 C295 181 291 176 283 174 C277 172 269 170 267 169
+             C269 165 275 160 277 157 C279 153 275 148 269 144 C265 141 262 140 262 140
+             L262 132
+             C262 140 259 141 257 144 C249 148 245 153 247 157 C249 160 255 165 257 169
+             C257 170 245 172 237 174 C229 176 225 181 231 185 C233 188 241 194 247 197
+             C245 199 235 201 231 204 C223 207 221 212 225 216 C227 220 235 226 239 229
+             C237 231 227 234 223 237 C215 240 211 246 217 250 C219 254 227 260 231 263
+             C229 265 217 268 207 272 C201 276 201 283 207 288 C213 296 231 302 256 305
+             L256 318 Z"
+          fill="#183E17"/>
+        <path class="il-tree2-line"
+          d="M268 318 L268 305
+             C279 302 297 296 315 288 C323 283 323 276 317 272 C307 268 295 265 293 263
+             C297 260 305 254 307 250 C313 246 313 240 305 237 C297 234 287 231 285 229
+             C289 226 297 220 299 216 C303 212 301 207 293 204 C287 201 279 199 277 197
+             C281 194 289 188 291 185 C295 181 291 176 283 174 C277 172 269 170 267 169
+             C269 165 275 160 277 157 C279 153 275 148 269 144 C265 141 262 140 262 140
+             L262 132
+             C262 140 259 141 257 144 C249 148 245 153 247 157 C249 160 255 165 257 169
+             C257 170 245 172 237 174 C229 176 225 181 231 185 C233 188 241 194 247 197
+             C245 199 235 201 231 204 C223 207 221 212 225 216 C227 220 235 226 239 229
+             C237 231 227 234 223 237 C215 240 211 246 217 250 C219 254 227 260 231 263
+             C229 265 217 268 207 272 C201 276 201 283 207 288 C213 296 231 302 256 305
+             L256 318"
+          stroke="#0B1D0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+        <!-- Small flanking trees -->
+        <path class="il-tree-sm"
+          d="M42 318 L42 310
+             C38 308 30 304 24 300 C18 296 19 292 25 290 C30 288 38 287 40 286
+             C36 284 28 280 24 276 C20 272 21 268 28 266 C34 264 42 263 44 262
+             C40 260 34 256 32 253 C28 249 30 245 38 243 C42 241 46 241 46 241
+             L46 232
+             C46 241 50 241 54 243 C62 245 64 249 60 253 C58 256 52 260 50 262
+             C52 263 60 264 66 266 C73 268 74 272 70 276 C66 280 58 284 54 286
+             C56 287 64 288 69 290 C75 292 74 296 68 300 C62 304 54 308 50 310
+             L50 318 Z"
+          fill="#183E17" stroke="#0B1D0B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="il-tree-sm"
+          d="M318 318 L318 310
+             C322 308 330 304 336 300 C342 296 341 292 335 290 C330 288 322 287 320 286
+             C324 284 332 280 336 276 C340 272 339 268 332 266 C326 264 318 263 316 262
+             C320 260 326 256 328 253 C332 249 330 245 322 243 C318 241 314 241 314 241
+             L314 232
+             C314 241 310 241 306 243 C298 245 296 249 300 253 C302 256 308 260 310 262
+             C308 263 300 264 294 266 C287 268 286 272 290 276 C294 280 302 284 306 286
+             C304 287 296 288 291 290 C285 292 286 296 292 300 C298 304 306 308 310 310
+             L310 318 Z"
+          fill="#183E17" stroke="#0B1D0B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- ⑨ TENT — concave sides, organic -->
+        <!-- Tent fill -->
+        <path class="il-tent-fill"
+          d="M142 320 C147 298 157 274 166 258 C169 253 172 250 174 248 C176 250 179 253 182 258 C191 274 201 298 206 320 Z"
+          fill="url(#tentGrad)"/>
+        <!-- Left shadow -->
+        <path class="il-tent-fill"
+          d="M142 320 C148 298 158 274 166 258 C163 264 158 282 154 300 C151 308 148 314 146 320 Z"
+          fill="url(#tentShade)" opacity=".45"/>
+        <!-- Tent outline — concave sides drawn in -->
+        <path class="il-tent-line"
+          d="M142 320 C148 296 159 270 167 256 C170 250 173 247 174 246 C175 247 178 250 181 256 C189 270 200 296 206 320"
+          stroke="#B84800" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <!-- Door arch -->
+        <path class="il-tent-fill"
+          d="M168 320 C167 308 167 296 169 288 C170 283 172 280 174 280 C176 280 178 283 179 288 C181 296 181 308 180 320 Z"
+          fill="#FFE090" opacity=".55"/>
+        <!-- Tent peak accent -->
+        <circle cx="174" cy="246" r="3" fill="#F8C840" opacity=".8" class="il-tent-fill"/>
+
+        <!-- ⑩ STRING LIGHTS -->
+        <g class="il-lights">
+          <!-- Wire -->
+          <path d="M136 272 C144 268 152 270 160 266 C166 263 171 261 174 261 C177 261 182 263 188 266 C196 270 204 268 212 272"
+            stroke="#7A5020" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <!-- Bulbs -->
+          <circle cx="139" cy="274" r="3.5" fill="#FFE566" class="light-1" filter="url(#glow)"/>
+          <circle cx="150" cy="270" r="3"   fill="#FFE566" class="light-3"/>
+          <circle cx="160" cy="267" r="3"   fill="#FFE566" class="light-5"/>
+          <circle cx="170" cy="262" r="4"   fill="#FFFAAA" class="light-2" filter="url(#glow)"/>
+          <circle cx="180" cy="267" r="3"   fill="#FFE566" class="light-4"/>
+          <circle cx="190" cy="270" r="3"   fill="#FFE566" class="light-6"/>
+          <circle cx="200" cy="274" r="3.5" fill="#FFE566" class="light-7" filter="url(#glow)"/>
+        </g>
+
+        <!-- ⑪ SMOKE -->
+        <g class="il-smoke">
+          <ellipse cx="174" cy="242" rx="5"   ry="4.5" fill="white" opacity=".4"  class="smoke-1"/>
+          <ellipse cx="177" cy="230" rx="4.5" ry="4"   fill="white" opacity=".28" class="smoke-2"/>
+          <ellipse cx="173" cy="220" rx="3.5" ry="3"   fill="white" opacity=".18" class="smoke-3"/>
+        </g>
+
+        <!-- Foreground grass -->
+        <path class="il-ground"
+          d="M0 330 C28 322 64 328 102 324 C140 320 172 327 200 323 C228 319 260 326 300 322 C328 319 350 325 362 322 L362 340 L0 340 Z"
+          fill="#091A09"/>
+      </svg>
+    </div>
+  </div>
+
+</div><!-- /hero-body -->
+
+</div><!-- /page -->
+</body>
+</html>

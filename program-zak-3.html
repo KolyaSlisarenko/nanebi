@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Закарпаття 3 дні — Na Nebi Camp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange:   #E8521A;
+    --yellow:   #F0B429;
+    --yellow-lt:#FFD966;
+    --green:    #1A5C3A;
+    --green-md: #2D8A58;
+    --green-lt: #A8D5B8;
+    --bg:       #FEFAF4;
+    --ink:      #1A1F1A;
+    --muted:    #6B7566;
+    --cream:    #F0EAD6;
+  }
+
+  html, body {
+    width: 100%;
+    background: var(--bg);
+    font-family: 'Syne', sans-serif;
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulseDot {
+    0%,100% { transform: scale(1); opacity:1; }
+    50%     { transform: scale(1.5); opacity:.6; }
+  }
+
+  /* ══ NAV ══ */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 24px;
+    background: var(--bg);
+    border-bottom: 1.5px solid rgba(26,31,26,.08);
+    animation: fadeUp .4s ease both;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+  .logo-text { display: flex; flex-direction: column; }
+  .logo-name { font-family:'Fredoka',sans-serif; font-size:19px; font-weight:700; color:var(--ink); line-height:1; }
+  .logo-sub  { font-family:'Syne',sans-serif; font-size:9px; font-weight:700; color:var(--orange); letter-spacing:.18em; text-transform:uppercase; line-height:1; margin-top:2px; }
+  .nav-links { display:none; gap:24px; align-items:center; }
+  .nav-links a { font-family:'Syne',sans-serif; font-size:13.5px; font-weight:600; color:var(--ink); text-decoration:none; transition:color .15s; }
+  .nav-links a:hover { color:var(--orange); }
+  .nav-cta {
+    font-family:'Fredoka',sans-serif; font-size:14px; font-weight:600;
+    color:white; background:var(--orange); padding:9px 18px;
+    border-radius:50px; cursor:pointer; text-decoration:none;
+    box-shadow:3px 3px 0 var(--green); transition:transform .15s,box-shadow .15s; white-space:nowrap;
+  }
+  .nav-cta:hover { transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--green); }
+
+  /* ══ PROGRAM HEADER ══ */
+  .prog-header {
+    background: var(--green);
+    padding: 48px 24px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .prog-header::after {
+    content:'';
+    position:absolute; bottom:-2px; left:0; right:0; height:36px;
+    background: var(--bg);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  .prog-location {
+    font-family:'Syne',sans-serif; font-size:11px; font-weight:700;
+    color: rgba(255,255,255,.65); letter-spacing:.18em; text-transform:uppercase;
+    margin-bottom: 10px;
+  }
+  .prog-title {
+    font-family:'Fredoka',sans-serif; font-size: clamp(36px,9vw,56px); font-weight:700;
+    color: white; line-height: 1.05; margin-bottom:14px;
+  }
+  .prog-title span { color: var(--yellow); }
+  .prog-meta { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:24px; }
+  .prog-badge {
+    display:inline-flex; align-items:center; gap:7px;
+    background: rgba(255,255,255,.15); border-radius:50px;
+    padding: 7px 16px;
+    font-family:'Syne',sans-serif; font-size:13px; font-weight:600; color:white;
+  }
+  .prog-price {
+    font-family:'Fredoka',sans-serif; font-size:28px; font-weight:700; color:var(--yellow);
+    margin-bottom: 20px;
+  }
+  .prog-price span { font-family:'Syne',sans-serif; font-size:13px; font-weight:500; color:rgba(255,255,255,.6); }
+  .prog-cta-btn {
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Fredoka',sans-serif; font-size:17px; font-weight:600;
+    color:var(--green); background:var(--yellow);
+    padding:13px 28px; border-radius:50px; text-decoration:none;
+    box-shadow:3px 3px 0 rgba(0,0,0,.2); transition:transform .15s, box-shadow .15s;
+  }
+  .prog-cta-btn:hover { transform:translate(-1px,-1px); box-shadow:4px 4px 0 rgba(0,0,0,.2); }
+
+  /* ══ MAIN CONTENT ══ */
+  .main { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  .section-label {
+    font-family:'Syne',sans-serif; font-size:10px; font-weight:700;
+    color:var(--muted); letter-spacing:.2em; text-transform:uppercase;
+    margin-bottom: 32px;
+  }
+
+  /* ══ TIMELINE ══ */
+  .timeline {
+    position: relative;
+    padding-left: 0;
+  }
+  .timeline-wavy {
+    position:absolute; left: 28px; top:0; bottom:0; width:4px;
+    pointer-events:none; z-index:0;
+    overflow:visible;
+  }
+
+  .day-card {
+    display: flex; gap: 20px;
+    margin-bottom: 40px;
+    position: relative; z-index:1;
+    animation: fadeUp .5s ease both;
+  }
+  .day-num-col { flex-shrink: 0; display:flex; flex-direction:column; align-items:center; }
+  .day-circle {
+    width: 58px; height: 58px; flex-shrink:0;
+    position: relative; display:flex; align-items:center; justify-content:center;
+  }
+  .day-circle svg.dc-bg {
+    position:absolute; inset:0; width:100%; height:100%; overflow:visible;
+  }
+  .day-num-text {
+    position:relative; z-index:1;
+    font-family:'Fredoka',sans-serif; font-size:22px; font-weight:700; color:white;
+    line-height:1;
+  }
+
+  .day-body { flex:1; padding-top:6px; }
+  .day-label {
+    font-family:'Syne',sans-serif; font-size:10px; font-weight:700;
+    color:var(--orange); letter-spacing:.16em; text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .day-title {
+    font-family:'Fredoka',sans-serif; font-size:24px; font-weight:700;
+    color:var(--ink); line-height:1.1; margin-bottom:14px;
+  }
+
+  /* period blocks */
+  .period { margin-bottom:14px; }
+  .period-name {
+    font-family:'Syne',sans-serif; font-size:10.5px; font-weight:700;
+    color:var(--muted); letter-spacing:.14em; text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .activities { display:flex; flex-direction:column; gap:6px; }
+  .activity {
+    display:flex; align-items:flex-start; gap:10px;
+    font-family:'Syne',sans-serif; font-size:14px; font-weight:400; color:var(--ink);
+    line-height:1.45;
+  }
+  .act-icon { font-size:18px; flex-shrink:0; margin-top:-1px; }
+
+  /* ══ INCLUSIONS ══ */
+  .includes-section { margin-top: 64px; }
+  .includes-title {
+    font-family:'Fredoka',sans-serif; font-size:30px; font-weight:700;
+    color:var(--ink); margin-bottom:24px;
+    position:relative; display:inline-block;
+  }
+  .includes-title::after {
+    content:'';
+    position:absolute; bottom:-6px; left:0; right:0; height:4px;
+    background: var(--yellow); border-radius:2px;
+  }
+  .includes-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  }
+  .include-item {
+    display:flex; align-items:flex-start; gap:10px;
+    background:white; border-radius:16px; padding:14px 16px;
+    box-shadow: 0 2px 8px rgba(26,31,26,.06);
+  }
+  .include-icon { font-size:20px; flex-shrink:0; }
+  .include-text { font-family:'Syne',sans-serif; font-size:13px; font-weight:500; color:var(--ink); line-height:1.4; }
+
+  /* ══ BOTTOM CTA ══ */
+  .bottom-cta {
+    margin-top: 64px;
+    background: var(--green);
+    border-radius: 28px;
+    padding: 40px 28px;
+    text-align: center;
+    position:relative; overflow:hidden;
+  }
+  .bottom-cta-sub {
+    font-family:'Syne',sans-serif; font-size:12px; font-weight:600;
+    color:rgba(255,255,255,.55); letter-spacing:.16em; text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .bottom-cta-title {
+    font-family:'Fredoka',sans-serif; font-size:clamp(28px,7vw,40px); font-weight:700;
+    color:white; margin-bottom:6px; line-height:1.1;
+  }
+  .bottom-cta-price {
+    font-family:'Fredoka',sans-serif; font-size:22px; font-weight:600;
+    color:var(--yellow); margin-bottom:24px;
+  }
+  .bottom-cta-btn {
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Fredoka',sans-serif; font-size:18px; font-weight:600;
+    color:var(--green); background:var(--yellow);
+    padding:14px 32px; border-radius:50px; text-decoration:none;
+    box-shadow:3px 3px 0 rgba(0,0,0,.2); transition:transform .15s, box-shadow .15s;
+  }
+  .bottom-cta-btn:hover { transform:translate(-1px,-1px); box-shadow:4px 4px 0 rgba(0,0,0,.2); }
+
+  /* ══ FOOTER ══ */
+  .footer {
+    background: var(--ink); color:rgba(255,255,255,.5);
+    padding: 36px 24px;
+    text-align:center;
+  }
+  .footer-logo { font-family:'Fredoka',sans-serif; font-size:22px; font-weight:700; color:white; margin-bottom:6px; }
+  .footer-sub { font-family:'Syne',sans-serif; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--orange); margin-bottom:20px; }
+  .footer-links { display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-bottom:20px; }
+  .footer-links a { font-family:'Syne',sans-serif; font-size:13px; color:rgba(255,255,255,.55); text-decoration:none; transition:color .15s; }
+  .footer-links a:hover { color:white; }
+  .footer-copy { font-family:'Syne',sans-serif; font-size:11px; color:rgba(255,255,255,.25); }
+
+  /* ══ MOBILE STICKY BAR ══ */
+  .sticky-bar {
+    position:fixed; bottom:0; left:0; right:0; z-index:200;
+    background:white; padding:12px 20px;
+    box-shadow:0 -4px 24px rgba(26,31,26,.12);
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+  }
+  .sticky-price { font-family:'Fredoka',sans-serif; font-size:20px; font-weight:700; color:var(--ink); }
+  .sticky-price span { font-family:'Syne',sans-serif; font-size:11px; font-weight:500; color:var(--muted); display:block; }
+  .sticky-cta {
+    font-family:'Fredoka',sans-serif; font-size:15px; font-weight:600;
+    color:white; background:var(--orange); padding:12px 22px;
+    border-radius:50px; text-decoration:none; white-space:nowrap;
+    box-shadow:3px 3px 0 var(--green); transition:transform .15s, box-shadow .15s;
+  }
+  .sticky-cta:hover { transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--green); }
+
+  @media (min-width:1024px) {
+    .nav { padding: 18px 64px; }
+    .nav-links { display:flex; }
+    .prog-header { padding: 64px 64px 52px; }
+    .main { padding: 64px 40px 120px; }
+    .includes-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .sticky-bar { display:none; }
+    .bottom-cta { padding: 56px 40px; }
+  }
+  @media (min-width:768px) {
+    .nav { padding: 16px 40px; }
+    .prog-header { padding: 56px 40px 48px; }
+    .main { padding: 56px 40px 100px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <a href="index.html" class="logo">
+    <img class="logo-img" src="logo.jpg" alt="Na Nebi Camp">
+    <div class="logo-text">
+      <span class="logo-name">na nebi</span>
+      <span class="logo-sub">camp</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="pro-kemp.html">Про кемп</a>
+    <a href="zakarpattya.html">Закарпаття</a>
+    <a href="lvivshyna.html">Львівщина</a>
+    <a href="vsi-turi.html">Всі тури</a>
+    <a href="korporatyvni.html">Корпоративні</a>
+  </div>
+  <a href="vsi-turi.html" class="nav-cta">Обрати тур →</a>
+</nav>
+
+<!-- ══ PROGRAM HEADER ══ -->
+<header class="prog-header">
+  <div class="prog-location">📍 Закарпаття · Карпати</div>
+  <h1 class="prog-title">Закарпаття<br><span>3 дні</span></h1>
+  <div class="prog-meta">
+    <div class="prog-badge">🏕 Намет на дереві</div>
+    <div class="prog-badge">🥾 Легкий похід</div>
+    <div class="prog-badge">🌲 Природа</div>
+  </div>
+  <div class="prog-price">від 2 900 грн <span>/ особа</span></div>
+  <a href="vsi-turi.html?location=zakarpattya&days=3" class="prog-cta-btn">Обрати цей тур →</a>
+</header>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+
+  <div class="section-label">Програма · День за днем</div>
+
+  <!-- Timeline wavy line SVG placed relatively -->
+  <div class="timeline">
+
+    <!-- SVG wavy connector -->
+    <svg class="timeline-wavy" viewBox="0 0 4 100%" preserveAspectRatio="none" fill="none" style="position:absolute;left:27px;top:58px;width:4px;height:calc(100% - 100px);overflow:visible;">
+      <path d="M2 0 C3 30 1 60 2 90 C3 120 1 150 2 180 C3 210 1 240 2 270 C3 300 1 330 2 360" stroke="#A8D5B8" stroke-width="2.5" stroke-dasharray="6 4" stroke-linecap="round" fill="none"/>
+    </svg>
+
+    <!-- День 1 -->
+    <div class="day-card" style="animation-delay:.1s">
+      <div class="day-num-col">
+        <div class="day-circle">
+          <svg class="dc-bg" viewBox="0 0 58 58" fill="none">
+            <path d="M8 4 C16 1 30 2 38 3 C48 4 56 8 57 18 C58 28 57 38 54 46 C51 54 44 58 34 57 C24 56 10 56 4 48 C-2 40 1 26 2 16 C4 8 4 6 8 4 Z" fill="#1A5C3A"/>
+          </svg>
+          <span class="day-num-text">1</span>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-label">День перший</div>
+        <div class="day-title">Прибуття та перший захід сонця</div>
+        <div class="period">
+          <div class="period-name">Вечір</div>
+          <div class="activities">
+            <div class="activity"><span class="act-icon">🏕</span><span>Заселення в намет на дереві — ваш дім на ці дні</span></div>
+            <div class="activity"><span class="act-icon">👋</span><span>Знайомство з кемпом та іншими учасниками</span></div>
+            <div class="activity"><span class="act-icon">🍲</span><span>Вечеря біля вогнища — гречана каша та чай з Карпат</span></div>
+            <div class="activity"><span class="act-icon">⭐</span><span>Зоряне небо: перший вечір без міського світла</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- День 2 -->
+    <div class="day-card" style="animation-delay:.2s">
+      <div class="day-num-col">
+        <div class="day-circle">
+          <svg class="dc-bg" viewBox="0 0 58 58" fill="none">
+            <path d="M6 6 C14 2 28 1 38 3 C50 5 57 11 58 22 C59 33 56 43 51 50 C46 57 36 59 24 58 C12 57 4 52 2 42 C0 32 1 18 3 10 C4 7 5 7 6 6 Z" fill="#E8521A"/>
+          </svg>
+          <span class="day-num-text">2</span>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-label">День другий</div>
+        <div class="day-title">Туман, гори та гітара вночі</div>
+        <div class="period">
+          <div class="period-name">Ранок</div>
+          <div class="activities">
+            <div class="activity"><span class="act-icon">🌫</span><span>Ранковий туман над лісом — просто дивитися</span></div>
+            <div class="activity"><span class="act-icon">☕</span><span>Гарячий сніданок: яєчня, хліб, трав'яний чай</span></div>
+          </div>
+        </div>
+        <div class="period">
+          <div class="period-name">День</div>
+          <div class="activities">
+            <div class="activity"><span class="act-icon">🥾</span><span>Похід на оглядовий майданчик (6 км, середній темп)</span></div>
+            <div class="activity"><span class="act-icon">📸</span><span>Панорама Карпатських гір з вершини</span></div>
+            <div class="activity"><span class="act-icon">🍱</span><span>Обід у таборі після повернення</span></div>
+          </div>
+        </div>
+        <div class="period">
+          <div class="period-name">Вечір</div>
+          <div class="activities">
+            <div class="activity"><span class="act-icon">🛏</span><span>Вільний час: гамаки, річка, читання</span></div>
+            <div class="activity"><span class="act-icon">🔥</span><span>Вогнище + жива гітара до пізньої ночі</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- День 3 -->
+    <div class="day-card" style="animation-delay:.3s">
+      <div class="day-num-col">
+        <div class="day-circle">
+          <svg class="dc-bg" viewBox="0 0 58 58" fill="none">
+            <path d="M10 3 C20 0 34 1 44 4 C54 7 58 15 58 26 C58 37 55 48 48 53 C41 58 28 58 16 55 C5 52 0 44 0 32 C0 20 2 10 6 5 C7 4 9 4 10 3 Z" fill="#F0B429"/>
+          </svg>
+          <span class="day-num-text" style="color:var(--ink)">3</span>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-label">День третій</div>
+        <div class="day-title">Ранковий ритуал та повернення</div>
+        <div class="period">
+          <div class="period-name">Ранок</div>
+          <div class="activities">
+            <div class="activity"><span class="act-icon">☕</span><span>Кава-ритуал на світанку: разом чекати сонця</span></div>
+            <div class="activity"><span class="act-icon">🍳</span><span>Прощальний сніданок у колі</span></div>
+            <div class="activity"><span class="act-icon">💬</span><span>Підсумки, спогади, обміни контактами</span></div>
+          </div>
+        </div>
+        <div class="period">
+          <div class="period-name">До полудня</div>
+          <div class="activities">
+            <div class="activity"><span class="act-icon">🚗</span><span>Виїзд до 12:00 — відпочилий та заземлений</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /timeline -->
+
+  <!-- ══ INCLUSIONS ══ -->
+  <div class="includes-section">
+    <h2 class="includes-title">Що включено</h2>
+    <div class="includes-grid">
+      <div class="include-item"><span class="include-icon">🏕</span><span class="include-text">Намет на дереві (2 ночі)</span></div>
+      <div class="include-item"><span class="include-icon">🍽</span><span class="include-text">Харчування 3-разове</span></div>
+      <div class="include-item"><span class="include-icon">🥾</span><span class="include-text">Похід з гідом</span></div>
+      <div class="include-item"><span class="include-icon">🔥</span><span class="include-text">Вогнище щовечора</span></div>
+      <div class="include-item"><span class="include-icon">🎒</span><span class="include-text">Знаряддя для походу</span></div>
+      <div class="include-item"><span class="include-icon">🌿</span><span class="include-text">Трав'яний чай з Карпат</span></div>
+    </div>
+  </div>
+
+  <!-- ══ BOTTOM CTA ══ -->
+  <div class="bottom-cta">
+    <div class="bottom-cta-sub">Закарпаття · 3 дні</div>
+    <div class="bottom-cta-title">Готовий до відпочинку<br>на небі?</div>
+    <div class="bottom-cta-price">від 2 900 грн</div>
+    <a href="vsi-turi.html?location=zakarpattya&days=3" class="bottom-cta-btn">Обрати цей тур →</a>
+  </div>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-logo">na nebi</div>
+  <div class="footer-sub">camp</div>
+  <div class="footer-links">
+    <a href="pro-kemp.html">Про кемп</a>
+    <a href="zakarpattya.html">Закарпаття</a>
+    <a href="lvivshyna.html">Львівщина</a>
+    <a href="vsi-turi.html">Всі тури</a>
+    <a href="korporatyvni.html">Корпоративні</a>
+  </div>
+  <div class="footer-copy">© 2025 Na Nebi Camp · Усі права захищено</div>
+</footer>
+
+<!-- ══ MOBILE STICKY BAR ══ -->
+<div class="sticky-bar">
+  <div class="sticky-price">
+    <span>від</span>
+    2 900 грн
+  </div>
+  <a href="vsi-turi.html?location=zakarpattya&days=3" class="sticky-cta">Обрати тур</a>
+</div>
+
+</body>
+</html>

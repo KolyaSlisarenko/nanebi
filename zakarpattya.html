@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Закарпаття — Na Nebi Camp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --orange:   #E8521A;
+  --yellow:   #F0B429;
+  --yellow-lt:#FFD966;
+  --green:    #1A5C3A;
+  --green-md: #2D8A58;
+  --green-lt: #A8D5B8;
+  --bg:       #FEFAF4;
+  --ink:      #1A1F1A;
+  --muted:    #6B7566;
+  --cream:    #F0EAD6;
+  --teal:     #1A7A5C;
+  --teal-lt:  #B8E0D4;
+  --nav-height: 72px;
+}
+
+html, body {
+  width: 100%;
+  background: var(--bg);
+  font-family: 'Syne', sans-serif;
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ─── KEYFRAMES ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulseDot {
+  0%,100% { transform: scale(1); opacity:1; }
+  50%     { transform: scale(1.5); opacity:.6; }
+}
+@keyframes floatBlob {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50%     { transform: translateY(-6px) rotate(2deg); }
+}
+@keyframes draw200 { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
+@keyframes twinkle {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.3; }
+}
+@keyframes smokePuff {
+  0%   { transform: translateY(0) scale(1); opacity: 0.5; }
+  100% { transform: translateY(-18px) scale(1.6); opacity: 0; }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SCROLL ANIMATION ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: .1s; }
+.reveal-delay-2 { transition-delay: .2s; }
+.reveal-delay-3 { transition-delay: .3s; }
+
+/* ══════ NAV ══════ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(254,250,244,.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  border-bottom: 1.5px solid rgba(26,31,26,.07);
+}
+
+.logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; text-decoration: none; }
+.logo-img {
+  width: 42px; height: 42px;
+  border-radius: 50%; object-fit: cover; display: block;
+}
+.logo-text { display: flex; flex-direction: column; }
+.logo-name {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 20px; font-weight: 700;
+  color: var(--ink); line-height: 1; letter-spacing: -.01em;
+}
+.logo-sub {
+  font-family: 'Syne', sans-serif;
+  font-size: 9px; font-weight: 700;
+  color: var(--orange); letter-spacing: .18em;
+  text-transform: uppercase; line-height: 1; margin-top: 2px;
+}
+
+.nav-links { display: none; gap: 24px; align-items: center; }
+.nav-links a {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--ink); text-decoration: none;
+  transition: color .15s;
+}
+.nav-links a:hover { color: var(--green); }
+.nav-links a.active { color: var(--green); }
+
+.nav-right { display: flex; align-items: center; gap: 12px; }
+
+.nav-cta {
+  font-family: 'Fredoka', sans-serif; font-size: 15px; font-weight: 600;
+  color: white; background: var(--orange); padding: 10px 20px;
+  border-radius: 50px; cursor: pointer; letter-spacing: .01em;
+  box-shadow: 3px 3px 0 var(--green); text-decoration: none;
+  transition: transform .15s, box-shadow .15s; white-space: nowrap;
+  display: inline-block;
+}
+.nav-cta:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--green); }
+.nav-cta:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--green); }
+
+.burger {
+  display: flex; flex-direction: column; gap: 5px; cursor: pointer;
+  background: none; border: none; padding: 6px;
+}
+.burger span {
+  display: block; width: 24px; height: 2px;
+  background: var(--ink); border-radius: 2px; transition: .2s;
+}
+
+.mobile-menu {
+  display: none; flex-direction: column; gap: 0;
+  background: var(--bg); border-bottom: 1.5px solid rgba(26,31,26,.07);
+  padding: 8px 24px 16px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600;
+  color: var(--ink); text-decoration: none; padding: 10px 0;
+  border-bottom: 1px solid rgba(26,31,26,.06);
+}
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a.active { color: var(--green); }
+
+/* ══════ HERO ══════ */
+.hero {
+  min-height: calc(100svh - var(--nav-height));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
+  padding: 32px 24px 84px;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg svg {
+  width: 100%; height: 100%;
+  position: absolute; inset: 0;
+}
+
+.hero-content-inner {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 700px);
+}
+
+.hero-overline {
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--green-lt); margin-bottom: 14px;
+  animation: fadeUp .5s .1s ease both;
+}
+
+.hero-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: clamp(36px, 10vw, 72px);
+  font-weight: 700; line-height: 1.05;
+  color: white;
+  letter-spacing: -.02em;
+  margin-bottom: 20px;
+  animation: fadeUp .6s .2s ease both;
+}
+
+.hero-title .accent-yellow { color: var(--yellow-lt); }
+
+.hero-desc {
+  font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 400;
+  line-height: 1.6; color: rgba(255,255,255,.8);
+  max-width: 520px;
+  animation: fadeUp .6s .35s ease both;
+  margin-bottom: 28px;
+}
+
+.hero-tags {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  animation: fadeUp .6s .45s ease both;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.12); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.25);
+  padding: 7px 14px; border-radius: 50px;
+  font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600;
+  color: white; white-space: nowrap;
+}
+.hero-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--yellow-lt); flex-shrink: 0; }
+
+/* scroll hint */
+.scroll-hint {
+  position: absolute;
+  bottom: max(20px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%);
+  z-index: 3;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  animation: fadeUp .6s .7s ease both;
+}
+.scroll-hint span {
+  font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+}
+.scroll-arrow {
+  width: 24px; height: 24px;
+  animation: floatBlob 2s ease-in-out infinite;
+}
+
+/* ══════ SECTION COMMON ══════ */
+.section { padding: 72px 24px; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+
+.section-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 12px;
+}
+.section-label::before {
+  content: '';
+  display: block; width: 20px; height: 2px;
+  background: var(--green); border-radius: 2px;
+}
+
+.section-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: clamp(28px, 5vw, 46px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--ink); letter-spacing: -.02em;
+  margin-bottom: 16px;
+}
+
+/* ══════ TOURS SECTION ══════ */
+.tours-section { background: var(--bg); }
+
+.tours-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.tour-card {
+  position: relative;
+  background: white;
+  border-radius: 24px;
+  padding: 28px 24px 24px;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 2px 12px rgba(26,31,26,.06);
+}
+.tour-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(26,92,58,.12);
+}
+.tour-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--green), var(--green-md));
+  border-radius: 24px 24px 0 0;
+}
+
+.tour-badge {
+  display: inline-block;
+  font-family: 'Fredoka', sans-serif; font-size: 13px; font-weight: 600;
+  color: var(--green); background: rgba(26,92,58,.08);
+  padding: 4px 12px; border-radius: 50px;
+  margin-bottom: 12px;
+}
+
+.tour-duration {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 32px; font-weight: 700;
+  color: var(--ink); line-height: 1;
+  margin-bottom: 6px;
+  letter-spacing: -.02em;
+}
+
+.tour-highlights {
+  list-style: none;
+  margin-bottom: 20px;
+}
+.tour-highlights li {
+  font-family: 'Syne', sans-serif; font-size: 13px;
+  color: var(--muted); padding: 5px 0;
+  display: flex; align-items: flex-start; gap: 8px;
+  border-bottom: 1px solid rgba(26,31,26,.05);
+}
+.tour-highlights li:last-child { border-bottom: none; }
+.tour-highlights li::before {
+  content: '→';
+  color: var(--green); flex-shrink: 0; margin-top: 1px;
+}
+
+.tour-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+}
+
+.tour-price {
+  display: flex; flex-direction: column;
+}
+.tour-price-from {
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+  color: var(--muted); letter-spacing: .06em; text-transform: uppercase;
+}
+.tour-price-value {
+  font-family: 'Fredoka', sans-serif; font-size: 26px; font-weight: 700;
+  color: var(--green); line-height: 1.1;
+}
+
+/* Organic SVG button */
+.btn-organic {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 10px 22px; cursor: pointer;
+  font-family: 'Fredoka', sans-serif; font-size: 15px; font-weight: 600;
+  text-decoration: none; color: white;
+  transition: transform .15s;
+  white-space: nowrap;
+}
+.btn-organic:hover { transform: translateY(-2px); }
+.btn-organic:active { transform: scale(.97); }
+.btn-organic svg.btn-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  overflow: visible; z-index: 0;
+}
+.btn-organic span { position: relative; z-index: 1; }
+
+.btn-green svg.btn-bg path { fill: var(--green); }
+.btn-outline-green { color: var(--green); }
+.btn-outline-green svg.btn-bg path { fill: none; stroke: var(--green); stroke-width: 2; }
+
+/* Tours bottom buttons */
+.tours-actions {
+  display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+}
+
+/* ══════ PHOTO GRID / GALLERY ══════ */
+.gallery-section { background: #F5F0E8; }
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.photo-cell {
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  min-height: 160px;
+  background: var(--cream);
+}
+.photo-cell.tall { grid-row: span 2; }
+.photo-cell.wide { grid-column: span 2; }
+
+.photo-cell svg {
+  width: 100%; height: 100%;
+  display: block;
+  min-height: 160px;
+}
+
+.photo-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(10,25,10,.7) 0%, transparent 100%);
+  padding: 20px 14px 12px;
+  font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600;
+  color: white; letter-spacing: .02em;
+}
+
+.video-placeholder {
+  background: var(--ink);
+  border-radius: 24px;
+  min-height: 220px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px; cursor: pointer;
+  position: relative; overflow: hidden;
+  margin-bottom: 16px;
+}
+.video-placeholder svg.bg {
+  position: absolute; inset: 0; width: 100%; height: 100%; opacity: .25;
+}
+.video-play-btn {
+  width: 60px; height: 60px;
+  background: var(--orange); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1;
+  box-shadow: 0 4px 20px rgba(232,82,26,.4);
+  transition: transform .2s;
+}
+.video-placeholder:hover .video-play-btn { transform: scale(1.1); }
+.video-label {
+  font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,.7); position: relative; z-index: 1;
+}
+
+.ugc-strip {
+  display: flex; align-items: center; gap: 12px;
+  background: white; border-radius: 16px;
+  padding: 14px 18px;
+}
+.ugc-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--green), var(--green-md));
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  font-family: 'Fredoka', sans-serif; font-size: 16px; font-weight: 700; color: white;
+}
+.ugc-text { flex: 1; }
+.ugc-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--ink); }
+.ugc-quote { font-family: 'Syne', sans-serif; font-size: 12px; color: var(--muted); line-height: 1.4; margin-top: 2px; }
+.ugc-stars { font-size: 14px; flex-shrink: 0; }
+
+/* ══════ INCLUSIONS ══════ */
+.inclusions-section { background: var(--bg); }
+
+.inclusions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.inclusion-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  background: white;
+  border-radius: 18px; padding: 18px 20px;
+  box-shadow: 0 2px 8px rgba(26,31,26,.04);
+  transition: transform .2s;
+}
+.inclusion-item:hover { transform: translateX(4px); }
+
+.inclusion-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(26,92,58,.12), rgba(45,138,88,.08));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+}
+
+.inclusion-body { flex: 1; }
+.inclusion-title {
+  font-family: 'Fredoka', sans-serif; font-size: 17px; font-weight: 600;
+  color: var(--ink); margin-bottom: 3px;
+}
+.inclusion-desc {
+  font-family: 'Syne', sans-serif; font-size: 12px; color: var(--muted);
+  line-height: 1.5;
+}
+
+.inclusions-note {
+  margin-top: 20px;
+  background: linear-gradient(135deg, rgba(26,92,58,.08), rgba(45,138,88,.05));
+  border-radius: 18px; padding: 18px 20px;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.inclusions-note-icon { font-size: 22px; flex-shrink: 0; }
+.inclusions-note-text {
+  font-family: 'Syne', sans-serif; font-size: 13px; color: var(--green);
+  font-weight: 600; line-height: 1.5;
+}
+
+/* ══════ CTA BANNER ══════ */
+.cta-section {
+  background: var(--green);
+  padding: 64px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='40' cy='40' r='30'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.cta-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative; z-index: 1;
+  text-align: center;
+}
+
+.cta-emoji { font-size: 36px; margin-bottom: 12px; display: block; }
+
+.cta-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: clamp(26px, 5vw, 40px);
+  font-weight: 700; line-height: 1.15;
+  color: white; letter-spacing: -.02em;
+  margin-bottom: 10px;
+}
+
+.cta-subtitle {
+  font-family: 'Syne', sans-serif; font-size: 15px;
+  color: rgba(255,255,255,.75); line-height: 1.5;
+  margin-bottom: 36px;
+}
+
+.cta-form {
+  background: white; border-radius: 28px;
+  padding: 28px 24px; text-align: left;
+}
+
+.form-row { margin-bottom: 14px; }
+.form-row label {
+  display: block;
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 6px;
+}
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  font-family: 'Syne', sans-serif; font-size: 15px;
+  color: var(--ink); background: var(--bg);
+  border: 1.5px solid rgba(26,31,26,.1);
+  border-radius: 14px; padding: 12px 16px;
+  outline: none; transition: border-color .15s;
+  resize: none;
+  appearance: none;
+}
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  border-color: var(--green);
+}
+.form-row textarea { min-height: 90px; }
+
+.form-grid-2 {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+
+.form-submit {
+  position: relative;
+  width: 100%; padding: 16px 24px; cursor: pointer;
+  font-family: 'Fredoka', sans-serif; font-size: 18px; font-weight: 700;
+  color: white; border: none; background: none;
+  transition: transform .15s; margin-top: 4px;
+}
+.form-submit:hover { transform: translateY(-2px); }
+.form-submit:active { transform: scale(.98); }
+.form-submit svg.btn-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  overflow: visible; z-index: 0;
+}
+.form-submit span { position: relative; z-index: 1; }
+
+/* ══════ FOOTER ══════ */
+.footer {
+  background: var(--ink);
+  padding: 48px 24px 32px;
+  color: rgba(255,255,255,.65);
+}
+
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
+}
+
+.footer-top {
+  display: grid; grid-template-columns: 1fr;
+  gap: 32px; padding-bottom: 32px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  margin-bottom: 24px;
+}
+
+.footer-brand .logo-name { color: white; }
+.footer-brand .logo-sub { color: var(--orange); }
+.footer-tagline {
+  font-family: 'Syne', sans-serif; font-size: 13px;
+  color: rgba(255,255,255,.45); line-height: 1.5; margin-top: 10px;
+}
+
+.footer-col-title {
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.35); margin-bottom: 14px;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+  font-family: 'Syne', sans-serif; font-size: 14px;
+  color: rgba(255,255,255,.65); text-decoration: none;
+  transition: color .15s;
+}
+.footer-links a:hover { color: white; }
+
+.footer-bottom {
+  display: flex; flex-direction: column; gap: 8px;
+  font-family: 'Syne', sans-serif; font-size: 12px;
+  color: rgba(255,255,255,.3);
+}
+
+/* ══════ RESPONSIVE ══════ */
+@media (min-width: 768px) {
+  :root { --nav-height: 76px; }
+  .nav { padding: 16px 48px; }
+  .nav-links { display: flex; }
+  .burger { display: none; }
+
+  .hero { padding: 48px 48px 92px; }
+
+  .section { padding: 96px 48px; }
+
+  .tours-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .photo-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 200px 200px;
+  }
+  .photo-cell { min-height: 200px; }
+  .photo-cell svg { min-height: 200px; }
+
+  .inclusions-grid { grid-template-columns: 1fr 1fr; }
+
+  .footer-top { grid-template-columns: 2fr 1fr 1fr; }
+  .footer-bottom { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+
+@media (min-width: 1024px) {
+  :root { --nav-height: 84px; }
+  .nav { padding: 18px 64px; }
+  .hero { padding: 64px 64px 96px; }
+  .section { padding: 112px 64px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════ NAV ══════ -->
+<nav class="nav">
+  <a href="index.html" class="logo">
+    <img class="logo-img" src="logo.jpg" alt="Na Nebi Camp">
+    <div class="logo-text">
+      <span class="logo-name">na nebi</span>
+      <span class="logo-sub">camp</span>
+    </div>
+  </a>
+
+  <div class="nav-links">
+    <a href="pro-kemp.html">Про кемп</a>
+    <a href="zakarpattya.html" class="active">Закарпаття</a>
+    <a href="lvivshyna.html">Львівщина</a>
+    <a href="vsi-turi.html">Всі тури</a>
+    <a href="korporatyvni.html">Корпоративні</a>
+  </div>
+
+  <div class="nav-right">
+    <a href="#cta" class="nav-cta">Підібрати тур →</a>
+    <button class="burger" id="burgerBtn" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="pro-kemp.html">Про кемп</a>
+  <a href="zakarpattya.html" class="active">Закарпаття</a>
+  <a href="lvivshyna.html">Львівщина</a>
+  <a href="vsi-turi.html">Всі тури</a>
+  <a href="korporatyvni.html">Корпоративні</a>
+</div>
+
+<!-- ══════ HERO ══════ -->
+<section class="hero">
+  <!-- Atmospheric SVG background — Carpathian night landscape -->
+  <div class="hero-bg">
+    <svg viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="zakSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0A1F14"/>
+          <stop offset="40%" stop-color="#122E1E"/>
+          <stop offset="100%" stop-color="#1A4A2A"/>
+        </linearGradient>
+        <linearGradient id="zakMtn1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1A3C28"/>
+          <stop offset="100%" stop-color="#0D2018"/>
+        </linearGradient>
+        <linearGradient id="zakMtn2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#234D35"/>
+          <stop offset="100%" stop-color="#122A1C"/>
+        </linearGradient>
+        <linearGradient id="zakGlow" cx="50%" cy="50%" r="50%" gradientUnits="userSpaceOnUse" x1="400" y1="300" x2="1040" y2="700">
+          <stop offset="0%" stop-color="#2D8A58" stop-opacity=".18"/>
+          <stop offset="100%" stop-color="#0A1F14" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="mist">
+          <feGaussianBlur stdDeviation="12"/>
+        </filter>
+        <filter id="softGlow">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Sky -->
+      <rect width="1440" height="900" fill="url(#zakSky)"/>
+      <!-- Atmospheric glow -->
+      <ellipse cx="720" cy="450" rx="700" ry="400" fill="url(#zakGlow)"/>
+
+      <!-- Stars -->
+      <g opacity=".7">
+        <circle cx="120" cy="60"  r="1.5" fill="white"/>
+        <circle cx="280" cy="40"  r="1"   fill="white"/>
+        <circle cx="380" cy="80"  r="1.5" fill="white"/>
+        <circle cx="460" cy="30"  r="1"   fill="white"/>
+        <circle cx="560" cy="55"  r="1.2" fill="white"/>
+        <circle cx="680" cy="25"  r="1.5" fill="white"/>
+        <circle cx="750" cy="70"  r="1"   fill="white"/>
+        <circle cx="850" cy="45"  r="1.5" fill="white"/>
+        <circle cx="960" cy="35"  r="1"   fill="white"/>
+        <circle cx="1060" cy="65" r="1.2" fill="white"/>
+        <circle cx="1160" cy="50" r="1.5" fill="white"/>
+        <circle cx="1280" cy="30" r="1"   fill="white"/>
+        <circle cx="1360" cy="75" r="1.5" fill="white"/>
+        <circle cx="200" cy="100" r="1"   fill="white"/>
+        <circle cx="500" cy="110" r="1.2" fill="white"/>
+        <circle cx="900" cy="90"  r="1"   fill="white"/>
+        <circle cx="1100" cy="110" r="1.5" fill="white"/>
+      </g>
+
+      <!-- Moon -->
+      <circle cx="1200" cy="120" r="55" fill="#FFFCE0" opacity=".85" filter="url(#softGlow)"/>
+      <circle cx="1222" cy="108" r="42" fill="#0A1F14"/>
+      <circle cx="1200" cy="120" r="70" fill="#FFFCE0" opacity=".04"/>
+
+      <!-- Far mountains (darkest) -->
+      <path d="M0 620 C80 540 160 480 260 460 C320 448 360 455 420 420 C470 392 510 350 560 310 C590 288 615 280 640 290 C668 302 690 330 720 360 C755 396 790 430 850 450 C910 470 960 455 1020 420 C1070 390 1110 360 1160 340 C1200 322 1240 320 1280 340 C1320 360 1380 410 1440 460 L1440 900 L0 900 Z" fill="#0D2018" opacity=".9"/>
+
+      <!-- Mid mountains -->
+      <path d="M0 680 C100 620 200 580 320 560 C420 544 480 555 560 530 C620 512 660 480 720 450 C760 428 790 422 830 435 C880 452 920 490 980 510 C1040 530 1100 520 1160 500 C1220 480 1280 450 1360 470 C1400 480 1430 500 1440 520 L1440 900 L0 900 Z" fill="url(#zakMtn1)"/>
+
+      <!-- Near hills -->
+      <path d="M0 760 C120 730 240 720 360 730 C480 740 560 755 660 745 C760 735 840 720 960 730 C1060 740 1160 755 1280 740 C1360 730 1410 725 1440 730 L1440 900 L0 900 Z" fill="url(#zakMtn2)"/>
+
+      <!-- Mist layer -->
+      <ellipse cx="720" cy="720" rx="800" ry="120" fill="#2D8A58" opacity=".06" filter="url(#mist)"/>
+
+      <!-- Foreground ground -->
+      <path d="M0 820 C160 800 320 815 480 808 C640 801 800 814 960 806 C1120 798 1280 810 1440 800 L1440 900 L0 900 Z" fill="#091A09"/>
+    </svg>
+  </div>
+
+  <div class="hero-content-inner">
+    <div class="hero-overline">На Небі Кемп · Закарпаття</div>
+    <h1 class="hero-title">
+      Закарпаття —<br>
+      де гори <span class="accent-yellow">торкаються</span><br>
+      хмар
+    </h1>
+    <p class="hero-desc">
+      Дикі Карпати, хвойні ліси, гірські річки. Намети на деревах над туманними долинами — тут час сповільнюється, а місто залишається далеко позаду.
+    </p>
+    <div class="hero-tags">
+      <div class="hero-tag"><span class="dot"></span> Карпатські ліси</div>
+      <div class="hero-tag"><span class="dot"></span> Гірські річки</div>
+      <div class="hero-tag"><span class="dot"></span> Намети на деревах</div>
+      <div class="hero-tag"><span class="dot"></span> Від 2 900 грн</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>дізнатись більше</span>
+    <svg class="scroll-arrow" viewBox="0 0 24 24" fill="none">
+      <path d="M12 4 L12 18 M6 13 L12 19 L18 13" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ══════ НАШІ ТУРИ ══════ -->
+<section class="section tours-section" id="tours">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Програми</div>
+      <h2 class="section-title">Наші тури на Закарпаття</h2>
+      <p style="font-family:'Syne',sans-serif; font-size:15px; color:var(--muted); line-height:1.6; max-width:560px; margin-bottom:40px;">
+        Три програми на будь-який ритм. Від короткого вікенду до повного занурення в Карпати — обирайте свій темп.
+      </p>
+    </div>
+
+    <div class="tours-grid">
+      <!-- 3 дні -->
+      <div class="tour-card reveal reveal-delay-1">
+        <div class="tour-badge">Найпопулярніший</div>
+        <div class="tour-duration">3 дні</div>
+        <ul class="tour-highlights">
+          <li>2 ночі в наметі на дереві</li>
+          <li>Похід до гірського водоспаду</li>
+          <li>Вечір біля вогнища з гідом</li>
+          <li>Харчування 3 рази на день</li>
+          <li>Трансфер від зупинки</li>
+        </ul>
+        <div class="tour-footer">
+          <div class="tour-price">
+            <span class="tour-price-from">Ціна від</span>
+            <span class="tour-price-value">2 900 грн</span>
+          </div>
+          <a href="program-zak-3.html" class="btn-organic btn-green">
+            <svg class="btn-bg" viewBox="0 0 200 46" fill="none" preserveAspectRatio="none">
+              <path d="M12 4 C24 1 72 2 100 2 C142 1 178 1 192 4 C199 6 200 12 200 18 C200 28 200 36 198 42 C196 46 190 48 178 48 C160 48 40 48 22 48 C8 47 2 43 1 36 C0 30 0 20 1 12 C3 6 8 4 12 4 Z"/>
+            </svg>
+            <span>Подивитись програму</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 4 дні -->
+      <div class="tour-card reveal reveal-delay-2">
+        <div class="tour-badge" style="background:rgba(240,180,41,.15); color:#8A6010;">Розширений</div>
+        <div class="tour-duration">4 дні</div>
+        <ul class="tour-highlights">
+          <li>3 ночі в наметі на дереві</li>
+          <li>Радіальний похід на вершину</li>
+          <li>Майстер-клас з орієнтування</li>
+          <li>Харчування 3 рази на день</li>
+          <li>Трансфер від/до зупинки</li>
+        </ul>
+        <div class="tour-footer">
+          <div class="tour-price">
+            <span class="tour-price-from">Ціна від</span>
+            <span class="tour-price-value">3 600 грн</span>
+          </div>
+          <a href="program-zak-4.html" class="btn-organic btn-green">
+            <svg class="btn-bg" viewBox="0 0 200 46" fill="none" preserveAspectRatio="none">
+              <path d="M12 4 C24 1 72 2 100 2 C142 1 178 1 192 4 C199 6 200 12 200 18 C200 28 200 36 198 42 C196 46 190 48 178 48 C160 48 40 48 22 48 C8 47 2 43 1 36 C0 30 0 20 1 12 C3 6 8 4 12 4 Z"/>
+            </svg>
+            <span>Подивитись програму</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 6 днів -->
+      <div class="tour-card reveal reveal-delay-3">
+        <div class="tour-badge" style="background:rgba(232,82,26,.1); color:var(--orange);">Повне занурення</div>
+        <div class="tour-duration">6 днів</div>
+        <ul class="tour-highlights">
+          <li>5 ночей в наметі на дереві</li>
+          <li>Похід на полонину та карпатські луки</li>
+          <li>Риболовля в гірській річці</li>
+          <li>Зоряна ніч з телескопом</li>
+          <li>Харчування 3 рази на день</li>
+        </ul>
+        <div class="tour-footer">
+          <div class="tour-price">
+            <span class="tour-price-from">Ціна від</span>
+            <span class="tour-price-value">4 800 грн</span>
+          </div>
+          <a href="program-zak-6.html" class="btn-organic btn-green">
+            <svg class="btn-bg" viewBox="0 0 200 46" fill="none" preserveAspectRatio="none">
+              <path d="M12 4 C24 1 72 2 100 2 C142 1 178 1 192 4 C199 6 200 12 200 18 C200 28 200 36 198 42 C196 46 190 48 178 48 C160 48 40 48 22 48 C8 47 2 43 1 36 C0 30 0 20 1 12 C3 6 8 4 12 4 Z"/>
+            </svg>
+            <span>Подивитись програму</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom action buttons -->
+    <div class="tours-actions reveal">
+      <a href="vsi-turi.html" class="btn-organic" style="color:var(--green);">
+        <svg class="btn-bg" viewBox="0 0 220 50" fill="none" preserveAspectRatio="none">
+          <path d="M14 4 C26 1 78 2 110 2 C156 1 196 1 210 4 C218 6 220 14 220 22 C220 32 218 40 214 46 C210 50 196 52 178 52 C144 52 76 52 42 52 C18 52 4 50 2 44 C0 38 0 28 1 18 C3 8 8 4 14 4 Z" stroke="var(--green)" stroke-width="2" fill="none"/>
+        </svg>
+        <span>Подивитись всі дати</span>
+      </a>
+      <a href="#cta" class="btn-organic btn-green">
+        <svg class="btn-bg" viewBox="0 0 180 50" fill="none" preserveAspectRatio="none">
+          <path d="M12 4 C22 1 64 2 90 2 C128 1 162 1 172 4 C179 6 180 14 180 22 C180 32 178 40 174 46 C170 50 158 52 142 52 C112 52 68 52 38 52 C16 52 4 50 2 44 C0 38 0 28 1 18 C3 8 8 4 12 4 Z"/>
+        </svg>
+        <span>Підібрати тур</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ ЯК ВИГЛЯДАЄ ЛОКАЦІЯ ══════ -->
+<section class="section gallery-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Локація</div>
+      <h2 class="section-title">Як виглядає Закарпаття</h2>
+      <p style="font-family:'Syne',sans-serif; font-size:15px; color:var(--muted); line-height:1.6; max-width:540px; margin-bottom:36px;">
+        Кожного ранку — туман над горами. Кожного вечора — вогонь і зорі. Ось як це виглядає.
+      </p>
+    </div>
+
+    <!-- Photo grid with SVG placeholders -->
+    <div class="photo-grid reveal">
+      <div class="photo-cell tall">
+        <svg viewBox="0 0 300 420" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="min-height:320px;">
+          <defs>
+            <linearGradient id="p1sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1A4A30"/>
+              <stop offset="100%" stop-color="#2D7A4A"/>
+            </linearGradient>
+          </defs>
+          <rect width="300" height="420" fill="url(#p1sky)"/>
+          <!-- Treehouse platform sketch -->
+          <path d="M60 280 C80 240 100 180 150 140 C200 180 220 240 240 280 Z" fill="#0D2A18"/>
+          <rect x="90" y="240" width="120" height="70" rx="8" fill="#4A2C10"/>
+          <rect x="95" y="245" width="110" height="60" rx="6" fill="#5A3618"/>
+          <rect x="115" y="255" width="30" height="45" fill="#3A2008"/>
+          <path d="M80 240 L220 240" stroke="#3A2008" stroke-width="6" stroke-linecap="round"/>
+          <path d="M70 238 L148 160 L230 238" stroke="#2D4A20" stroke-width="3" fill="#2D4A20"/>
+          <rect x="100" y="240" width="6" height="50" fill="#3A2008"/>
+          <rect x="194" y="240" width="6" height="50" fill="#3A2008"/>
+          <circle cx="60" cy="80" r="35" fill="white" opacity=".6"/>
+          <circle cx="120" cy="55" r="42" fill="white" opacity=".55"/>
+          <circle cx="190" cy="70" r="38" fill="white" opacity=".6"/>
+          <circle cx="250" cy="60" r="30" fill="white" opacity=".5"/>
+          <path d="M0 340 C60 320 120 330 180 320 C240 310 280 325 300 315 L300 420 L0 420 Z" fill="#0A1A0E"/>
+          <!-- Fog -->
+          <path d="M0 310 C50 295 100 305 150 298 C200 291 260 300 300 295 L300 330 L0 330 Z" fill="white" opacity=".12"/>
+        </svg>
+        <div class="photo-caption">Наш намет над карпатським лісом</div>
+      </div>
+
+      <div class="photo-cell">
+        <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="p2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4A8A5A"/>
+              <stop offset="100%" stop-color="#1A4A28"/>
+            </linearGradient>
+          </defs>
+          <rect width="300" height="200" fill="url(#p2)"/>
+          <!-- River scene -->
+          <path d="M0 160 C30 145 60 155 90 148 C120 141 150 150 180 144 C210 138 250 148 300 140 L300 200 L0 200 Z" fill="#1A3A50"/>
+          <path d="M0 165 C40 158 80 162 120 158 C160 154 200 160 240 156 C270 153 290 158 300 155 L300 175 L0 175 Z" fill="#2A5A7A" opacity=".6"/>
+          <ellipse cx="60" cy="130" rx="20" ry="35" fill="#183818"/>
+          <ellipse cx="100" cy="120" rx="18" ry="40" fill="#1A4020"/>
+          <ellipse cx="220" cy="125" rx="22" ry="38" fill="#183818"/>
+          <ellipse cx="260" cy="135" rx="16" ry="30" fill="#1A4020"/>
+          <circle cx="150" cy="50" r="35" fill="white" opacity=".5"/>
+          <circle cx="190" cy="40" r="25" fill="white" opacity=".45"/>
+        </svg>
+        <div class="photo-caption">Гірська річка Ріка</div>
+      </div>
+
+      <div class="photo-cell">
+        <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="p3" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0A1A10"/>
+              <stop offset="100%" stop-color="#1A3A20"/>
+            </linearGradient>
+          </defs>
+          <rect width="300" height="200" fill="url(#p3)"/>
+          <!-- Campfire night scene -->
+          <path d="M0 170 C80 160 160 168 240 160 C270 157 290 162 300 160 L300 200 L0 200 Z" fill="#081208"/>
+          <!-- Fire glow -->
+          <ellipse cx="150" cy="160" rx="60" ry="30" fill="#E8521A" opacity=".2"/>
+          <ellipse cx="150" cy="160" rx="30" ry="15" fill="#F0B429" opacity=".3"/>
+          <!-- Fire flames -->
+          <path d="M135 165 C138 150 140 140 143 132 C145 125 148 122 150 120 C152 122 155 125 157 132 C160 140 162 150 165 165 Z" fill="#F0B429"/>
+          <path d="M140 165 C143 155 145 148 148 142 C149 138 150 136 151 136 C152 136 153 138 154 142 C157 148 159 155 162 165 Z" fill="#E8521A" opacity=".7"/>
+          <!-- Logs -->
+          <ellipse cx="150" cy="168" rx="22" ry="6" fill="#3A1A08"/>
+          <ellipse cx="150" cy="167" rx="18" ry="4" fill="#4A2A0A"/>
+          <!-- Stars -->
+          <circle cx="50"  cy="30"  r="1.5" fill="white" opacity=".8"/>
+          <circle cx="100" cy="20"  r="1"   fill="white" opacity=".7"/>
+          <circle cx="180" cy="35"  r="1.5" fill="white" opacity=".75"/>
+          <circle cx="240" cy="15"  r="1"   fill="white" opacity=".65"/>
+          <circle cx="280" cy="45"  r="1.2" fill="white" opacity=".8"/>
+          <circle cx="130" cy="50"  r="1"   fill="white" opacity=".6"/>
+          <circle cx="220" cy="60"  r="1.2" fill="white" opacity=".7"/>
+        </svg>
+        <div class="photo-caption">Вечір біля вогнища</div>
+      </div>
+
+      <div class="photo-cell wide">
+        <svg viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="width:100%;">
+          <defs>
+            <linearGradient id="p4" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#6AB88A"/>
+              <stop offset="50%" stop-color="#2D8A58"/>
+              <stop offset="100%" stop-color="#1A5C3A"/>
+            </linearGradient>
+          </defs>
+          <rect width="600" height="200" fill="url(#p4)"/>
+          <!-- Panorama mountains -->
+          <path d="M0 120 C80 80 160 60 240 70 C300 78 340 100 400 80 C460 60 520 50 600 70 L600 200 L0 200 Z" fill="#1A4A2A"/>
+          <path d="M0 150 C100 130 200 140 300 135 C400 130 500 140 600 135 L600 200 L0 200 Z" fill="#122A1A"/>
+          <!-- Pine trees silhouettes -->
+          <path d="M50 150 L50 140 C44 137 32 131 22 126 C16 122 16 118 22 116 C30 113 40 112 42 111 L42 100 L58 100 C58 111 60 112 68 116 C76 119 78 123 70 126 C62 131 52 137 50 140 Z" fill="#0D2010"/>
+          <path d="M150 150 L150 140 C144 137 132 131 122 126 C116 122 116 118 122 116 C130 113 140 112 142 111 L142 100 L158 100 C158 111 160 112 168 116 C176 119 178 123 170 126 C162 131 152 137 150 140 Z" fill="#0D2010"/>
+          <path d="M300 150 L300 140 C294 137 282 131 272 126 C266 122 266 118 272 116 C280 113 290 112 292 111 L292 100 L308 100 C308 111 310 112 318 116 C326 119 328 123 320 126 C312 131 302 137 300 140 Z" fill="#0D2010"/>
+          <path d="M450 150 L450 140 C444 137 432 131 422 126 C416 122 416 118 422 116 C430 113 440 112 442 111 L442 100 L458 100 C458 111 460 112 468 116 C476 119 478 123 470 126 C462 131 452 137 450 140 Z" fill="#0D2010"/>
+          <path d="M550 150 L550 140 C544 137 532 131 522 126 C516 122 516 118 522 116 C530 113 540 112 542 111 L542 100 L558 100 C558 111 560 112 568 116 C576 119 578 123 570 126 C562 131 552 137 550 140 Z" fill="#0D2010"/>
+          <!-- Morning mist -->
+          <path d="M0 125 C100 118 200 122 300 119 C400 116 500 120 600 117 L600 135 L0 135 Z" fill="white" opacity=".18"/>
+        </svg>
+        <div class="photo-caption">Панорама Карпат з ранковим туманом</div>
+      </div>
+    </div>
+
+    <!-- Video placeholder -->
+    <div class="video-placeholder reveal">
+      <svg class="bg" viewBox="0 0 800 300" fill="none" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="vid-bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#1A4A2A"/>
+            <stop offset="100%" stop-color="#0A1F14"/>
+          </linearGradient>
+        </defs>
+        <rect width="800" height="300" fill="url(#vid-bg)"/>
+        <path d="M0 200 C100 160 200 180 300 165 C400 150 500 170 600 155 C700 140 750 160 800 150 L800 300 L0 300 Z" fill="#091A09" opacity=".6"/>
+      </svg>
+      <div class="video-play-btn">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M8 6 L18 11 L8 16 Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="video-label">Дивитись відео про Закарпаття · 2:45</div>
+    </div>
+
+    <!-- UGC strip -->
+    <div class="ugc-strip reveal">
+      <div class="ugc-avatar">М</div>
+      <div class="ugc-text">
+        <div class="ugc-name">Маринка В., Київ</div>
+        <div class="ugc-quote">«Прокидатись над хмарами — це щось неймовірне. Перший ранок в наметі на дереві змінив мене назавжди.»</div>
+      </div>
+      <div class="ugc-stars">⭐⭐⭐⭐⭐</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ ЩО ВХОДИТЬ У ВАРТІСТЬ ══════ -->
+<section class="section inclusions-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Включено</div>
+      <h2 class="section-title">Що входить у вартість</h2>
+      <p style="font-family:'Syne',sans-serif; font-size:15px; color:var(--muted); line-height:1.6; max-width:500px; margin-bottom:40px;">
+        Ніяких прихованих платежів. Все, що потрібно для відпочинку — вже включено в ціну.
+      </p>
+    </div>
+
+    <div class="inclusions-grid">
+      <div class="inclusion-item reveal reveal-delay-1">
+        <div class="inclusion-icon">🌲</div>
+        <div class="inclusion-body">
+          <div class="inclusion-title">Проживання в наметі на дереві</div>
+          <div class="inclusion-desc">Зручні платформи на висоті 3–6 метрів, спальники, матраци. Ваш будинок серед лісу.</div>
+        </div>
+      </div>
+      <div class="inclusion-item reveal reveal-delay-2">
+        <div class="inclusion-icon">🍳</div>
+        <div class="inclusion-body">
+          <div class="inclusion-title">Харчування 3 рази на день</div>
+          <div class="inclusion-desc">Сніданок, обід, вечеря — приготовані на вогні з місцевих продуктів. Вегетаріанське меню за запитом.</div>
+        </div>
+      </div>
+      <div class="inclusion-item reveal reveal-delay-1">
+        <div class="inclusion-icon">🧭</div>
+        <div class="inclusion-body">
+          <div class="inclusion-title">Досвідчений гід</div>
+          <div class="inclusion-desc">Місцевий гід, який знає кожну стежку і кожну легенду цих гір. Безпека та захоплюючі оповіді.</div>
+        </div>
+      </div>
+      <div class="inclusion-item reveal reveal-delay-2">
+        <div class="inclusion-icon">🔥</div>
+        <div class="inclusion-body">
+          <div class="inclusion-title">Вечірнє вогнище</div>
+          <div class="inclusion-desc">Щовечора — вогнище, розмови під зорями, запечені маршмелоу і карпатський чай.</div>
+        </div>
+      </div>
+      <div class="inclusion-item reveal reveal-delay-1">
+        <div class="inclusion-icon">🚌</div>
+        <div class="inclusion-body">
+          <div class="inclusion-title">Трансфер від зупинки</div>
+          <div class="inclusion-desc">Зустрінемо вас на найближчій залізничній зупинці або автостанції і довеземо до табору.</div>
+        </div>
+      </div>
+      <div class="inclusion-item reveal reveal-delay-2">
+        <div class="inclusion-icon">🎒</div>
+        <div class="inclusion-body">
+          <div class="inclusion-title">Туристичне спорядження</div>
+          <div class="inclusion-desc">Дощовики, треккінгові палиці, ліхтарики — все є в таборі. Приїжджай налегке.</div>
+        </div>
+      </div>
+      <div class="inclusion-item reveal reveal-delay-1">
+        <div class="inclusion-icon">🏊</div>
+        <div class="inclusion-body">
+          <div class="inclusion-title">Купання в гірській річці</div>
+          <div class="inclusion-desc">Відкриті купальні зони в кристально чистій воді Карпатських річок.</div>
+        </div>
+      </div>
+      <div class="inclusion-item reveal reveal-delay-2">
+        <div class="inclusion-icon">📸</div>
+        <div class="inclusion-body">
+          <div class="inclusion-title">Фотопрогулянка</div>
+          <div class="inclusion-desc">Фотозупинки у найкрасивіших місцях з порадами щодо ракурсів від нашого гіда.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="inclusions-note reveal">
+      <div class="inclusions-note-icon">✅</div>
+      <div class="inclusions-note-text">
+        Не потрібен досвід кемпінгу — ми подбаємо про все. Просто приїдь і відпочинь у Карпатах.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CTA BANNER ══════ -->
+<section class="cta-section" id="cta">
+  <div class="cta-inner reveal">
+    <span class="cta-emoji">🔥</span>
+    <h2 class="cta-title">Місця розлітаються!<br>Залиш заявку</h2>
+    <p class="cta-subtitle">Ми підберемо тур на Закарпаття саме для тебе — за датами, форматом та бюджетом.</p>
+
+    <div class="cta-form">
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label for="name-zak">Ім'я</label>
+          <input type="text" id="name-zak" placeholder="Твоє ім'я">
+        </div>
+        <div class="form-row">
+          <label for="phone-zak">Телефон</label>
+          <input type="tel" id="phone-zak" placeholder="+380 ...">
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="loc-zak">Локація</label>
+        <select id="loc-zak">
+          <option value="zakarpattya" selected>Закарпаття</option>
+          <option value="lvivshyna">Львівщина</option>
+          <option value="any">Будь-яка</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="msg-zak">Повідомлення</label>
+        <textarea id="msg-zak" placeholder="Коли плануєш? Кількість людей? Будь-які питання..."></textarea>
+      </div>
+      <button class="form-submit">
+        <svg class="btn-bg" viewBox="0 0 400 56" fill="none" preserveAspectRatio="none">
+          <path d="M14 4 C28 1 100 2 160 2 C240 1 330 1 386 4 C396 6 400 14 400 24 C400 36 398 44 394 50 C390 54 374 56 354 57 C304 58 96 58 46 57 C22 56 4 52 2 44 C0 36 0 24 2 14 C4 6 8 4 14 4 Z" fill="var(--orange)"/>
+        </svg>
+        <span>Надіслати заявку →</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FOOTER ══════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="logo" style="margin-bottom:0;">
+          <img class="logo-img" src="logo.jpg" alt="Na Nebi Camp">
+          <div class="logo-text">
+            <span class="logo-name">na nebi</span>
+            <span class="logo-sub">camp</span>
+          </div>
+        </a>
+        <p class="footer-tagline">Намети на деревах у Карпатах.<br>Без досвіду кемпінгу. Просто приїдь.</p>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Локації</div>
+        <ul class="footer-links">
+          <li><a href="zakarpattya.html">Закарпаття</a></li>
+          <li><a href="lvivshyna.html">Львівщина</a></li>
+          <li><a href="vsi-turi.html">Всі тури</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Компанія</div>
+        <ul class="footer-links">
+          <li><a href="pro-kemp.html">Про кемп</a></li>
+          <li><a href="korporatyvni.html">Корпоративні</a></li>
+          <li><a href="#cta">Контакти</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 Na Nebi Camp. Всі права захищено.</span>
+      <span>🇺🇦 Зроблено в Україні</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile menu toggle
+const burgerBtn = document.getElementById('burgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+burgerBtn.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+});
+
+// IntersectionObserver for scroll animations
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+revealEls.forEach(el => observer.observe(el));
+
+// Form submit
+const formSubmit = document.querySelector('.form-submit');
+if (formSubmit) {
+  formSubmit.addEventListener('click', (e) => {
+    e.preventDefault();
+    const nameVal = document.getElementById('name-zak').value.trim();
+    const phoneVal = document.getElementById('phone-zak').value.trim();
+    if (!nameVal || !phoneVal) {
+      alert('Будь ласка, вкажи ім\'я та телефон.');
+      return;
+    }
+    formSubmit.querySelector('span').textContent = 'Заявку надіслано ✓';
+    formSubmit.disabled = true;
+    formSubmit.style.opacity = '.7';
+  });
+}
+</script>
+</body>
+</html>
